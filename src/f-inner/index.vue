@@ -1,25 +1,47 @@
 <template>
 	<div class="f-inner-wrapper">
-		<component v-for="(item,i) in datas" :key="i" :is="item.component" />
+		<div v-for="(item,i) in datas" :key="i" @click="eventShowControls(item)">
+			<component :is="item.component" />
+		</div>
 	</div>
 </template>
 
 <script>
-	import widgets from "./mixins/widgets"
-	import hoc from "./widgets/hoc"
+	import widgethoc from "./widgets/common/hoc"
+	import widgetlist from "./widgets/common/list"
+	import postMessage from "@/util/postMessage"
+	import {
+		clone
+	} from "@/util/util"
 	export default {
 		data() {
-			var datas = [{
-				name: "layout",
-				datas: {
-					test: "test"
-				}
-			}]
 			return {
-				datas: datas.map((_data) => {
-					_data.component = hoc(widgets.components[_data.name], _data.datas)
-					return _data
+				datas: []
+			}
+		},
+		mounted() {
+			this.$source = new postMessage(window.parent, window)
+			this.$source.send("widgetnav", widgetlist.map((_data) => {
+				return this.cloneWidgetRemoveComponent(_data)
+			}))
+			this.$source.receive("widgetlist", (widgetdata) => {
+				this.datas = widgetdata.datas.map((_w) => {
+					_w.component = widgethoc(this.getComponentById(_w.wid), clone(_w))
+					return _w
 				})
+			})
+		},
+		methods: {
+			cloneWidgetRemoveComponent(data) {
+				let _data = clone(data)
+				delete _data.component
+				return _data
+			},
+			getComponentById(wid) {
+				return widgetlist.find((_data) => _data.wid === wid).component
+			},
+			eventShowControls(widget) {
+				this.$source.send("widgetcontrol", widget.id)
 			}
 		}
 	}

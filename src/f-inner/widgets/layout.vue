@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import mixin from "./hoc/mixin.js"
+  import mixin from "./common/mixin.js"
   export default {
     name: "layout",
     mixins: [mixin],
@@ -13,8 +13,8 @@
       return {}
     },
     methods: {
-      $change() {
-        debugger
+      $change(data, isFirst) {
+        
       }
     }
   }
