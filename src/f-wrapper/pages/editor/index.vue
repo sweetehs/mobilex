@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="controls-wrapper">
-      <Controls @change="peventUpdateById" />
+      <Controls @change="peventUpdateById" @changeBase="peventUpdateBase" />
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@
           id: "",
           controls: {
             style: {},
-            attr: {}
+            props: {}
           }
         }
       }
@@ -93,7 +93,7 @@
           id: randomId(),
           controls: {
             style: {},
-            attr: {}
+            props: {}
           }
         })
         this.$store.dispatch("$widget/add", newWidget).then(() => {
@@ -104,6 +104,9 @@
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
         })
+      },
+      peventUpdateBase(data) {
+        this.$store.dispatch("$widget/updateBase", data)
       }
     }
   }

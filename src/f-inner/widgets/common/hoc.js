@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 export default (Component, datas) => {
   return {
     render: (createElement) => {
