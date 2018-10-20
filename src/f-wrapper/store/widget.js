@@ -1,6 +1,7 @@
 import {
   clone,
-  compare
+  compare,
+  extendDeep
 } from "@/util/util"
 export default {
   namespaced: true,
@@ -33,11 +34,13 @@ export default {
       state.currentWidget = clone(state.widget.datas.find((_data) => _data.id == id))
     },
     update(state, data) {
+      debugger
       let getData = state.widget.datas.find((_data) => _data.id == state.currentWidget.id)
       // 为了防止死循环，比较数据是否相等
       if (!compare(data, getData)) {
-        Object.assign(getData, data)
+        extendDeep(data, getData)
       }
+      debugger
     },
     updateBase(state, data) {
       // 为了防止死循环，比较数据是否相等
