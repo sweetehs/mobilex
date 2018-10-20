@@ -1,11 +1,13 @@
 export default (Component, datas) => {
   return {
     render: (createElement) => {
+      debugger
       return createElement(Component, {
         props: {
-          dataChange: datas
+          // dataChange: datas,
+          ...datas.controls.props
         },
-        style: datas.controls.style
+        style: datas.controls.style,
       })
     }
   }

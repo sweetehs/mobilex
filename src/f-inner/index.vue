@@ -7,8 +7,8 @@
 </template>
 
 <script>
-	import widgethoc from "./widgets/common/hoc"
-	import widgetlist from "./widgets/common/list"
+	import widgethoc from "./widgets/hoc"
+	import widgetlist from "./widgets/list"
 	import postMessage from "@/util/postMessage"
 	import {
 		clone

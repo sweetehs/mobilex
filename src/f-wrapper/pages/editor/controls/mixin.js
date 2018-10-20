@@ -1,10 +1,11 @@
+import { clone } from "@/util/util"
 export default {
   props: ["bdata"],
   watch: {
     bdata: {
       deep: true,
       handler() {
-        this.$parseData && this.$parseData(this.bdata)
+        this.$parseData && this.$parseData(clone(this.bdata))
       }
     },
     list: {

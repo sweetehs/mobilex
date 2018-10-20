@@ -1,10 +1,11 @@
 <template>
-  <div class="widget-temp-wrapper">
+  <div class="widget-layout-wrapper">
+    layout
   </div>
 </template>
 
 <script>
-  import mixin from "./common/mixin.js"
+  import mixin from "../mixin.js"
   export default {
     name: "layout",
     mixins: [mixin],
@@ -12,7 +13,9 @@
       return {}
     },
     methods: {
-      $change(data, isFirst) {}
+      $change(data, isFirst) {
+        
+      }
     }
   }
 </script>

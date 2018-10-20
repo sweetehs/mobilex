@@ -1,6 +1,10 @@
 <template>
   <div class="control-text-wrapper">
-    te
+    <el-form>
+      <el-form-item label="文字" label-width="50px">
+        <el-input v-model="list.text"></el-input>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -10,12 +14,22 @@
     mixins: [mixin],
     data() {
       return {
-        list: []
+        list: {
+          text: ""
+        }
       }
     },
     methods: {
-      $parseData() {},
-      $reverseData() {}
+      $parseData(data) {
+        if(data){
+          this.list = data
+        }
+      },
+      $reverseData() {
+        return {
+          props: this.list
+        }
+      }
     }
   }
 </script>

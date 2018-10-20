@@ -1,20 +1,21 @@
 <template>
   <div class="widget-text-wrapper">
-    text
+    {{text||'默认文字'}}
   </div>
 </template>
 
 <script>
-  import mixin from "./common/mixin.js"
+  // import mixin from "../mixin.js"
   export default {
     name: "layout",
-    mixins: [mixin],
+    // mixins: [mixin],
+    props: ['text'],
     data() {
       return {}
     },
     methods: {
       $change(data, isFirst) {
-        // debugger
+        debugger
       }
     }
   }

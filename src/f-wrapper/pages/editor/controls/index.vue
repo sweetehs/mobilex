@@ -28,7 +28,7 @@
          <Controlstyle @change="peventChangeData" :bdata="currentWidget.controls.style" />
       </el-tab-pane>
       <el-tab-pane label="个性化" name="2" v-if="currentWidget ? true : false">
-        <component :is="currentWidget.wid" :data="currentWidget.controls.props" />
+        <component @change="peventChangeData" :is="currentWidget.wid" :data="currentWidget.controls.props" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -61,7 +61,7 @@
     methods: {
       peventChangeData(data) {
         this.$emit("change", {
-          controls: data
+          controls: clone(data)
         })
       },
       peventChangeBaseData(data) {

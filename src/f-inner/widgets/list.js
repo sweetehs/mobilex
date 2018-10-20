@@ -1,5 +1,5 @@
-import layout from "../layout"
-import xtext from "../xtext"
+import layout from "./common/layout"
+import xtext from "./common/xtext"
 export default [{
   name: "布局",
   wid: "layout",
