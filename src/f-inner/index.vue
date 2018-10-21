@@ -1,19 +1,34 @@
 <template>
 	<div class="f-inner-wrapper">
-		<div v-for="(item,i) in datas" :key="i" @click="eventShowControls(item)">
-			<component :is="item.component" />
+		<div v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
+			<control>
+				<component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props" />
+			</control>
 		</div>
 	</div>
 </template>
 
 <script>
-	import widgethoc from "./widgets/hoc"
-	import widgetlist from "./widgets/list"
+	import widgetlist from "./components/widgets/list"
+	import control from "./components/widgets/item-control"
 	import postMessage from "@/util/postMessage"
 	import {
 		clone
 	} from "@/util/util"
+
+	const getMixinComponents = () => {
+		return {
+			components: widgetlist.reduce((r, n) => {
+				r[n.wid] = n.component
+				return r
+			}, {})
+		}
+	}
 	export default {
+		mixins:[getMixinComponents()],
+		components:{
+			control
+		},
 		data() {
 			return {
 				datas: []
@@ -25,10 +40,7 @@
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (widgetdata) => {
-				this.datas = widgetdata.datas.map((_w) => {
-					_w.component = widgethoc(this.getComponentById(_w.wid), clone(_w))
-					return _w
-				})
+				this.datas = widgetdata.datas
 			})
 		},
 		methods: {
@@ -40,7 +52,7 @@
 			getComponentById(wid) {
 				return widgetlist.find((_data) => _data.wid === wid).component
 			},
-			eventShowControls(widget) {
+			eventSetCurrentControls(widget) {
 				this.$source.send("widgetcontrol", widget.id)
 			}
 		}

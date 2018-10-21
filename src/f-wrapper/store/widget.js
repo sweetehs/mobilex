@@ -16,6 +16,20 @@ export default {
         id: "id294859",
         controls: {
           style: {
+            margin: "0 0 0 0",
+            padding: "10px 10px 10px 10px",
+            color: "#abcdef",
+            'background-color': "#000",
+            'border-radius': "10px"
+          },
+          props: {}
+        }
+      }, {
+        name: "按钮",
+        wid: "xbutton",
+        id: "id234859",
+        controls: {
+          style: {
             margin: "10px 10px 10px 10px",
             color: "#abcdef",
             'background-color': "#000",
@@ -34,13 +48,11 @@ export default {
       state.currentWidget = clone(state.widget.datas.find((_data) => _data.id == id))
     },
     update(state, data) {
-      debugger
       let getData = state.widget.datas.find((_data) => _data.id == state.currentWidget.id)
       // 为了防止死循环，比较数据是否相等
       if (!compare(data, getData)) {
         extendDeep(data, getData)
       }
-      debugger
     },
     updateBase(state, data) {
       // 为了防止死循环，比较数据是否相等

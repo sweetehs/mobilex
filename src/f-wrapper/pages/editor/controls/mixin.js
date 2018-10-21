@@ -5,7 +5,11 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        this.$parseData && this.$parseData(clone(this.bdata))
+        if(!this.$parseData){
+          this.list = clone(this.bdata)
+        }else{
+          this.$parseData(clone(this.bdata))
+        }
       }
     },
     list: {

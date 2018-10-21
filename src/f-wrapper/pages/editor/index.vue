@@ -89,13 +89,13 @@
       },
       eventAddWidget(widget) {
         // 增加一个组件
-        let newWidget = Object.assign(clone(widget), {
+        let newWidget = Object.assign({
           id: randomId(),
           controls: {
             style: {},
             props: {}
           }
-        })
+        }, clone(widget))
         this.$store.dispatch("$widget/add", newWidget).then(() => {
           this.postWidgetListSend()
         })

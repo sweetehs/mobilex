@@ -3,11 +3,11 @@
     <el-form>
       <el-form-item v-for="(item,i) in list" :key="i" :label="item.name" label-width="80px">
         <span v-if="item.values" class="fn-mr5" v-for="(item1,j) in item.values" :key="j">
-          <el-input v-model="item1.value" class="small"></el-input>
-        </span>
+              <el-input v-model="item1.value" class="small"></el-input>
+            </span>
         <span v-if="!item.values">
-          <el-input v-model="item.value"></el-input>
-        </span>
+              <el-input v-model="item.value"></el-input>
+            </span>
       </el-form-item>
     </el-form>
   </div>
@@ -23,7 +23,7 @@
     data() {
       return {
         list: [{
-          name: "内边距",
+          name: "外边距",
           key: "margin",
           values: [{
             name: "左",
@@ -52,20 +52,62 @@
           reverse() {
             return this.values.map(_data => _data.value + "px").join(" ")
           }
-        },{
+        }, {
+          name: "内边距",
+          key: "padding",
+          values: [{
+            name: "左",
+            value: 0
+          }, {
+            name: "上",
+            value: 0
+          }, {
+            name: "右",
+            value: 0
+          }, {
+            name: "下",
+            value: 0
+          }],
+          default () {
+            this.values.map((_data) => {
+              _data.value = 0
+            })
+          },
+          parse(text) {
+            var values = text.split(" ")
+            this.values.forEach((_data, i) => {
+              _data.value = values[i].replace("px", "")
+            })
+          },
+          reverse() {
+            return this.values.map(_data => _data.value + "px").join(" ")
+          }
+        }, {
           name: "颜色",
           key: "color",
           value: ""
-        },{
+        }, {
           name: "背景颜色",
           key: "background-color",
           value: ""
+        }, {
+          name: "宽度",
+          key: "width",
+          value: "auto",
+        }, {
+          name: "高度",
+          key: "height",
+          value: "auto",
+        }, {
+          name: "圆角",
+          key: "border-radius",
+          value: 0,
         }]
       }
     },
     methods: {
-      setDefault(){
-        this.list.forEach((_data)=>{
+      setDefault() {
+        this.list.forEach((_data) => {
           _data.value = _data.default ? _data.default() : ''
         })
       },
@@ -76,23 +118,21 @@
           if (_style) {
             if (_data.parse) {
               _data.parse(_style)
-            }else{
+            } else {
               _data.value = _style
             }
           }
         })
       },
       $reverseData() {
-        return {
-          style: this.list.reduce((_data, next) => {
-            if (next.reverse) {
-              _data[next.key] = next.reverse()
-            }else{
-              _data[next.key] = next.value
-            }
-            return _data
-          }, {})
-        }
+        return this.list.reduce((_data, next) => {
+          if (next.reverse) {
+            _data[next.key] = next.reverse()
+          } else {
+            _data[next.key] = next.value
+          }
+          return _data
+        }, {})
       }
     }
   }

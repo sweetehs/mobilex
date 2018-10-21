@@ -25,20 +25,22 @@
         <Controlbase @change="peventChangeBaseData" :bdata="baseData" />
       </el-tab-pane>
       <el-tab-pane label="样式" name="1" v-if="currentWidget ? true : false">
-         <Controlstyle @change="peventChangeData" :bdata="currentWidget.controls.style" />
+        <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" />
       </el-tab-pane>
       <el-tab-pane label="个性化" name="2" v-if="currentWidget ? true : false">
-        <component @change="peventChangeData" :is="currentWidget.wid" :data="currentWidget.controls.props" />
+        <component @change="peventChangePropsData" :is="currentWidget.wid" :data="currentWidget.controls.props" />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-  import Controlstyle from "./nav/style"
-  import Controlbase from "./nav/base"
+  import Controlstyle from "./common/style"
+  import Controlbase from "./common/base"
   import mixinlist from "./mixinlist"
-  import { clone } from "@/util/util"
+  import {
+    clone
+  } from "@/util/util"
   export default {
     mixins: [mixinlist],
     components: {
@@ -59,9 +61,18 @@
       }
     },
     methods: {
-      peventChangeData(data) {
+      peventChangeStyleData(data) {
         this.$emit("change", {
-          controls: clone(data)
+          controls: {
+            style: clone(data)
+          }
+        })
+      },
+      peventChangePropsData(data) {
+        this.$emit("change", {
+          controls: {
+            props: clone(data)
+          }
         })
       },
       peventChangeBaseData(data) {

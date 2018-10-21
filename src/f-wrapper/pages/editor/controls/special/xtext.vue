@@ -26,10 +26,7 @@
         }
       },
       $reverseData() {
-        debugger
-        return {
-          props: this.list
-        }
+        return this.list
       }
     }
   }
