@@ -7,23 +7,30 @@
 </template>
 
 <script>
+	import Vue from "vue"
 	import widgetlist from "@/components/widgets/list-elements"
 	import control from "./components/item-control"
 	import postMessage from "@/util/postMessage"
 	import {
 		clone
 	} from "@/util/util"
-	
-	const getMixinComponents = () => {
-		return {
-			components: widgetlist.reduce((r, n) => {
-				r[n.wid] = n.component
-				return r
-			}, {})
-		}
+	// 全局注册component widget
+	const setGlobalComponents = () => {
+		widgetlist.forEach((_c) => {
+			Vue.component(_c.wid, _c.component)
+		});
 	}
+	setGlobalComponents()
+	// const getMixinComponents = () => {
+	// 	return {
+	// 		components: widgetlist.reduce((r, n) => {
+	// 			r[n.wid] = n.component
+	// 			return r
+	// 		}, {})
+	// 	}
+	// }
 	export default {
-		mixins: [getMixinComponents()],
+		// mixins: [getMixinComponents()],
 		components: {
 			control
 		},
