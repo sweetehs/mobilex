@@ -23,9 +23,11 @@
     },
     mounted() {
       setTimeout(() => {
-        const display = document.defaultView.getComputedStyle(this.$refs.control[0].$el).display
-        this.$set(this.style, "display", display)
-      }, 100)
+        if(this.$refs.control){
+          const display = document.defaultView.getComputedStyle(this.$refs.control[0].$el).display
+          this.$set(this.style, "display", display)
+        }
+      }, 0)
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div class="f-inner-wrapper">
-		<controlwrapper :datas="datas||[]" :currentId="currentId"/>
+		<controlwrapper :datas="datas||[]" :currentId="currentId" />
 	</div>
 </template>
 
@@ -38,8 +38,10 @@
 			this.$source.receive("widgetlist", (widgetdata) => {
 				this.datas = clone(widgetdata.datas)
 			})
-			event.$on("setControl",(id)=>{
-				this.currentId = id
+			this.$source.receive("widgetcurrent", (currentwidget) => {
+				this.currentId = currentwidget.id
+			})
+			event.$on("setControl", (id) => {
 				this.$source.send("widgetcontrol", id)
 			})
 		},

@@ -6,7 +6,7 @@
       flex: 1;
     }
     .editor-wrapper {
-      width: 600px;
+      width: 500px;
       flex-shrink: 0;
       background: #eee;
       display: flex;
@@ -28,6 +28,9 @@
         <li v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
       </ul>
     </div>
+    <div class="ps-wrapper">
+      <Pstree :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+    </div>
     <div class="editor-wrapper">
       <div class="editor-inner">
         <Ioswrapper>
@@ -44,6 +47,7 @@
 <script>
   import postMessage from "@/util/postMessage"
   import Controls from "./controls"
+  import Pstree from "./ps-tree"
   import Ioswrapper from "./ios"
   import {
     clone,
@@ -52,7 +56,8 @@
   export default {
     components: {
       Controls,
-      Ioswrapper
+      Ioswrapper,
+      Pstree
     },
     data() {
       return {
@@ -66,6 +71,17 @@
             props: {}
           }
         }
+      }
+    },
+    computed: {
+      currentWidget() {
+        return this.$store.state.$widget.currentWidget
+      }
+    },
+    watch: {
+      currentWidget() {
+        // 当前current改变的时候通知内部
+        this.$source.send("widgetcurrent", clone(this.currentWidget))
       }
     },
     mounted() {

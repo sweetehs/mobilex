@@ -7,13 +7,16 @@
       width: 100%;
       left: 0;
       top: 0;
+      box-sizing: border-box;
     }
-    &.active,
     &.hover {
-      >.overlay {
-        // background: rgba(255, 255, 255, 0.5);
-        border: 2px dashed #e12134;
-        box-sizing: border-box;
+      >.overlay{
+        border: 4px dashed #e12134;
+      }
+    }
+    &.active{
+       >.overlay {
+        border: 4px dashed #48D1CC;
       }
     }
   }
