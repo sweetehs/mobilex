@@ -1,10 +1,8 @@
 <template>
 	<div class="f-inner-wrapper">
-		<div class="item" v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
-			<control>
-				<component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props" />
-			</control>
-		</div>
+		<control :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
+			<component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props" />
+		</control>
 	</div>
 </template>
 
@@ -31,7 +29,8 @@
 		},
 		data() {
 			return {
-				datas: []
+				datas: [],
+				currentId: ''
 			}
 		},
 		mounted() {
@@ -53,6 +52,7 @@
 				return widgetlist.find((_data) => _data.wid === wid).component
 			},
 			eventSetCurrentControls(widget) {
+				this.currentId = widget.id
 				this.$source.send("widgetcontrol", widget.id)
 			}
 		}

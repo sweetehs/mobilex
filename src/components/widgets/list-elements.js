@@ -4,6 +4,7 @@ import xbutton from "./elements/xbutton"
 export default [{
   name: "布局",
   wid: "layout",
+  isWrapper: true,
   component: layout
 }, {
   name: "文字",

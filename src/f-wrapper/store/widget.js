@@ -14,6 +14,7 @@ export default {
         name: "布局",
         wid: "layout",
         id: "id294859",
+        isWrapper: true,
         controls: {
           style: {
             margin: "0 0 0 0",
@@ -28,6 +29,18 @@ export default {
         name: "按钮",
         wid: "xbutton",
         id: "id234859",
+        controls: {
+          style: {
+            margin: "10px 10px 10px 10px",
+            color: "#abcdef",
+            'background-color': "#000",
+          },
+          props: {}
+        }
+      }, {
+        name: "按钮",
+        wid: "xbutton",
+        id: "id234529",
         controls: {
           style: {
             margin: "10px 10px 10px 10px",
