@@ -2,10 +2,12 @@
   .editor-main-wrapper {
     height: 100%;
     display: flex;
-    >div:not(.editor-wrapper) {
-      flex: 1;
+    .ps-wrapper,.widgets-nav-wrapper{
+      width: 200px;
+      flex: none;
     }
     .editor-wrapper {
+      flex: none;
       width: 500px;
       flex-shrink: 0;
       background: #eee;
@@ -18,6 +20,9 @@
         height: 614px;
       }
     }
+    .controls-wrapper{
+      flex: 1;
+    }
   }
 </style>
 
@@ -29,7 +34,7 @@
       </ul>
     </div>
     <div class="ps-wrapper">
-      <Pstree :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+      <Pstree :isFirst="true" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
     </div>
     <div class="editor-wrapper">
       <div class="editor-inner">
