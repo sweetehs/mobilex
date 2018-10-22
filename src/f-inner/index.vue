@@ -1,6 +1,6 @@
 <template>
 	<div class="f-inner-wrapper">
-		<div v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
+		<div class="item" v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
 			<control>
 				<component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props" />
 			</control>
@@ -15,7 +15,7 @@
 	import {
 		clone
 	} from "@/util/util"
-
+	
 	const getMixinComponents = () => {
 		return {
 			components: widgetlist.reduce((r, n) => {
@@ -25,8 +25,8 @@
 		}
 	}
 	export default {
-		mixins:[getMixinComponents()],
-		components:{
+		mixins: [getMixinComponents()],
+		components: {
 			control
 		},
 		data() {

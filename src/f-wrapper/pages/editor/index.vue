@@ -6,20 +6,16 @@
       flex: 1;
     }
     .editor-wrapper {
-      width: 400px;
+      width: 600px;
       flex-shrink: 0;
       background: #eee;
       display: flex;
       align-items: center;
       justify-content: center;
-      .editor-inner {
-        background: #aaa;
-        width: 375px;
-        height: 614px;
-      }
       iframe {
         height: 100%;
-        width: 100%;
+        width: 375px;
+        height: 614px;
       }
     }
   }
@@ -27,14 +23,16 @@
 
 <template>
   <div class="editor-main-wrapper">
-    <div class="widgets-wrapper">
+    <div class="widgets-nav-wrapper">
       <ul>
         <li v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
       </ul>
     </div>
     <div class="editor-wrapper">
       <div class="editor-inner">
-        <iframe ref="editor" src="/?inner=true" frameborder="0"></iframe>
+        <Ioswrapper>
+          <iframe ref="editor" src="/?inner=true" frameborder="0"></iframe>
+        </Ioswrapper>
       </div>
     </div>
     <div class="controls-wrapper">
@@ -44,15 +42,17 @@
 </template>
 
 <script>
-  import Controls from "./controls"
   import postMessage from "@/util/postMessage"
+  import Controls from "./controls"
+  import Ioswrapper from "./ios"
   import {
     clone,
     randomId
   } from "@/util/util.js"
   export default {
     components: {
-      Controls
+      Controls,
+      Ioswrapper
     },
     data() {
       return {
