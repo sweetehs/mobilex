@@ -83,7 +83,7 @@ export default {
       loop(state.widget.datas,(data)=>{
         return data.id === state.currentWidget.id
       },(data)=>{
-        getData = clone(data)
+        getData = data
       })
       // 为了防止死循环，比较数据是否相等
       if (!compare(data, getData)) {

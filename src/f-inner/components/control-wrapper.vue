@@ -18,9 +18,7 @@
     props: ["datas", "currentId"],
     data() {
       return {
-        style: {
-  
-        }
+        style: {}
       }
     },
     mounted() {

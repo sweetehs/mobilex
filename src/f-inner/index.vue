@@ -36,10 +36,9 @@
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (widgetdata) => {
-				this.datas = widgetdata.datas
+				this.datas = clone(widgetdata.datas)
 			})
 			event.$on("setControl",(id)=>{
-				debugger
 				this.currentId = id
 				this.$source.send("widgetcontrol", id)
 			})
