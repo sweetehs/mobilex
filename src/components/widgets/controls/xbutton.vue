@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import mixin from "./mixin"
+  import mixin from "../mixin-control"
   export default {
     mixins: [mixin],
     data() {
