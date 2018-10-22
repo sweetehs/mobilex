@@ -7,8 +7,9 @@
 <script>
 	import Vue from "vue"
 	import widgetlist from "@/components/widgets/list-elements"
-	import controlwrapper from "./components/control-wrapper"
 	import postMessage from "@/util/postMessage"
+	import event from "./components/event"
+	import controlwrapper from "./components/control-wrapper"
 	import {
 		clone
 	} from "@/util/util"
@@ -37,6 +38,11 @@
 			this.$source.receive("widgetlist", (widgetdata) => {
 				this.datas = widgetdata.datas
 			})
+			event.$on("setControl",(id)=>{
+				debugger
+				this.currentId = id
+				this.$source.send("widgetcontrol", id)
+			})
 		},
 		methods: {
 			cloneWidgetRemoveComponent(data) {
@@ -46,10 +52,6 @@
 			},
 			getComponentById(wid) {
 				return widgetlist.find((_data) => _data.wid === wid).component
-			},
-			eventSetCurrentControls(widget) {
-				this.currentId = widget.id
-				this.$source.send("widgetcontrol", widget.id)
 			}
 		}
 	}

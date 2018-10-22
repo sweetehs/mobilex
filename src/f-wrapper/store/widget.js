@@ -1,7 +1,8 @@
 import {
   clone,
   compare,
-  extendDeep
+  extendDeep,
+  loop
 } from "@/util/util"
 export default {
   namespaced: true,
@@ -71,10 +72,19 @@ export default {
       state.widget.datas.push(widget)
     },
     setCur(state, id) {
-      state.currentWidget = clone(state.widget.datas.find((_data) => _data.id == id))
+      loop(state.widget.datas,(data)=>{
+        return data.id === id
+      },(data)=>{
+        state.currentWidget = clone(data)
+      })
     },
     update(state, data) {
-      let getData = state.widget.datas.find((_data) => _data.id == state.currentWidget.id)
+      let getData = ""
+      loop(state.widget.datas,(data)=>{
+        return data.id === state.currentWidget.id
+      },(data)=>{
+        getData = clone(data)
+      })
       // 为了防止死循环，比较数据是否相等
       if (!compare(data, getData)) {
         extendDeep(data, getData)

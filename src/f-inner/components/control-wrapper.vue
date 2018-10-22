@@ -1,6 +1,6 @@
 <template>
-  <div :style="style">
-    <control ref="control" :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i">
+  <div class="control-wrapper" :style="style">
+    <control ref="control" :id="item.id" :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i">
       <component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props">
         <controlwrapper :datas="item.children" :currentId="currentId"></controlwrapper>
       </component>
@@ -19,7 +19,7 @@
     data() {
       return {
         style: {
-          
+  
         }
       }
     },
@@ -27,7 +27,7 @@
       setTimeout(() => {
         const display = document.defaultView.getComputedStyle(this.$refs.control[0].$el).display
         this.$set(this.style, "display", display)
-      }, 0) 
+      }, 100)
     }
   }
 </script>

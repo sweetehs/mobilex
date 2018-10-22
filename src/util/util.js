@@ -7,6 +7,9 @@ export function randomId() {
 export function isObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]"
 }
+export function isArray(obj) {
+  return Object.prototype.toString.call(obj) === "[object Array]"
+}
 export function compare(data1, data2) {
   var flag = true
   for (var i in data1) {
@@ -28,4 +31,13 @@ export function extendDeep(data1, data2) {
       data2[i] = data1[i]
     }
   }
+}
+export function loop(arr, judge, callback) {
+  arr.forEach((data) => {
+    if (judge(data)) {
+      callback && callback(data)
+    } else if (isArray(data.children)) {
+      loop(data.children, judge, callback)
+    }
+  })
 }
