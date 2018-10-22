@@ -35,9 +35,9 @@
 </template>
 
 <script>
-  import Controlstyle from "./common/style"
-  import Controlbase from "./common/base"
-  import mixinlist from "./mixinlist"
+  import Controlstyle from "./style"
+  import Controlbase from "./base"
+  import mixinlist from "@/components/widgets/list-controls"
   import {
     clone
   } from "@/util/util"

@@ -20,7 +20,7 @@
   import {
     clone
   } from "@/util/util"
-  import mixin from "../mixin"
+  import mixin from "@/components/widgets/controls/mixin"
   export default {
     mixins: [mixin],
     data() {

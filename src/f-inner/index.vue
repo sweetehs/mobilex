@@ -9,8 +9,8 @@
 </template>
 
 <script>
-	import widgetlist from "./components/widgets/list"
-	import control from "./components/widgets/item-control"
+	import widgetlist from "@/components/widgets/list-elements"
+	import control from "./components/item-control"
 	import postMessage from "@/util/postMessage"
 	import {
 		clone

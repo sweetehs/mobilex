@@ -1,6 +1,6 @@
-import layout from "./common/layout"
-import xtext from "./common/xtext"
-import xbutton from "./common/xbutton"
+import layout from "./elements/layout"
+import xtext from "./elements/xtext"
+import xbutton from "./elements/xbutton"
 export default [{
   name: "布局",
   wid: "layout",
@@ -12,7 +12,7 @@ export default [{
 }, {
   name: "按钮",
   wid: "xbutton",
-  controls:{
+  controls: {
     style: {
       "background-color": "#eee",
       "color": "red"

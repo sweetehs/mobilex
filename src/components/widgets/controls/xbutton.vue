@@ -1,20 +1,19 @@
 <template>
   <div class="control-layout">
-  
+    
   </div>
 </template>
 
 <script>
-  import mixin from "../mixin"
+  import mixin from "./mixin"
   export default {
     mixins: [mixin],
     data() {
       return {
-        list: []
+        list: {}
       }
     },
     methods: {
-      $parseData() {},
       $reverseData() {}
     }
   }
