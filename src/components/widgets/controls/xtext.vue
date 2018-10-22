@@ -18,16 +18,6 @@
           text: ""
         }
       }
-    },
-    methods: {
-      $parseData(data) {
-        if(data){
-          this.list = data
-        }
-      },
-      $reverseData() {
-        return this.list
-      }
     }
   }
 </script>

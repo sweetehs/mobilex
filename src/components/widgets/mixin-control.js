@@ -15,7 +15,11 @@ export default {
     list: {
       deep: true,
       handler() {
-        this.$emit("change", this.$reverseData())
+        if(this.$reverseData){
+          this.$emit("change", this.$reverseData())
+        }else{
+          this.$emit("change", clone(this.list))
+        }
       }
     }
   },
