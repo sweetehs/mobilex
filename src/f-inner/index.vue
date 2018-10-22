@@ -1,15 +1,13 @@
 <template>
 	<div class="f-inner-wrapper">
-		<control :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i" @click="eventSetCurrentControls(item)">
-			<component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props" />
-		</control>
+		<controlwrapper :datas="datas||[]" :currentId="currentId"/>
 	</div>
 </template>
 
 <script>
 	import Vue from "vue"
 	import widgetlist from "@/components/widgets/list-elements"
-	import control from "./components/item-control"
+	import controlwrapper from "./components/control-wrapper"
 	import postMessage from "@/util/postMessage"
 	import {
 		clone
@@ -21,18 +19,9 @@
 		});
 	}
 	setGlobalComponents()
-	// const getMixinComponents = () => {
-	// 	return {
-	// 		components: widgetlist.reduce((r, n) => {
-	// 			r[n.wid] = n.component
-	// 			return r
-	// 		}, {})
-	// 	}
-	// }
 	export default {
-		// mixins: [getMixinComponents()],
 		components: {
-			control
+			controlwrapper
 		},
 		data() {
 			return {

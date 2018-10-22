@@ -24,7 +24,20 @@ export default {
             'border-radius': "10px"
           },
           props: {}
-        }
+        },
+        children: [{
+          name: "按钮",
+          wid: "xbutton",
+          id: "id246259",
+          controls: {
+            style: {
+              margin: "10px 10px 10px 10px",
+              color: "#abcdef",
+              'background-color': "#000",
+            },
+            props: {}
+          }
+        }]
       }, {
         name: "按钮",
         wid: "xbutton",
