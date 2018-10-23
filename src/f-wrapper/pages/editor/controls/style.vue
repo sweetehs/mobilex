@@ -1,7 +1,7 @@
 <template>
   <div class="control-style-wrapper">
     <el-form>
-      <el-form-item v-for="(item,i) in list" :key="i" :label="item.name" label-width="80px">
+      <el-form-item v-for="(item,i) in props" :key="i" :label="item.name" label-width="80px">
         <span v-if="item.values" class="fn-mr5" v-for="(item1,j) in item.values" :key="j">
           <el-input v-model="item1.value" class="small"></el-input>
         </span>
@@ -25,7 +25,7 @@
     mixins: [mixin],
     data() {
       return {
-        list: [{
+        props: [{
           name: "外边距",
           key: "margin",
           values: [{
@@ -115,13 +115,13 @@
     },
     methods: {
       setDefault() {
-        this.list.forEach((_data) => {
+        this.props.forEach((_data) => {
           _data.value = _data.default ? _data.default() : ''
         })
       },
       $parseData(bdata) {
         this.setDefault()
-        this.list.forEach((_data) => {
+        this.props.forEach((_data) => {
           let _style = bdata[_data.key]
           if (_style) {
             if (_data.parse) {
@@ -133,7 +133,7 @@
         })
       },
       $reverseData() {
-        return this.list.reduce((_data, next) => {
+        return this.props.reduce((_data, next) => {
           if (next.reverse) {
             _data[next.key] = next.reverse()
           } else {

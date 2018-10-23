@@ -14,7 +14,7 @@
     mixins: [mixin],
     data() {
       return {
-        list: {
+        props: {
           text: ""
         }
       }

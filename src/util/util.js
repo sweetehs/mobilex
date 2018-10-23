@@ -14,7 +14,7 @@ export function compare(data1, data2) {
   var flag = true
   for (var i in data1) {
     if (isObject(data1[i])) {
-      flag = compare(data1[i], data2[i])
+      flag = compare(data1[i], data2[i]||{})
     } else {
       if (data1[i] !== data2[i]) {
         flag = false
@@ -25,6 +25,9 @@ export function compare(data1, data2) {
 }
 export function extendDeep(data1, data2) {
   for (var i in data1) {
+    if(!data2[i]){
+      data2[i] = {}
+    }
     if (isObject(data1[i])) {
       extendDeep(data1[i], data2[i])
     } else {

@@ -12,13 +12,13 @@ export default {
         }
       }
     },
-    list: {
+    props: {
       deep: true,
       handler() {
         if(this.$reverseData){
-          this.$emit("change", this.$reverseData())
+          this.$emit("change", this.$reverseData(clone(this.props)))
         }else{
-          this.$emit("change", clone(this.list))
+          this.$emit("change", clone(this.props))
         }
       }
     }

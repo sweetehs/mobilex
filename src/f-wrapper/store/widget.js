@@ -12,26 +12,84 @@ export default {
       base: {
         name: "测试专题"
       },
-      datas: [
-        {
-        name: "布局",
-        wid: "layout",
-        id: "id294859",
-        isWrapper: true,
-        controls: {
-          style: {
-            margin: "0 0 0 0",
-            padding: "10px 10px 10px 10px",
-            color: "#abcdef",
-            'background-color': "#000",
-            'border-radius': "10px"
+      datas: [{
+          name: "布局",
+          wid: "layout",
+          id: "id294859",
+          isWrapper: true,
+          controls: {
+            style: {
+              margin: "0 0 0 0",
+              padding: "10px 10px 10px 10px",
+              color: "#abcdef",
+              'background-color': "#000",
+              'border-radius': "10px"
+            },
+            props: {
+            }
           },
-          props: {}
+          children: [{
+            name: "布局",
+            wid: "layout",
+            id: "id29485ed39",
+            isWrapper: true,
+            controls: {
+              style: {
+                margin: "0 0 0 0",
+                padding: "10px 10px 10px 10px",
+                color: "#abcdef",
+                'background-color': "#000",
+                'border-radius': "10px"
+              },
+              props: {}
+            },
+            children: [{
+              name: "按钮",
+              wid: "xbutton",
+              id: "id2443436259",
+              controls: {
+                style: {
+                  margin: "10px 10px 10px 10px",
+                  color: "#abcdef",
+                  'background-color': "#000",
+                },
+                props: {}
+              }
+            }]
+          }, {
+            name: "布局",
+            wid: "layout",
+            id: "id294f859",
+            isWrapper: true,
+            controls: {
+              style: {
+                margin: "0 0 0 0",
+                padding: "10px 10px 10px 10px",
+                color: "#abcdef",
+                'background-color': "#000",
+                'border-radius': "10px"
+              },
+              props: {}
+            },
+            children: [{
+              name: "按钮",
+              wid: "xbutton",
+              id: "id2462fd59",
+              controls: {
+                style: {
+                  margin: "10px 10px 10px 10px",
+                  color: "#abcdef",
+                  'background-color': "#000",
+                },
+                props: {}
+              }
+            }]
+          }]
         },
-        children: [{
+        {
           name: "按钮",
           wid: "xbutton",
-          id: "id246259",
+          id: "id234859",
           controls: {
             style: {
               margin: "10px 10px 10px 10px",
@@ -41,46 +99,19 @@ export default {
             props: {}
           }
         }, {
-          name: "文字",
-          wid: "xtext",
-          id: "id2584859",
+          name: "按钮",
+          wid: "xbutton",
+          id: "id234529",
           controls: {
             style: {
-              padding: "10px 10px 10px 10px",
+              margin: "10px 10px 10px 10px",
               color: "#abcdef",
               'background-color': "#000",
             },
-            props: {
-              text: "这是一段文字"
-            }
+            props: {}
           }
-        }]
-      }, 
-      {
-        name: "按钮",
-        wid: "xbutton",
-        id: "id234859",
-        controls: {
-          style: {
-            margin: "10px 10px 10px 10px",
-            color: "#abcdef",
-            'background-color': "#000",
-          },
-          props: {}
         }
-      }, {
-        name: "按钮",
-        wid: "xbutton",
-        id: "id234529",
-        controls: {
-          style: {
-            margin: "10px 10px 10px 10px",
-            color: "#abcdef",
-            'background-color': "#000",
-          },
-          props: {}
-        }
-      }]
+      ]
     },
     currentWidget: ""
   },

@@ -2,7 +2,7 @@
   <div class="control-base-wrapper">
     <el-form>
       <el-form-item label="名称" label-width="50px">
-        <el-input v-model="list.name"></el-input>
+        <el-input v-model="props.name"></el-input>
       </el-form-item>
     </el-form>
   </div>
@@ -14,7 +14,7 @@
     props: ["bdata"],
     data(){
       return {
-        list: {}
+        props: {}
       }
     },
     watch: {
@@ -24,7 +24,7 @@
           this.$parseData && this.$parseData(this.bdata)
         }
       },
-      list: {
+      props: {
         deep: true,
         handler() {
           this.$emit("change", this.$reverseData())
@@ -36,10 +36,10 @@
     },
     methods: {
       $parseData() {
-        this.list = clone(this.bdata)
+        this.props = clone(this.bdata)
       },
       $reverseData(){
-        return clone(this.list)
+        return clone(this.props)
       }
     }
   }

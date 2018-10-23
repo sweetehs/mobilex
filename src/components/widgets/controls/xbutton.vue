@@ -10,7 +10,7 @@
     mixins: [mixin],
     data() {
       return {
-        list: {}
+        props: {}
       }
     },
     methods: {
