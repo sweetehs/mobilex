@@ -2,29 +2,39 @@
   .editor-main-wrapper {
     height: 100%;
     display: flex;
-    .action-wrapper{
+    .action-wrapper {
+      flex-grow: 0;
       flex: 1;
       display: flex;
       flex-direction: column;
-      .nav-wrapper,.ps-wrapper{
+      .nav-wrapper,
+      .ps-wrapper {
         width: 100%;
         background: #fff;
         flex: 1;
-        header{
+        display: flex;
+        flex-direction: column;
+        >header {
           text-align: center;
+          flex-shrink: 0;
+          height: 40px;
           line-height: 40px;
           background: #333;
           color: #fff;
-          a{
+          a {
             float: right;
             margin-right: 10px;
             color: #fff;
           }
         }
+        >div{
+          flex: 1;
+          overflow: auto;
+        }
       }
-      .nav-wrapper{
-        ul{
-          li{
+      .nav-wrapper {
+        ul {
+          li {
             // line-height: 40px;
             display: inline-block;
             padding: 10px 10px;
@@ -33,10 +43,13 @@
             margin-right: 10px;
             border-radius: 4px;
             margin-top: 10px;
-            &.disabled{
+            &:hover {
+              cursor: pointer;
+            }
+            &.disabled {
               background: #eee;
               color: #fff;
-              &:hover{
+              &:hover {
                 cursor: not-allowed
               }
             }
@@ -70,17 +83,21 @@
       <div class="ps-wrapper">
         <header>
           <span>组件层级</span>
-          <a href="javascript:;" class="btn-add" @click="addRootItem">添加</a>
+          <a href="javascript:;" class="btn-add" @click="setRoot">添加</a>
         </header>
-        <Pstree :isFirst="true" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+        <div>
+          <Pstree :isFirst="true" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+        </div>
       </div>
       <div class="nav-wrapper">
         <header>
           <span>组件库</span>
         </header>
-        <ul>
-          <li :class="{disabled:!currentWidget.isWrapper}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
-        </ul>
+        <div>
+          <ul>
+            <li :class="{disabled:!currentIsWrapper}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="editor-wrapper">
@@ -129,12 +146,22 @@
     computed: {
       currentWidget() {
         return this.$store.state.$widget.currentWidget
+      },
+      currentIsWrapper() {
+        return this.currentWidget.isWrapper || this.currentWidget === ""
+      },
+      widgetList(){
+        return this.$store.state.$widget.widget.datas
       }
     },
     watch: {
       currentWidget() {
         // 当前current改变的时候通知内部
         this.$source.send("widgetcurrent", clone(this.currentWidget))
+      },
+      widgetList(){
+        // 当全局数据变化是通知内部组件变化
+        this.postWidgetListSend()
       }
     },
     mounted() {
@@ -152,15 +179,18 @@
       }, 1000)
     },
     methods: {
-      addRootItem(){
-        // 根部增加组件
-        this.showNav = true
+      setRoot() {
+        this.$store.dispatch("$widget/setCur", "")
       },
       postWidgetListSend() {
         // 发送list数据内部显示
         this.$source.send("widgetlist", this.$store.state.$widget.widget)
       },
       eventAddWidget(widget) {
+        // 不是wrapper不能增加组件
+        if (!this.currentIsWrapper) {
+          return
+        }
         // 增加一个组件
         let newWidget = Object.assign({
           id: randomId(),
@@ -169,9 +199,7 @@
             props: {}
           }
         }, clone(widget))
-        this.$store.dispatch("$widget/add", newWidget).then(() => {
-          this.postWidgetListSend()
-        })
+        this.$store.dispatch("$widget/add", newWidget)
       },
       peventUpdateById(data) {
         this.$store.dispatch("$widget/update", data).then(() => {

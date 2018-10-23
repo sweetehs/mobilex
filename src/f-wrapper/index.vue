@@ -6,9 +6,11 @@
 		.top-wrapper{
 			height: 60px;
 			background: #aaa;
+			flex-shrink: 0;
 		}
 		.bottom-wrapper{
 			flex: 1;
+			overflow: auto;
 		}
 	}
 </style>

@@ -1,29 +1,38 @@
 <style lang="less">
   .ps-tree-wrapper {
+    color: #333;
+    ul{
+      padding-left: 20px;
+      &.root{
+        padding-left: 0;
+      }
+    }
     li {
       line-height: 40px;
-      padding-left: 10px;
+      // padding-left: 20px;
       &:hover {
         cursor: default;
-      }
-      &.root {
-        padding-left: 0;
       }
       &.active {
         background: #48D1CC;
         color: #fff;
+        >.tree-item{
+          &>.action a{
+            color: #fff;
+          }
+        }
       }
       .name {
         padding-left: 10px;
-      }
-      &:not(:last-child) {
-        border-bottom: 1px solid #abc;
       }
       .tree-item {
         display: flex;
         justify-content: space-between;
         .action {
           margin-right: 10px;
+          a{
+            color: #333;
+          }
         }
       }
     }
@@ -32,17 +41,26 @@
 
 <template>
   <div class="ps-tree-wrapper">
-    <ul>
-      <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{active:(activedata && item.id === activedata.id),root:isFirst}">
+    <ul :class="{
+      root: isFirst
+    }">
+      <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{active:(activedata && item.id === activedata.id)}">
         <div class="tree-item">
-          <span class="name">{{item.name}}</span>
+          <div class="name">
+            <span class="fa" :class="{
+              'fa-folder': item.children,
+              'fa-file': !item.children,
+              'fa-folder-open': isOpens.indexOf(item.id) !== -1
+            }" @click="eventOpen($event,item)"></span>
+            <span>{{item.name}}</span>
+          </div>
           <div class="action">
             <!-- <a href="javascript:;" @add="eventAddItem(item)">添加</a> -->
-            <a href="javascript:;" @click="eventDeleteItem(item)">删除</a>
-            <a href="javascript:;" @click="eventCopyItem(item)">复制</a>
+            <a class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
+            <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
-        <treewrapper v-if="item.children && item.children.length !== 0" :datas="item.children" :activedata="activedata" />
+        <treewrapper v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" :activedata="activedata" />
       </li>
     </ul>
   </div>
@@ -52,13 +70,29 @@
   export default {
     name: "treewrapper",
     props: ["isFirst", "datas", "activedata"],
+    data(){
+      return {
+        isOpens: []
+      }
+    },
     methods: {
       setCurrent(e, data) {
         this.$store.dispatch("$widget/setCur", data.id)
         e.stopPropagation()
       },
-      eventAddItem(data) {},
-      eventDeleteItem(data) {},
+      eventOpen(e, data){
+        let index = this.isOpens.indexOf(data.id)
+        if(index !== -1){
+          this.isOpens.splice(index, 1)
+        }else{
+          this.isOpens.push(data.id)
+        }
+        e.stopPropagation()
+      },
+      eventDeleteItem(e, data) {
+        this.$store.dispatch("$widget/deletei", data.id)
+        e.stopPropagation()
+      },
       eventCopyItem(data) {}
     }
   }

@@ -1,3 +1,4 @@
+import Vue from "vue"
 import {
   clone,
   compare,
@@ -11,7 +12,8 @@ export default {
       base: {
         name: "测试专题"
       },
-      datas: [{
+      datas: [
+        {
         name: "布局",
         wid: "layout",
         id: "id294859",
@@ -53,7 +55,8 @@ export default {
             }
           }
         }]
-      }, {
+      }, 
+      {
         name: "按钮",
         wid: "xbutton",
         id: "id234859",
@@ -83,20 +86,36 @@ export default {
   },
   mutations: {
     add(state, widget) {
-      state.widget.datas.push(widget)
+      if (state.currentWidget && state.currentWidget.isWrapper) {
+        let getData = ""
+        loop(state.widget.datas, (data) => {
+          return data.id === state.currentWidget.id
+        }, (data) => {
+          getData = data
+        })
+        getData.children.push(widget)
+        state.widget.datas = clone(state.widget.datas)
+      } else {
+        state.widget.datas.push(widget)
+      }
     },
     setCur(state, id) {
-      loop(state.widget.datas,(data)=>{
-        return data.id === id
-      },(data)=>{
-        state.currentWidget = clone(data)
-      })
+      if (id) {
+        loop(state.widget.datas, (data) => {
+          return data.id === id
+        }, (data) => {
+          state.currentWidget = clone(data)
+        })
+      } else {
+        // 在根路径上
+        state.currentWidget = ""
+      }
     },
     update(state, data) {
       let getData = ""
-      loop(state.widget.datas,(data)=>{
+      loop(state.widget.datas, (data) => {
         return data.id === state.currentWidget.id
-      },(data)=>{
+      }, (data) => {
         getData = data
       })
       // 为了防止死循环，比较数据是否相等
@@ -109,6 +128,14 @@ export default {
       if (JSON.stringify(state.widget.base) !== JSON.stringify(data.base)) {
         Object.assign(state.widget, data)
       }
+    },
+    deletei(state, id) {
+      loop(state.widget.datas, (data) => {
+        return data.id === id
+      }, (data, index, list) => {
+        list.splice(index, 1)
+      })
+      state.widget.datas = clone(state.widget.datas)
     }
   },
   actions: {
@@ -123,6 +150,9 @@ export default {
     },
     updateBase(context, data) {
       context.commit('updateBase', data)
+    },
+    deletei(context, id) {
+      context.commit('deletei', id)
     }
   }
 }

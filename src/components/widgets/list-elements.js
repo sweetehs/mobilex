@@ -5,6 +5,12 @@ export default [{
   name: "布局",
   wid: "layout",
   isWrapper: true,
+  children: [],
+  controls: {
+    style: {
+      padding: "10px 10px 10px 10px"
+    }
+  },
   component: layout
 }, {
   name: "文字",

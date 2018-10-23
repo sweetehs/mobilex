@@ -33,9 +33,9 @@ export function extendDeep(data1, data2) {
   }
 }
 export function loop(arr, judge, callback) {
-  arr.forEach((data) => {
+  arr.forEach((data, index) => {
     if (judge(data)) {
-      callback && callback(data)
+      callback && callback(data, index, arr)
     } else if (isArray(data.children)) {
       loop(data.children, judge, callback)
     }
