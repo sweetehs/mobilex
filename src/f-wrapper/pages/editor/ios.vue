@@ -7,6 +7,7 @@
   position: relative;
   .ios-inner{
     background-color: #eee;
+    box-shadow: 0 0 4px #eee;
   }
   .ios-radius{
     height: 35px;
@@ -19,13 +20,14 @@
     left: 50%;
     transform: translate(-50%,0);
     box-shadow: 0 0 5px #888 inset;
+    border: 3px solid #888;
   }
   .ios-top{
     width: 100px;
-    height: 6px;
+    height: 4px;
     border-radius: 6px;
-    // box-shadow: 0 0 8px #888;
     background: #888;
+    box-shadow: 0 0 5px #888;
     position: absolute;
     top: 0px;
     left: 50%;

@@ -33,6 +33,7 @@
           margin-right: 10px;
           a{
             color: @fontColor;
+            margin-right: 6px;
           }
         }
       }
