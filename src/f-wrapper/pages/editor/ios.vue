@@ -20,11 +20,27 @@
     transform: translate(-50%,0);
     box-shadow: 0 0 5px #888 inset;
   }
+  .ios-top{
+    width: 100px;
+    height: 6px;
+    border-radius: 6px;
+    // box-shadow: 0 0 8px #888;
+    background: #888;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%,0);
+    top: 30px;
+  }
 }
 </style>
 >
 <template>
   <div class="ios-wrapper">
+    <div class="ios-top">
+      <i></i>
+      <span></span>
+    </div>
     <div class="ios-inner">
       <slot></slot>
     </div>

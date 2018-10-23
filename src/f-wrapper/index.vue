@@ -17,7 +17,7 @@
 
 <template>
   <div class="f-wrapper-wrapper">
-		<div class="top-wrapper"></div>
+		<!-- <div class="top-wrapper"></div> -->
 		<div class="bottom-wrapper">
 			<router-view/>
 		</div>

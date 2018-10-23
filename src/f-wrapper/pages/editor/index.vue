@@ -2,15 +2,18 @@
   .editor-main-wrapper {
     height: 100%;
     display: flex;
-    .action-wrapper {
-      flex-grow: 0;
+    .action-wrapper,.controls-wrapper {
+      background: rgb(77,77,77);
       flex: 1;
+      min-width: 200px;
+      flex-shrink: 0;
+    }
+    .action-wrapper {
+      // background: rgb(77,77,77);
       display: flex;
       flex-direction: column;
       .nav-wrapper,
       .ps-wrapper {
-        width: 100%;
-        background: #fff;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -38,8 +41,8 @@
             // line-height: 40px;
             display: inline-block;
             padding: 10px 10px;
-            background: #abc;
-            color: #333;
+            background: rgb(107,107,107);
+            color: rgb(221,221,221);
             margin-right: 10px;
             border-radius: 4px;
             margin-top: 10px;
@@ -47,8 +50,8 @@
               cursor: pointer;
             }
             &.disabled {
-              background: #eee;
-              color: #fff;
+              background: rgb(83,83,83);
+              color: rgb(130,130,130);
               &:hover {
                 cursor: not-allowed
               }
@@ -61,7 +64,7 @@
       flex: none;
       width: 500px;
       flex-shrink: 0;
-      background: #eee;
+      background: rgb(40,40,40);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -70,9 +73,6 @@
         width: 375px;
         height: 614px;
       }
-    }
-    .controls-wrapper {
-      flex: 1;
     }
   }
 </style>
@@ -118,6 +118,7 @@
   import Controls from "./controls"
   import Pstree from "./pstree"
   import Ioswrapper from "./ios"
+  import "@/assets/less/wrapper-element.less"
   import {
     clone,
     randomId

@@ -34,7 +34,7 @@
     },
     methods: {
       $parseData(props) {
-        if (props.flex) {
+        if (props && props.flex) {
           const {
             display
           } = props.flex

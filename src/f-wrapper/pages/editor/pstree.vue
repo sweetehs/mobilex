@@ -1,6 +1,8 @@
 <style lang="less">
   .ps-tree-wrapper {
-    color: #333;
+    @fontColor: rgb(221,221,221);
+    color: @fontColor;
+    font-size: 12px;
     ul{
       padding-left: 20px;
       &.root{
@@ -8,13 +10,12 @@
       }
     }
     li {
-      line-height: 40px;
-      // padding-left: 20px;
+      line-height: 30px;
       &:hover {
         cursor: default;
       }
       &.active {
-        background: #48D1CC;
+        background: rgb(107,107,107);
         color: #fff;
         >.tree-item{
           &>.action a{
@@ -31,7 +32,7 @@
         .action {
           margin-right: 10px;
           a{
-            color: #333;
+            color: @fontColor;
           }
         }
       }
