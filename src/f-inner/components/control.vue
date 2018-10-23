@@ -32,6 +32,7 @@
 <script>
   import event from "./event"
   export default {
+    name: "control",
     props: ["id"],
     data() {
       return {

@@ -1,6 +1,6 @@
 <template>
   <div class="control-wrapper" :style="style">
-    <control ref="control" :id="item.id" :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i">
+    <control ref="control" :class="item.id == currentId ? 'active' : ''" v-for="(item,i) in datas" :key="i">
       <component :is="item.wid" :style="item.controls.style" v-bind="item.controls.props">
         <controlwrapper :datas="item.children" :currentId="currentId"></controlwrapper>
       </component>

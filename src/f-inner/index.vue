@@ -1,6 +1,7 @@
 <template>
 	<div class="f-inner-wrapper">
-		<controlwrapper :datas="datas||[]" :currentId="currentId" />
+		<!-- <controlwrapper :datas="datas||[]" :currentId="currentId" /> -->
+		<controlwrappero :datas="datas||[]" :currentId="currentId"/>
 	</div>
 </template>
 
@@ -10,6 +11,7 @@
 	import postMessage from "@/util/postMessage"
 	import event from "./components/event"
 	import controlwrapper from "./components/control-wrapper"
+	import controlwrappero from "./components/control-wrapper-o"
 	import {
 		clone
 	} from "@/util/util"
@@ -22,7 +24,8 @@
 	setGlobalComponents()
 	export default {
 		components: {
-			controlwrapper
+			controlwrapper,
+			controlwrappero
 		},
 		data() {
 			return {

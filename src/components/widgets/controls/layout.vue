@@ -34,7 +34,6 @@
     },
     methods: {
       $parseData(props) {
-        debugger
         if (props.flex) {
           const {
             display
