@@ -1,6 +1,5 @@
 <template>
   <div class="widget-layout-wrapper">
-    layout
     <slot></slot>
   </div>
 </template>

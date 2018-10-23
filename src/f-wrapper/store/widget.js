@@ -38,6 +38,20 @@ export default {
             },
             props: {}
           }
+        }, {
+          name: "文字",
+          wid: "xtext",
+          id: "id2584859",
+          controls: {
+            style: {
+              padding: "10px 10px 10px 10px",
+              color: "#abcdef",
+              'background-color': "#000",
+            },
+            props: {
+              text: "这是一段文字"
+            }
+          }
         }]
       }, {
         name: "按钮",
