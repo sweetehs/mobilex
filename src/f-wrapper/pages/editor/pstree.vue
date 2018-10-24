@@ -64,7 +64,7 @@
           <div class="action">
             <a v-if="copyWidget && item.isWrapper && copyWidget.id !== item.id" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
             <a class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
-            <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a>
+            <!-- <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a> -->
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>

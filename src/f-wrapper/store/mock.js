@@ -13,7 +13,7 @@ export default {
         "margin": "0 0 0 0",
         "padding": "10px 10px 10px 10px",
         "color": "#abcdef",
-        'background-color': "#000",
+        'background-color': "#4d4d4d",
         'border-radius': "10px"
       },
       props: {}
@@ -29,7 +29,7 @@ export default {
           "margin": "0 0 0 0",
           "padding": "10px 10px 10px 10px",
           "color": "#abcdef",
-          'background-color': "#000",
+          'background-color': "#4d4d4d",
           'border-radius': "10px"
         },
         props: {}
@@ -43,7 +43,7 @@ export default {
             "display": "inline-block",
             "margin": "10px 10px 10px 10px",
             "color": "#abcdef",
-            'background-color': "#000",
+            'background-color': "#4d4d4d",
           },
           props: {}
         }
@@ -59,7 +59,7 @@ export default {
           "margin": "0 0 0 0",
           "padding": "10px 10px 10px 10px",
           "color": "#abcdef",
-          'background-color': "#000",
+          'background-color': "#4d4d4d",
           'border-radius': "10px"
         },
         props: {}
@@ -73,7 +73,6 @@ export default {
             "display": "inline-block",
             "margin": "10px 10px 10px 10px",
             "color": "#abcdef",
-            'background-color': "#000",
           },
           props: {}
         }

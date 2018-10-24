@@ -34,11 +34,12 @@
       .ps-wrapper {
         .tree-root {
           color: rgb(221, 221, 221);
-          line-height: 40px;
+          line-height: 35px;
           border-bottom: 1px solid rgb(69, 69, 69);
           padding-left: 10px;
           display: flex;
           justify-content: space-between;
+          font-size: 14px;
           &.active {
             background: rgb(107, 107, 107);
             color: #fff;
