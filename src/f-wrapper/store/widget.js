@@ -3,7 +3,8 @@ import {
   clone,
   compare,
   extendDeep,
-  loop
+  loop,
+  randomId
 } from "@/util/util"
 import mockData from "./mock"
 export default {
@@ -81,15 +82,29 @@ export default {
       state.widget.datas = clone(state.widget.datas)
     },
     setCopy(state, id) {
-      if(id){
+      if (id) {
         loop(state.widget.datas, (data) => {
           return data.id === id
         }, (data) => {
           state.currentCopy = clone(data)
         })
-      }else{
+      } else {
         state.currentCopy = ""
       }
+    },
+    setPaste(state, id) {
+      loop(state.widget.datas, (data) => {
+        return data.id === id
+      }, (data) => {
+        let currentCopy = clone(state.currentCopy)
+        currentCopy.id = randomId()
+        // 遍历每个元素重新设置ID
+        loop(currentCopy.children, () => true, (_data) => {
+          _data.id = randomId()
+        })
+        data.children.push(currentCopy)
+        state.currentCopy = ""
+      })
     }
   },
   actions: {
@@ -110,6 +125,9 @@ export default {
     },
     setCopy(context, id) {
       context.commit('setCopy', id)
+    },
+    setPaste(context, id) {
+      context.commit('setPaste', id)
     }
   }
 }

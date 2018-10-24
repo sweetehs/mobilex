@@ -2,7 +2,7 @@ export function clone(data) {
   return JSON.parse(JSON.stringify(data))
 }
 export function randomId() {
-  return "id" + parseInt(Math.random() * 100000)
+  return "id" + parseInt(Math.random() * 100000000000)
 }
 export function isObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]"
@@ -36,6 +36,9 @@ export function extendDeep(data1, data2) {
   }
 }
 export function loop(arr, judge, callback, parent) {
+  if(!arr){
+    return 
+  }
   arr.forEach((data, index) => {
     if (judge(data)) {
       callback && callback(data, index, arr, parent)

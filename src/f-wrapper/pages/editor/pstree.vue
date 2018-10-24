@@ -62,7 +62,7 @@
             <span>{{item.name}}</span>
           </div>
           <div class="action">
-            <!-- <a class="fa fa-paste" href="javascript:;" @click="eventCopyItem(item)"></a> -->
+            <a v-if="copyWidget && item.isWrapper && copyWidget.id !== item.id" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
             <a class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
             <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a>
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
@@ -111,6 +111,9 @@
       },
       eventCopyItem(data) {
         this.$store.dispatch("$widget/setCopy", data.id)
+      },
+      eventPasteItem(data){
+        this.$store.dispatch("$widget/setPaste", data.id)
       },
       eventCutItem(data){}
     }
