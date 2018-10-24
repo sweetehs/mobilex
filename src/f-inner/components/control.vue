@@ -8,17 +8,17 @@
       left: 0;
       top: 0;
       box-sizing: border-box;
-      border: 1px solid #eee;
+      border: 1px dashed #eee;
       overflow: hidden;
     }
     &.hover {
       >.overlay{
-        border: 4px dashed #e12134;
+        border: 2px dashed #e12134;
       }
     }
     &.active{
        >.overlay {
-        border: 4px dashed #48D1CC;
+        border: 2px dashed #48D1CC;
       }
     }
   }

@@ -28,6 +28,8 @@
             float: right;
             margin-right: 10px;
             color: #fff;
+            margin-top: 12px;
+            font-size: 16px;
           }
         }
         >div{
@@ -83,10 +85,10 @@
       <div class="ps-wrapper">
         <header>
           <span>组件层级</span>
-          <a href="javascript:;" class="btn-add" @click="setRoot">添加</a>
+          <a href="javascript:;" class="fa fa-plus btn-add" @click="setRoot"></a>
         </header>
         <div>
-          <Pstree :isFirst="true" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+          <Pstree :index="1" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
         </div>
       </div>
       <div class="nav-wrapper">
@@ -149,7 +151,6 @@
         return this.$store.state.$widget.currentWidget
       },
       currentIsWrapper() {
-        debugger
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
       widgetList(){
