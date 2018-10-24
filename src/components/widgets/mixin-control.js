@@ -6,7 +6,7 @@ export default {
       deep: true,
       handler() {
         if(!this.$parseData){
-          this.list = clone(this.bdata)
+          this.props = clone(this.bdata)
         }else{
           this.$parseData(clone(this.bdata))
         }
@@ -15,7 +15,6 @@ export default {
     props: {
       deep: true,
       handler() {
-        debugger
         if(this.$reverseData){
           this.$emit("change", this.$reverseData(clone(this.props)))
         }else{
@@ -25,6 +24,6 @@ export default {
     }
   },
   created(){
-    this.$parseData && this.$parseData(this.bdata)
+    this.$parseData && this.$parseData(clone(this.bdata))
   }
 }

@@ -69,7 +69,6 @@
         })
       },
       peventChangePropsData(data) {
-        debugger
         this.$emit("change", {
           controls: {
             props: clone(data)
@@ -78,7 +77,7 @@
       },
       peventChangeBaseData(data) {
         this.$emit("changeBase", {
-          base: data
+          base: clone(data)
         })
       }
     }
