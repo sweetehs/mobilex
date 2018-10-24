@@ -123,6 +123,10 @@ export default {
               tempData.controls.temp.parentFlex = true
             }
           }
+          if(!data.isWrapper){
+            // 禁止显示disable:flex
+            tempData.controls.temp.disabledFlex = true
+          }
           state.currentWidget = tempData
         })
       } else {

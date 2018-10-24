@@ -31,7 +31,10 @@
         name: "布局",
         key: "display",
         value: "",
-        radio: ["flex", "block", "inline-block"]
+        radio: ["flex", "block", "inline-block"],
+        default(){
+          this.radio = ["flex", "block", "inline-block"]
+        }
       }, {
         name: "flex值",
         key: "flex",
@@ -149,6 +152,11 @@
               _data.disabled = false
             }else{
               _data.disabled = true
+            }
+          }
+          if(_data.key === "display"){
+            if(this.tdata.disabledFlex){
+              _data.radio = _data.radio.filter((data)=>data !== "flex")
             }
           }
           let _style = bdata[_data.key]
