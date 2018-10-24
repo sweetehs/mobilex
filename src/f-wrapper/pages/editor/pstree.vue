@@ -46,7 +46,10 @@
     <ul :class="{
           root: index === 1
         }">
-      <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{active:(activedata && item.id === activedata.id)}">
+      <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{
+        active:(currentWidget && item.id === currentWidget.id),
+        'is-copy': (copyWidget && item.id === copyWidget.id)
+      }">
         <div class="tree-item" :class="{folder:item.children}">
           <div class="name" :style="{
               'paddingLeft': (index === 1 ? 10 : index*15)+'px'
@@ -65,7 +68,7 @@
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
-        <treewrapper :index="index+1" v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" :activedata="activedata" />
+        <treewrapper :index="index+1" v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" />
       </li>
     </ul>
   </div>
@@ -74,10 +77,18 @@
 <script>
   export default {
     name: "treewrapper",
-    props: ["index", "datas", "activedata"],
+    props: ["index", "datas"],
     data() {
       return {
         isOpens: []
+      }
+    },
+    computed: {
+      currentWidget(){
+        return this.$store.state.$widget.currentWidget
+      },
+      copyWidget(){
+        return this.$store.state.$widget.currentCopy
       }
     },
     methods: {
@@ -98,7 +109,9 @@
         this.$store.dispatch("$widget/deletei", data.id)
         e.stopPropagation()
       },
-      eventCopyItem(data) {},
+      eventCopyItem(data) {
+        this.$store.dispatch("$widget/setCopy", data.id)
+      },
       eventCutItem(data){}
     }
   }

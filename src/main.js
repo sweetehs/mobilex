@@ -10,6 +10,7 @@ import store from "Wrapper/store"
 
 import "@/assets/less/reset.less"
 import "@/assets/less/fn.less"
+import "@/assets/less/common.less"
 import "@/assets/lib/font-awesome/css/font-awesome.min.css"
 
 Vue.config.productionTip = false

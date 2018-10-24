@@ -5,93 +5,13 @@ import {
   extendDeep,
   loop
 } from "@/util/util"
+import mockData from "./mock"
 export default {
   namespaced: true,
   state: {
-    widget: {
-      base: {
-        name: "测试专题"
-      },
-      datas: [{
-        name: "布局",
-        wid: "layout",
-        id: "id294859",
-        isWrapper: true,
-        controls: {
-          style: {
-            "display": "block",
-            "margin": "0 0 0 0",
-            "padding": "10px 10px 10px 10px",
-            "color": "#abcdef",
-            'background-color': "#000",
-            'border-radius': "10px"
-          },
-          props: {}
-        },
-        children: [{
-          name: "布局",
-          wid: "layout",
-          id: "id29485ed39",
-          isWrapper: true,
-          controls: {
-            style: {
-              "display": "block",
-              "margin": "0 0 0 0",
-              "padding": "10px 10px 10px 10px",
-              "color": "#abcdef",
-              'background-color': "#000",
-              'border-radius': "10px"
-            },
-            props: {}
-          },
-          children: [{
-            name: "按钮",
-            wid: "xbutton",
-            id: "id2443436259",
-            controls: {
-              style: {
-                "display": "inline-block",
-                "margin": "10px 10px 10px 10px",
-                "color": "#abcdef",
-                'background-color': "#000",
-              },
-              props: {}
-            }
-          }]
-        }, {
-          name: "布局",
-          wid: "layout",
-          id: "id294f859",
-          isWrapper: true,
-          controls: {
-            style: {
-              "display": "block",
-              "margin": "0 0 0 0",
-              "padding": "10px 10px 10px 10px",
-              "color": "#abcdef",
-              'background-color': "#000",
-              'border-radius': "10px"
-            },
-            props: {}
-          },
-          children: [{
-            name: "按钮",
-            wid: "xbutton",
-            id: "id2462fd59",
-            controls: {
-              style: {
-                "display": "inline-block",
-                "margin": "10px 10px 10px 10px",
-                "color": "#abcdef",
-                'background-color': "#000",
-              },
-              props: {}
-            }
-          }]
-        }]
-      }]
-    },
-    currentWidget: ""
+    widget: mockData,
+    currentWidget: "",
+    currentCopy: ""
   },
   mutations: {
     add(state, widget) {
@@ -114,16 +34,16 @@ export default {
           return data.id === id
         }, (data, index, arr, parent) => {
           const tempData = clone(data)
-          if(!tempData.controls.temp){
+          if (!tempData.controls.temp) {
             tempData.controls.temp = {}
           }
           // 特殊处理 如果parent是flex,则显示flex值得框
-          if(parent){
-            if(parent.controls.style.display && parent.controls.style.display === "flex"){
+          if (parent) {
+            if (parent.controls.style.display && parent.controls.style.display === "flex") {
               tempData.controls.temp.parentFlex = true
             }
           }
-          if(!data.isWrapper){
+          if (!data.isWrapper) {
             // 禁止显示disable:flex
             tempData.controls.temp.disabledFlex = true
           }
@@ -159,6 +79,17 @@ export default {
         list.splice(index, 1)
       })
       state.widget.datas = clone(state.widget.datas)
+    },
+    setCopy(state, id) {
+      if(id){
+        loop(state.widget.datas, (data) => {
+          return data.id === id
+        }, (data) => {
+          state.currentCopy = clone(data)
+        })
+      }else{
+        state.currentCopy = ""
+      }
     }
   },
   actions: {
@@ -176,6 +107,9 @@ export default {
     },
     deletei(context, id) {
       context.commit('deletei', id)
+    },
+    setCopy(context, id) {
+      context.commit('setCopy', id)
     }
   }
 }

@@ -88,7 +88,7 @@
           <a href="javascript:;" class="fa fa-plus btn-add" @click="setRoot"></a>
         </header>
         <div>
-          <Pstree :index="1" :datas="$store.state.$widget.widget.datas" :activedata="$store.state.$widget.currentWidget" />
+          <Pstree :index="1" :datas="$store.state.$widget.widget.datas"/>
         </div>
       </div>
       <div class="nav-wrapper">
@@ -150,6 +150,9 @@
       currentWidget() {
         return this.$store.state.$widget.currentWidget
       },
+      copyWidget(){
+        return this.$store.state.$widget.currentCopy
+      },
       currentIsWrapper() {
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
@@ -161,6 +164,9 @@
       currentWidget() {
         // 当前current改变的时候通知内部
         this.$source.send("widgetcurrent", clone(this.currentWidget))
+      },
+      copyWidget(){
+        this.$source.send("widgetcopy", clone(this.copyWidget))
       },
       widgetList(){
         // 当全局数据变化是通知内部组件变化
@@ -184,6 +190,7 @@
     methods: {
       setRoot() {
         this.$store.dispatch("$widget/setCur", "")
+        this.$store.dispatch("$widget/setCopy", "")
       },
       postWidgetListSend() {
         // 发送list数据内部显示

@@ -1,7 +1,7 @@
 <template>
 	<div class="f-inner-wrapper">
 		<!-- <controlwrapper :datas="datas||[]" :currentId="currentId" /> -->
-		<controlwrappero :datas="datas||[]" :currentId="currentId"/>
+		<controlwrappero :datas="datas||[]" :currentId="currentId" :copyId="copyId"/>
 	</div>
 </template>
 
@@ -30,7 +30,8 @@
 		data() {
 			return {
 				datas: [],
-				currentId: ''
+				currentId: '',
+				copyId: ''
 			}
 		},
 		mounted() {
@@ -43,6 +44,9 @@
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {
 				this.currentId = currentwidget.id
+			})
+			this.$source.receive("widgetcopy", (copyWidget)=>{
+				this.copyId = copyWidget.id
 			})
 			event.$on("setControl", (id) => {
 				this.$source.send("widgetcontrol", id)

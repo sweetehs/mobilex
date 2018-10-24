@@ -8,7 +8,8 @@ export default {
     datas: {
       type: Array
     },
-    currentId: {}
+    currentId: {},
+    copyId: {}
   },
   render(h, context) {
     const loop = (arr) => {
@@ -26,7 +27,8 @@ export default {
         }
         return h(control, {
           class: {
-            active: data.id === context.props.currentId
+            active: data.id === context.props.currentId,
+            "is-copy": data.id === context.props.copyId
           },
           props:{
             id: data.id
