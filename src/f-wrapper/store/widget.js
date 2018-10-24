@@ -30,6 +30,7 @@ export default {
       }
     },
     setCur(state, id) {
+      debugger
       if (id) {
         loop(state.widget.datas, (data) => {
           return data.id === id
@@ -56,7 +57,6 @@ export default {
       }
     },
     update(state, data) {
-      debugger
       let getData = ""
       loop(state.widget.datas, (data) => {
         return data.id === state.currentWidget.id

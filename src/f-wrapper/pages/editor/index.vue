@@ -207,6 +207,7 @@
       })
       // 得到当前widgetcontrol
       this.$source.receive('widgetcontrol', (id) => {
+        debugger
         this.$store.dispatch("$widget/setCur", id)
       })
       setTimeout(() => {
@@ -242,7 +243,6 @@
         e.stopPropagation()
       },
       peventUpdateById(data) {
-        debugger
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
         })

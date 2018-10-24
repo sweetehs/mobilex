@@ -20,6 +20,8 @@
 
 <template>
   <div class="controls-inner">
+    {{currentWidget.controls.props}}
+    {{currentWidget.wid}}
     <el-tabs v-model="tabIndex">
       <el-tab-pane label="基础" name="0">
         <Controlbase @change="peventChangeBaseData" :bdata="baseData" />
@@ -28,7 +30,7 @@
         <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" :tdata="currentWidget.controls.temp"/>
       </el-tab-pane>
       <el-tab-pane label="个性化" name="2" v-if="currentWidget ? true : false">
-        <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="currentWidget.controls.props||{}" />
+        <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="(currentWidget) ? currentWidget.controls.props : {}" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -54,6 +56,7 @@
     },
     computed: {
       currentWidget() {
+        debugger
         return this.$store.state.$widget.currentWidget
       },
       baseData() {

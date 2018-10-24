@@ -1,13 +1,16 @@
-import { clone } from "@/util/util"
+import {
+  clone
+} from "@/util/util"
 export default {
   props: ["bdata"],
   watch: {
     bdata: {
       deep: true,
       handler() {
-        if(!this.$parseData){
+        debugger
+        if (!this.$parseData) {
           this.props = clone(this.bdata)
-        }else{
+        } else {
           this.$parseData(clone(this.bdata))
         }
       }
@@ -15,15 +18,15 @@ export default {
     props: {
       deep: true,
       handler() {
-        if(this.$reverseData){
+        if (this.$reverseData) {
           this.$emit("change", this.$reverseData(clone(this.props)))
-        }else{
+        } else {
           this.$emit("change", clone(this.props))
         }
       }
     }
   },
-  created(){
+  created() {
     this.$parseData && this.$parseData(clone(this.bdata))
   }
 }

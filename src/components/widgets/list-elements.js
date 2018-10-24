@@ -1,6 +1,7 @@
 import layout from "./elements/layout"
 import xtext from "./elements/xtext"
 import xbutton from "./elements/xbutton"
+import ximage from "./elements/ximage"
 /*
   默认一定要写的属性
   style: {
@@ -37,4 +38,13 @@ export default [{
     }
   },
   component: xbutton
+}, {
+  name: "图片",
+  wid: "ximage",
+  controls: {
+    style: {
+      "display": "inline-block"
+    }
+  },
+  component: ximage
 }]

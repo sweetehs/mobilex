@@ -80,19 +80,56 @@
 //     }]
 //   }]
 // }
+//-----------------------------------------------------------------------------------------------------
+// {
+//   name: "文字",
+//   wid: "xtext",
+//   id: "id2462fd59",
+//   controls: {
+//     style: {
+//       "display": "inline-block",
+//       "margin": "10px 10px 10px 10px",
+//       "color": "#abcdef",
+//     },
+//     props: {}
+//   }
+// }
+//-----------------------------------------------------------------------------------------------------
 export default {
-  base:{},
+  base: {},
   datas: [{
-    name: "文字",
-    wid: "xtext",
-    id: "id2462fd59",
-    controls: {
-      style: {
-        "display": "inline-block",
-        "margin": "10px 10px 10px 10px",
-        "color": "#abcdef",
-      },
-      props: {}
+      name: "图片",
+      wid: "ximage",
+      id: "id2462fd59",
+      controls: {
+        style: {
+          "display": "inline-block",
+          "margin": "10px 10px 10px 10px",
+          "color": "#abcdef",
+          "width": "100px",
+          "height": "100px",
+          "border-radius": "100px"
+        },
+        props: {
+          url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
+        }
+      }
+    },
+
+    {
+      name: "文字",
+      wid: "xtext",
+      id: "id2462fd5ff9",
+      controls: {
+        style: {
+          "display": "inline-block",
+          "margin": "10px 10px 10px 10px",
+          "color": "#abcdef",
+        },
+        props: {
+          text: "test"
+        }
+      }
     }
-  }]
+  ]
 }
