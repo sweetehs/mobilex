@@ -8,6 +8,8 @@
       left: 0;
       top: 0;
       box-sizing: border-box;
+      border: 1px solid #eee;
+      overflow: hidden;
     }
     &.hover {
       >.overlay{
@@ -40,10 +42,6 @@
         style: {},
         isHover: false
       }
-    },
-    mounted() {
-      const display = getComputedStyle(this.$children[0].$el).display
-      this.$set(this.style, "display", display)
     },
     methods: {
       eventItemClick(e) {

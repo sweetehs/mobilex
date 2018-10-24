@@ -149,6 +149,7 @@
         return this.$store.state.$widget.currentWidget
       },
       currentIsWrapper() {
+        debugger
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
       widgetList(){

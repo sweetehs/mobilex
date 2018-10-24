@@ -13,9 +13,25 @@ export default {
         name: "测试专题"
       },
       datas: [{
+        name: "布局",
+        wid: "layout",
+        id: "id294859",
+        isWrapper: true,
+        controls: {
+          style: {
+            "display": "block",
+            "margin": "0 0 0 0",
+            "padding": "10px 10px 10px 10px",
+            "color": "#abcdef",
+            'background-color': "#000",
+            'border-radius': "10px"
+          },
+          props: {}
+        },
+        children: [{
           name: "布局",
           wid: "layout",
-          id: "id294859",
+          id: "id29485ed39",
           isWrapper: true,
           controls: {
             style: {
@@ -26,72 +42,54 @@ export default {
               'background-color': "#000",
               'border-radius': "10px"
             },
-            props: {
-            }
+            props: {}
           },
           children: [{
-            name: "布局",
-            wid: "layout",
-            id: "id29485ed39",
-            isWrapper: true,
+            name: "按钮",
+            wid: "xbutton",
+            id: "id2443436259",
             controls: {
               style: {
-                "display": "block",
-                "margin": "0 0 0 0",
-                "padding": "10px 10px 10px 10px",
+                "display": "inline-block",
+                "margin": "10px 10px 10px 10px",
                 "color": "#abcdef",
                 'background-color': "#000",
-                'border-radius': "10px"
               },
               props: {}
-            },
-            children: [{
-              name: "按钮",
-              wid: "xbutton",
-              id: "id2443436259",
-              controls: {
-                style: {
-                  "display": "inline-block",
-                  "margin": "10px 10px 10px 10px",
-                  "color": "#abcdef",
-                  'background-color': "#000",
-                },
-                props: {}
-              }
-            }]
-          }, {
-            name: "布局",
-            wid: "layout",
-            id: "id294f859",
-            isWrapper: true,
-            controls: {
-              style: {
-                "display": "block",
-                "margin": "0 0 0 0",
-                "padding": "10px 10px 10px 10px",
-                "color": "#abcdef",
-                'background-color': "#000",
-                'border-radius': "10px"
-              },
-              props: {}
-            },
-            children: [{
-              name: "按钮",
-              wid: "xbutton",
-              id: "id2462fd59",
-              controls: {
-                style: {
-                  "display": "inline-block",
-                  "margin": "10px 10px 10px 10px",
-                  "color": "#abcdef",
-                  'background-color': "#000",
-                },
-                props: {}
-              }
-            }]
+            }
           }]
-        }
-      ]
+        }, {
+          name: "布局",
+          wid: "layout",
+          id: "id294f859",
+          isWrapper: true,
+          controls: {
+            style: {
+              "display": "block",
+              "margin": "0 0 0 0",
+              "padding": "10px 10px 10px 10px",
+              "color": "#abcdef",
+              'background-color': "#000",
+              'border-radius': "10px"
+            },
+            props: {}
+          },
+          children: [{
+            name: "按钮",
+            wid: "xbutton",
+            id: "id2462fd59",
+            controls: {
+              style: {
+                "display": "inline-block",
+                "margin": "10px 10px 10px 10px",
+                "color": "#abcdef",
+                'background-color': "#000",
+              },
+              props: {}
+            }
+          }]
+        }]
+      }]
     },
     currentWidget: ""
   },
@@ -114,8 +112,18 @@ export default {
       if (id) {
         loop(state.widget.datas, (data) => {
           return data.id === id
-        }, (data) => {
-          state.currentWidget = clone(data)
+        }, (data, index, arr, parent) => {
+          const tempData = clone(data)
+          if(!tempData.controls.temp){
+            tempData.controls.temp = {}
+          }
+          // 特殊处理 如果parent是flex,则显示flex值得框
+          if(parent){
+            if(parent.controls.style.display && parent.controls.style.display === "flex"){
+              tempData.controls.temp.parentFlex = true
+            }
+          }
+          state.currentWidget = tempData
         })
       } else {
         // 在根路径上

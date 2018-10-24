@@ -15,6 +15,12 @@ export default {
       let temp = []
       temp = arr.map((data) => {
         let childtemp = []
+        // style 处理， control只需要display和flex值得信息
+        const { display, flex } = data.controls.style
+        let controlStyle = {
+          display: display,
+          flex: flex || 'none'
+        }
         if (data.children) {
           childtemp = loop(data.children)
         }
@@ -24,7 +30,8 @@ export default {
           },
           props:{
             id: data.id
-          }
+          },
+          style: controlStyle
         }, [h(data.wid, {
           style: data.controls.style
         }, childtemp)])

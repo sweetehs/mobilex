@@ -25,7 +25,7 @@
         <Controlbase @change="peventChangeBaseData" :bdata="baseData" />
       </el-tab-pane>
       <el-tab-pane label="样式" name="1" v-if="currentWidget ? true : false">
-        <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" />
+        <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" :tdata="currentWidget.controls.temp"/>
       </el-tab-pane>
       <el-tab-pane label="个性化" name="2" v-if="currentWidget ? true : false">
         <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="currentWidget.controls.props" />

@@ -14,7 +14,8 @@ export default [{
   children: [],
   controls: {
     style: {
-      "display": "block"
+      "display": "block",
+      "padding": "10px 10px 10px 10px",
     }
   },
   component: layout

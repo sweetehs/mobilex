@@ -2,16 +2,16 @@
   <div class="control-style-wrapper">
     <el-form>
       <!--需要特殊处理-->
-      <el-form-item v-if="!item.filter || item.filter()" v-for="(item,i) in props" :key="i" :label="item.name" label-width="80px">
+      <el-form-item v-if="!item.disabled" v-for="(item,i) in props" :key="i" :label="item.name" label-width="80px">
         <span v-if="item.values" class="fn-mr5" v-for="(item1,j) in item.values" :key="j">
-          <el-input v-model="item1.value" class="small"></el-input>
-        </span>
+            <el-input v-model="item1.value" class="small"></el-input>
+          </span>
         <span v-if="!item.values">
-          <el-input v-if="!item.radio" v-model="item.value"></el-input>
-          <el-radio-group v-if="item.radio" v-model="item.value">
-            <el-radio :label="r" v-for="r in item.radio" :key="r">{{r}}</el-radio>
-          </el-radio-group>
-        </span>
+            <el-input v-if="!item.radio" v-model="item.value"></el-input>
+            <el-radio-group v-if="item.radio" v-model="item.value">
+              <el-radio :label="r" v-for="r in item.radio" :key="r">{{r}}</el-radio>
+            </el-radio-group>
+          </span>
       </el-form-item>
     </el-form>
   </div>
@@ -24,6 +24,7 @@
   import mixin from "@/components/widgets/mixin-control"
   export default {
     mixins: [mixin],
+    props: ["tdata"],
     data() {
       const that = this
       const defaultData = [{
@@ -34,10 +35,7 @@
       }, {
         name: "flex值",
         key: "flex",
-        value: "",
-        filter() {
-          return false
-        }
+        value: ""
       }, {
         name: "宽度",
         key: "width",
@@ -146,6 +144,13 @@
       $parseData(bdata) {
         this.setDefault()
         this.props.forEach((_data) => {
+          if(_data.key === "flex"){
+            if(this.tdata.parentFlex){
+              _data.disabled = false
+            }else{
+              _data.disabled = true
+            }
+          }
           let _style = bdata[_data.key]
           if (_style) {
             if (_data.parse) {
