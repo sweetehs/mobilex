@@ -27,6 +27,10 @@ export default {
     }
   },
   created() {
-    this.$parseData && this.$parseData(clone(this.bdata))
+    if(this.$parseData){
+      this.$parseData(clone(this.bdata))
+    }else{
+      this.props = clone(this.bdata)
+    }
   }
 }

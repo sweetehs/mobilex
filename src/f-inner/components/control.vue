@@ -8,7 +8,7 @@
       left: 0;
       top: 0;
       box-sizing: border-box;
-      border: 1px dashed #eee;
+      border: 1px dashed #333;
       overflow: hidden;
     }
     &.hover {

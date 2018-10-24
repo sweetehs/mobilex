@@ -20,8 +20,6 @@
 
 <template>
   <div class="controls-inner">
-    {{currentWidget.controls.props}}
-    {{currentWidget.wid}}
     <el-tabs v-model="tabIndex">
       <el-tab-pane label="基础" name="0">
         <Controlbase @change="peventChangeBaseData" :bdata="baseData" />
