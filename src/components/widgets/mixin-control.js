@@ -15,6 +15,7 @@ export default {
     props: {
       deep: true,
       handler() {
+        debugger
         if(this.$reverseData){
           this.$emit("change", this.$reverseData(clone(this.props)))
         }else{

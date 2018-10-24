@@ -35,6 +35,7 @@
         .tree-root {
           color: rgb(221, 221, 221);
           line-height: 35px;
+          height: 35px;
           border-bottom: 1px solid rgb(69, 69, 69);
           padding-left: 10px;
           display: flex;
@@ -241,6 +242,7 @@
         e.stopPropagation()
       },
       peventUpdateById(data) {
+        debugger
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
         })

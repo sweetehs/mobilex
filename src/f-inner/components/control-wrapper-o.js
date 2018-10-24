@@ -35,7 +35,8 @@ export default {
           },
           style: controlStyle
         }, [h(data.wid, {
-          style: data.controls.style
+          style: data.controls.style,
+          props: data.controls.props
         }, childtemp)])
       })
       return temp
