@@ -44,3 +44,6 @@ export function loop(arr, judge, callback) {
     }
   })
 }
+export function getComputedStyle($el){
+  return document.defaultView.getComputedStyle($el)
+}

@@ -19,9 +19,10 @@ export default {
           isWrapper: true,
           controls: {
             style: {
-              margin: "0 0 0 0",
-              padding: "10px 10px 10px 10px",
-              color: "#abcdef",
+              "display": "block",
+              "margin": "0 0 0 0",
+              "padding": "10px 10px 10px 10px",
+              "color": "#abcdef",
               'background-color': "#000",
               'border-radius': "10px"
             },
@@ -35,9 +36,10 @@ export default {
             isWrapper: true,
             controls: {
               style: {
-                margin: "0 0 0 0",
-                padding: "10px 10px 10px 10px",
-                color: "#abcdef",
+                "display": "block",
+                "margin": "0 0 0 0",
+                "padding": "10px 10px 10px 10px",
+                "color": "#abcdef",
                 'background-color': "#000",
                 'border-radius': "10px"
               },
@@ -49,8 +51,9 @@ export default {
               id: "id2443436259",
               controls: {
                 style: {
-                  margin: "10px 10px 10px 10px",
-                  color: "#abcdef",
+                  "display": "inline-block",
+                  "margin": "10px 10px 10px 10px",
+                  "color": "#abcdef",
                   'background-color': "#000",
                 },
                 props: {}
@@ -63,9 +66,10 @@ export default {
             isWrapper: true,
             controls: {
               style: {
-                margin: "0 0 0 0",
-                padding: "10px 10px 10px 10px",
-                color: "#abcdef",
+                "display": "block",
+                "margin": "0 0 0 0",
+                "padding": "10px 10px 10px 10px",
+                "color": "#abcdef",
                 'background-color': "#000",
                 'border-radius': "10px"
               },
@@ -77,39 +81,15 @@ export default {
               id: "id2462fd59",
               controls: {
                 style: {
-                  margin: "10px 10px 10px 10px",
-                  color: "#abcdef",
+                  "display": "inline-block",
+                  "margin": "10px 10px 10px 10px",
+                  "color": "#abcdef",
                   'background-color': "#000",
                 },
                 props: {}
               }
             }]
           }]
-        },
-        {
-          name: "按钮",
-          wid: "xbutton",
-          id: "id234859",
-          controls: {
-            style: {
-              margin: "10px 10px 10px 10px",
-              color: "#abcdef",
-              'background-color': "#000",
-            },
-            props: {}
-          }
-        }, {
-          name: "按钮",
-          wid: "xbutton",
-          id: "id234529",
-          controls: {
-            style: {
-              margin: "10px 10px 10px 10px",
-              color: "#abcdef",
-              'background-color': "#000",
-            },
-            props: {}
-          }
         }
       ]
     },

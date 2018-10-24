@@ -1,6 +1,12 @@
 import layout from "./elements/layout"
 import xtext from "./elements/xtext"
 import xbutton from "./elements/xbutton"
+/*
+  默认一定要写的属性
+  style: {
+    display: ""
+  }
+*/
 export default [{
   name: "布局",
   wid: "layout",
@@ -8,21 +14,25 @@ export default [{
   children: [],
   controls: {
     style: {
-      padding: "10px 10px 10px 10px"
+      "display": "block"
     }
   },
   component: layout
 }, {
   name: "文字",
   wid: "xtext",
-  component: xtext
+  component: xtext,
+  controls: {
+    style: {
+      "display": "block"
+    }
+  }
 }, {
   name: "按钮",
   wid: "xbutton",
   controls: {
     style: {
-      "background-color": "#eee",
-      "color": "red"
+      "display": "inline-block"
     }
   },
   component: xbutton

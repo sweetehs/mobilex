@@ -31,6 +31,7 @@
 
 <script>
   import event from "./event"
+  import { getComputedStyle } from "@/util/util"
   export default {
     name: "control",
     props: ["id"],
@@ -41,7 +42,7 @@
       }
     },
     mounted() {
-      const display = document.defaultView.getComputedStyle(this.$children[0].$el).display
+      const display = getComputedStyle(this.$children[0].$el).display
       this.$set(this.style, "display", display)
     },
     methods: {

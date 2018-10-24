@@ -1,6 +1,6 @@
 <style lang="less">
   .xbutton-wrapper {
-    display: inline-block;
+    
   }
 </style>
 
