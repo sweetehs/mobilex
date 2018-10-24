@@ -2,8 +2,9 @@
   .editor-main-wrapper {
     height: 100%;
     display: flex;
-    .action-wrapper,.controls-wrapper {
-      background: rgb(77,77,77);
+    .action-wrapper,
+    .controls-wrapper {
+      background: rgb(77, 77, 77);
       flex: 1;
       min-width: 200px;
       flex-shrink: 0;
@@ -24,17 +25,33 @@
           line-height: 40px;
           background: #333;
           color: #fff;
+        }
+        >div {
+          flex: 1;
+          overflow: auto;
+        }
+      }
+      .ps-wrapper {
+        .tree-root {
+          color: rgb(221, 221, 221);
+          line-height: 40px;
+          border-bottom: 1px solid rgb(69, 69, 69);
+          padding-left: 10px;
+          display: flex;
+          justify-content: space-between;
+          &.active {
+            background: rgb(107, 107, 107);
+            color: #fff;
+            a {
+              color: #fff;
+            }
+          }
           a {
-            float: right;
             margin-right: 10px;
             color: #fff;
             margin-top: 12px;
-            font-size: 16px;
+            font-size: 14px;
           }
-        }
-        >div{
-          flex: 1;
-          overflow: auto;
         }
       }
       .nav-wrapper {
@@ -43,8 +60,8 @@
             // line-height: 40px;
             display: inline-block;
             padding: 10px 10px;
-            background: rgb(107,107,107);
-            color: rgb(221,221,221);
+            background: rgb(107, 107, 107);
+            color: rgb(221, 221, 221);
             margin-right: 10px;
             border-radius: 4px;
             margin-top: 10px;
@@ -52,8 +69,8 @@
               cursor: pointer;
             }
             &.disabled {
-              background: rgb(83,83,83);
-              color: rgb(130,130,130);
+              background: rgb(83, 83, 83);
+              color: rgb(130, 130, 130);
               &:hover {
                 cursor: not-allowed
               }
@@ -66,7 +83,7 @@
       flex: none;
       width: 500px;
       flex-shrink: 0;
-      background: rgb(40,40,40);
+      background: rgb(40, 40, 40);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -85,10 +102,17 @@
       <div class="ps-wrapper">
         <header>
           <span>组件层级</span>
-          <a href="javascript:;" class="fa fa-plus btn-add" @click="setRoot"></a>
         </header>
         <div>
-          <Pstree :index="1" :datas="$store.state.$widget.widget.datas"/>
+          <header class="tree-root" :class="{active:currentWidget===''}" @click="setRoot">
+            <div>
+              <span class="fa fa-folder-open"></span> ROOT
+            </div>
+            <div class="action">
+              <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
+            </div>
+          </header>
+          <Pstree :index="1" :datas="$store.state.$widget.widget.datas" />
         </div>
       </div>
       <div class="nav-wrapper">
@@ -150,13 +174,13 @@
       currentWidget() {
         return this.$store.state.$widget.currentWidget
       },
-      copyWidget(){
+      copyWidget() {
         return this.$store.state.$widget.currentCopy
       },
       currentIsWrapper() {
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
-      widgetList(){
+      widgetList() {
         return this.$store.state.$widget.widget.datas
       }
     },
@@ -165,10 +189,10 @@
         // 当前current改变的时候通知内部
         this.$source.send("widgetcurrent", clone(this.currentWidget))
       },
-      copyWidget(){
+      copyWidget() {
         this.$source.send("widgetcopy", clone(this.copyWidget))
       },
-      widgetList(){
+      widgetList() {
         // 当全局数据变化是通知内部组件变化
         this.postWidgetListSend()
       }
@@ -210,6 +234,10 @@
           }
         }, clone(widget))
         this.$store.dispatch("$widget/add", newWidget)
+      },
+      eventPaste(e) {
+        this.$store.dispatch("$widget/setPaste")
+        e.stopPropagation()
       },
       peventUpdateById(data) {
         this.$store.dispatch("$widget/update", data).then(() => {

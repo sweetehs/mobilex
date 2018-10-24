@@ -93,18 +93,23 @@ export default {
       }
     },
     setPaste(state, id) {
-      loop(state.widget.datas, (data) => {
-        return data.id === id
-      }, (data) => {
-        let currentCopy = clone(state.currentCopy)
-        currentCopy.id = randomId()
-        // 遍历每个元素重新设置ID
-        loop(currentCopy.children, () => true, (_data) => {
-          _data.id = randomId()
-        })
-        data.children.push(currentCopy)
-        state.currentCopy = ""
+      let currentCopy = clone(state.currentCopy)
+      currentCopy.id = randomId()
+      loop(currentCopy.children, () => true, (_data) => {
+        _data.id = randomId()
       })
+      if (id) {
+        loop(state.widget.datas, (data) => {
+          return data.id === id
+        }, (data) => {
+          // 遍历每个元素重新设置ID
+          data.children.push(currentCopy)
+          state.currentCopy = ""
+        })
+      } else {
+        state.widget.datas.push(currentCopy)
+        state.currentCopy = ""
+      }
     }
   },
   actions: {

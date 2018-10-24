@@ -52,7 +52,7 @@
       }">
         <div class="tree-item" :class="{folder:item.children}">
           <div class="name" :style="{
-              'paddingLeft': (index === 1 ? 10 : index*15)+'px'
+              'paddingLeft': (index === 1 ? 20 : index*15)+'px'
             }">
             <span class="fa" :class="{
               'fa-folder': item.children,
