@@ -124,8 +124,8 @@ export default {
       var index2 = 0
       loop(state.widget.datas, (data) => {
         return data.id === id1
-      }, (data1, index1, arr, parent) => {
-        index1 = index1
+      }, (data, index, arr, parent) => {
+        index1 = index
         index2 = arr.findIndex(_d => _d.id === id2)
         _arr = arr
       })

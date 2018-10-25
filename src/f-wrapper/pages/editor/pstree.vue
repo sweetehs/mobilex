@@ -119,7 +119,6 @@
         this.$store.dispatch("$widget/setPaste", data.id)
       },
       dragStart(item) {
-        console.log("dragstart")
         this.$store.dispatch("$widget/setDrag", {
           groupId: this.id,
           id: item.id
@@ -137,8 +136,9 @@
           })
         }
       },
-      allowDrop(event) {
-        event.preventDefault()
+      allowDrop(e) {
+        event.dataTransfer.dropEffect = "move"
+        e.preventDefault()
       },
       eventCutItem(data) {}
     }
