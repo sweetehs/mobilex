@@ -44,22 +44,20 @@
 
 <template>
   <div class="ps-tree-wrapper">
-    <ul :class="{
-          root: index === 1
-        }">
+    <ul :class="{root: index === 1}">
       <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{
-        active:(currentWidget && item.id === currentWidget.id),
-        'is-copy': (copyWidget && item.id === copyWidget.id)
-      }">
-        <div class="tree-item" :class="{folder:item.children}">
+            active:(currentWidget && item.id === currentWidget.id),
+            'is-copy': (copyWidget && item.id === copyWidget.id)
+          }">
+        <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
           <div class="name" :style="{
-              'paddingLeft': (index === 1 ? 20 : index*15)+'px'
-            }">
+                  'paddingLeft': (index === 1 ? 20 : index*15)+'px'
+                }">
             <span class="fa" :class="{
-              'fa-folder': item.children,
-              'fa-file': !item.children,
-              'fa-folder-open': isOpens.indexOf(item.id) !== -1
-            }" @click="eventOpen($event,item)"></span>
+                    'fa-folder': item.children,
+                    'fa-file': !item.children,
+                    'fa-folder-open': isOpens.indexOf(item.id) !== -1
+                  }" @click="eventOpen($event,item)"></span>
             <span>{{item.name}}</span>
           </div>
           <div class="action">
@@ -76,19 +74,23 @@
 </template>
 
 <script>
+  import {
+    randomId
+  } from "@/util/util"
   export default {
     name: "treewrapper",
     props: ["index", "datas"],
     data() {
       return {
-        isOpens: []
+        isOpens: [],
+        id: randomId()
       }
     },
     computed: {
-      currentWidget(){
+      currentWidget() {
         return this.$store.state.$widget.currentWidget
       },
-      copyWidget(){
+      copyWidget() {
         return this.$store.state.$widget.currentCopy
       }
     },
@@ -113,10 +115,32 @@
       eventCopyItem(data) {
         this.$store.dispatch("$widget/setCopy", data.id)
       },
-      eventPasteItem(data){
+      eventPasteItem(data) {
         this.$store.dispatch("$widget/setPaste", data.id)
       },
-      eventCutItem(data){}
+      dragStart(item) {
+        console.log("dragstart")
+        this.$store.dispatch("$widget/setDrag", {
+          groupId: this.id,
+          id: item.id
+        })
+      },
+      drop(item) {
+        const {
+          currentDrag
+        } = this.$store.state.$widget
+        if (this.id === currentDrag.groupId) {
+          // 交换两个元素
+          this.$store.dispatch("$widget/exchange", {
+            id1: item.id,
+            id2: currentDrag.id
+          })
+        }
+      },
+      allowDrop(event) {
+        event.preventDefault()
+      },
+      eventCutItem(data) {}
     }
   }
 </script>

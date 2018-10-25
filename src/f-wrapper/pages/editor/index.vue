@@ -114,7 +114,7 @@
               <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
             </div>
           </header>
-          <Pstree :index="1" :datas="$store.state.$widget.widget.datas" />
+          <Pstree :index="1" :datas="widgetList" />
         </div>
       </div>
       <div class="nav-wrapper">
@@ -183,6 +183,7 @@
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
       widgetList() {
+        debugger
         return this.$store.state.$widget.widget.datas
       }
     },
@@ -194,9 +195,12 @@
       copyWidget() {
         this.$source.send("widgetcopy", clone(this.copyWidget))
       },
-      widgetList() {
-        // 当全局数据变化是通知内部组件变化
-        this.postWidgetListSend()
+      widgetList:{
+        deep: true,
+        handler(){
+          debugger
+          this.postWidgetListSend()
+        }
       }
     },
     mounted() {
@@ -207,7 +211,6 @@
       })
       // 得到当前widgetcontrol
       this.$source.receive('widgetcontrol', (id) => {
-        debugger
         this.$store.dispatch("$widget/setCur", id)
       })
       setTimeout(() => {

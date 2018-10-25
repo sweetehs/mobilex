@@ -7,7 +7,6 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        debugger
         if (!this.$parseData) {
           this.props = clone(this.bdata)
         } else {

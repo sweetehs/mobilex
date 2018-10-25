@@ -10,9 +10,10 @@ import mockData from "./mock"
 export default {
   namespaced: true,
   state: {
-    widget: mockData,
-    currentWidget: "",
-    currentCopy: ""
+    widget: mockData, // 数据列表
+    currentWidget: "", // 当前选中的数据
+    currentCopy: "", // 当前复制的数据
+    currentDrag: "" // 当前拖拽的组ID
   },
   mutations: {
     add(state, widget) {
@@ -30,7 +31,6 @@ export default {
       }
     },
     setCur(state, id) {
-      debugger
       if (id) {
         loop(state.widget.datas, (data) => {
           return data.id === id
@@ -111,6 +111,28 @@ export default {
         state.widget.datas.push(currentCopy)
         state.currentCopy = ""
       }
+    },
+    setDrag(state, data) {
+      state.currentDrag = data
+    },
+    exchange(state, {
+      id1,
+      id2
+    }) {
+      var _arr = []
+      var index1 = 0
+      var index2 = 0
+      loop(state.widget.datas, (data) => {
+        return data.id === id1
+      }, (data1, index1, arr, parent) => {
+        index1 = index1
+        index2 = arr.findIndex(_d => _d.id === id2)
+        _arr = arr
+      })
+      let temp = clone(_arr[index1])
+      _arr[index1] = clone(_arr[index2])
+      _arr[index2] = temp
+      state.widget.datas = clone(state.widget.datas)
     }
   },
   actions: {
@@ -134,6 +156,12 @@ export default {
     },
     setPaste(context, id) {
       context.commit('setPaste', id)
+    },
+    setDrag(context, data) {
+      context.commit('setDrag', data)
+    },
+    exchange(context, data) {
+      context.commit('exchange', data)
     }
   }
 }

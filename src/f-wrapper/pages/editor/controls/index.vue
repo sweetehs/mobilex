@@ -54,7 +54,6 @@
     },
     computed: {
       currentWidget() {
-        debugger
         return this.$store.state.$widget.currentWidget
       },
       baseData() {
