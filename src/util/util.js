@@ -1,5 +1,5 @@
 export function clone(data) {
-  return JSON.parse(JSON.stringify(data))
+  return data ? JSON.parse(JSON.stringify(data)) : data
 }
 export function randomId() {
   return "id" + parseInt(Math.random() * 100000000000)

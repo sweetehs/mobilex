@@ -1,6 +1,7 @@
 <style lang="less">
   .ps-tree-wrapper {
-    @fontColor: rgb(221, 221, 221);
+    // @fontColor: rgb(221, 221, 221);
+    @fontColor: #b6b6b6;
     color: @fontColor;
     font-size: 12px;
     ul {
