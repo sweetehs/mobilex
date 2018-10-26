@@ -9,7 +9,7 @@
 <script>
   import Inner from "Inner"
   import Wrapper from "Wrapper"
-  import Preview from "./preview/index.js"
+  import Preview from "./preview/index.vue"
   export default {
     components: {
       Inner,

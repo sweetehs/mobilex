@@ -1,3 +1,9 @@
+<style>
+  .widget-layout-wrapper{
+    box-sizing: border-box;
+  }
+</style>
+
 <template>
   <div class="widget-layout-wrapper" :style="flex">
     <slot></slot>

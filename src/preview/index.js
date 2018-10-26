@@ -10,7 +10,10 @@ const setGlobalComponents = () => {
 setGlobalComponents()
 export default {
   functional: true,
-  render(h) {
+  props: {
+    datas: {}
+  },
+  render(h,context) {
     const loop = (arr) => {
       let temp = []
       temp = arr.map((data) => {
@@ -25,6 +28,6 @@ export default {
       })
       return temp
     }
-    return loop(mockData.datas)
+    return loop(context.props.datas)
   }
 }

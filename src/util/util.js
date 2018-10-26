@@ -42,7 +42,8 @@ export function loop(arr, judge, callback, parent) {
   arr.forEach((data, index) => {
     if (judge(data)) {
       callback && callback(data, index, arr, parent)
-    } else if (isArray(data.children)) {
+    } 
+    if (isArray(data.children)) {
       loop(data.children, judge, callback, data)
     }
   })

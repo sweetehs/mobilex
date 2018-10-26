@@ -99,6 +99,7 @@ export default {
     setPaste(state, id) {
       let currentCopy = clone(state.currentCopy)
       currentCopy.id = randomId()
+      debugger
       loop(currentCopy.children, () => true, (_data) => {
         _data.id = randomId()
       })
