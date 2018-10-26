@@ -130,7 +130,7 @@
     </div>
     <div class="editor-wrapper">
       <div class="editor-inner">
-        <Ioswrapper>
+        <Ioswrapper @save="peventSave">
           <iframe ref="editor" src="/?inner=true" frameborder="0"></iframe>
         </Ioswrapper>
       </div>
@@ -142,6 +142,7 @@
 </template>
 
 <script>
+  import axios from "axios"
   import postMessage from "@/util/postMessage"
   import Controls from "./controls"
   import Pstree from "./pstree"
@@ -156,6 +157,16 @@
       Controls,
       Ioswrapper,
       Pstree
+    },
+    created(){
+      axios({
+        url: "/mobilex/subject/get",
+        params: {
+          id: "5bd29730e3cd3d3c7387b36d"
+        }
+      }).then((ajaxData)=>{
+        this.$store.dispatch("$widget/setAll",JSON.parse(ajaxData.data.data))
+      })
     },
     data() {
       return {
@@ -183,7 +194,6 @@
         return this.currentWidget.isWrapper || this.currentWidget === ""
       },
       widgetList() {
-        debugger
         return this.$store.state.$widget.widget.datas
       }
     },
@@ -198,7 +208,6 @@
       widgetList:{
         deep: true,
         handler(){
-          debugger
           this.postWidgetListSend()
         }
       }
@@ -252,6 +261,18 @@
       },
       peventUpdateBase(data) {
         this.$store.dispatch("$widget/updateBase", data)
+      },
+      peventSave(){
+        axios({
+        url: "/mobilex/subject/update",
+        method: "post",
+        data: {
+          id: "5bd29730e3cd3d3c7387b36d",
+          subject: JSON.stringify(this.$store.state.$widget.widget)
+        }
+      }).then((ajaxData)=>{
+        this.$message.success("保存成功")
+      })
       }
     }
   }

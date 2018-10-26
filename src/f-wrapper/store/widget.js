@@ -10,12 +10,15 @@ import mockData from "./mock"
 export default {
   namespaced: true,
   state: {
-    widget: mockData, // 数据列表
+    widget: [], // 数据列表
     currentWidget: "", // 当前选中的数据
     currentCopy: "", // 当前复制的数据
     currentDrag: "" // 当前拖拽的组ID
   },
   mutations: {
+    setAll(state, data) {
+      state.widget = data
+    },
     add(state, widget) {
       if (state.currentWidget && state.currentWidget.isWrapper) {
         let getData = ""
@@ -162,6 +165,9 @@ export default {
     },
     exchange(context, data) {
       context.commit('exchange', data)
+    },
+    setAll(context, data){
+      context.commit('setAll', data)
     }
   }
 }

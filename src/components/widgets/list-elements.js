@@ -43,7 +43,15 @@ export default [{
   wid: "ximage",
   controls: {
     style: {
-      "display": "inline-block"
+      "display": "inline-block",
+      "margin": "10px 10px 10px 10px",
+      "color": "#abcdef",
+      "width": "100px",
+      "height": "100px",
+      "border-radius": "100px"
+    },
+    props:{
+      url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
     }
   },
   component: ximage
