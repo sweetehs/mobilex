@@ -1,12 +1,16 @@
 <style lang="less">
   .editor-main-wrapper {
+    color: #ddd;
     height: 100%;
     display: flex;
+    a{
+      color: #ddd;
+    }
     .action-wrapper,
     .controls-wrapper {
       background: rgb(77, 77, 77);
       flex: 1;
-      min-width: 200px;
+      min-width: 300px;
       flex-shrink: 0;
     }
     .action-wrapper {
