@@ -4,6 +4,7 @@
     .item {
       display: flex;
       align-items: center;
+      margin-bottom: 15px;
       .item-common,
       .item-special {
         position: relative;
@@ -26,7 +27,7 @@
       }
       .item-special {
         p {
-          margin-top: 10px;
+          margin-bottom: 10px;
           position: relative;
         }
       }
@@ -46,7 +47,12 @@
               <el-option v-for="(t,i) in formType" :key="i" :value="t.value" :label="t.name"></el-option>
             </el-select>
           </div>
-          <div class="item-special">
+          <div class="item-rule">
+            <el-radio-group v-model="item.rule">
+              <el-radio v-for="(item,i) in formRule" :label="item.value" :key="i">{{item.name}}</el-radio>
+            </el-radio-group>
+          </div>
+          <div v-if="item.type !== 'input'" class="item-special">
             <p v-for="(t,i) in item.values" :key="i">
               <el-input v-model="item.values[i]"></el-input>
               <a href="javascript:;" class="fa fa-remove" @click="item.values.splice(i,1)"></a>
@@ -75,6 +81,19 @@
         }, {
           name: "下拉菜单",
           value: "select"
+        }],
+        formRule: [{
+          name: "无",
+          value: ""
+        }, {
+          name: "必填",
+          value: "required"
+        }, {
+          name: "手机",
+          value: "phone"
+        }, {
+          name: "邮箱",
+          value: "email"
         }]
       }
     },

@@ -1,6 +1,6 @@
 <style lang="less">
   .xform-wrapper {
-    padding: 10px;
+    padding: 20px;
     overflow: hidden;
     .form-item {
       display: flex;

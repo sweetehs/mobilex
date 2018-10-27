@@ -66,14 +66,17 @@ export default [{
     props: {
       formitems: [{
         label: "名字",
-        type: "input"
+        type: "input",
+        rule: "required"
       }, {
-        label: "地址",
-        type: "input"
+        label: "手机",
+        type: "input",
+        rule: "phone"
       }, {
         label: "性别",
         type: "radio",
-        values: ["男", "女"]
+        values: ["男", "女"],
+        rule: "required"
       }, {
         label: "城市",
         type: "select",
