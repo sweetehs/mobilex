@@ -10,32 +10,41 @@ import mockData from "./mock"
 export default {
   namespaced: true,
   state: {
-    widget: [], // 数据列表
+    widget: {
+      datas: [],
+      hidden: []
+    }, // 数据列表
+    currentTab: "",
     currentWidget: "", // 当前选中的数据
     currentCopy: "", // 当前复制的数据
     currentDrag: "" // 当前拖拽的组ID
   },
   mutations: {
+    setTab(state, tab) {
+      state.currentTab = tab
+    },
     setAll(state, data) {
       state.widget = data
     },
     add(state, widget) {
+      let currendData = state.widget[state.currentTab]
       if (state.currentWidget && state.currentWidget.isWrapper) {
         let getData = ""
-        loop(state.widget.datas, (data) => {
+        loop(currendData, (data) => {
           return data.id === state.currentWidget.id
         }, (data) => {
           getData = data
         })
         getData.children.push(widget)
-        state.widget.datas = clone(state.widget.datas)
+        currendData = clone(currendData)
       } else {
-        state.widget.datas.push(widget)
+        currendData.push(widget)
       }
     },
     setCur(state, id) {
+      let currendData = state.widget[state.currentTab]
       if (id) {
-        loop(state.widget.datas, (data) => {
+        loop(currendData, (data) => {
           return data.id === id
         }, (data, index, arr, parent) => {
           const tempData = clone(data)
@@ -60,8 +69,9 @@ export default {
       }
     },
     update(state, data) {
+      let currendData = state.widget[state.currentTab]
       let getData = ""
-      loop(state.widget.datas, (data) => {
+      loop(currendData, (data) => {
         return data.id === state.currentWidget.id
       }, (data) => {
         getData = data
@@ -78,16 +88,18 @@ export default {
       }
     },
     deletei(state, id) {
-      loop(state.widget.datas, (data) => {
+      let currendData = state.widget[state.currentTab]
+      loop(currendData, (data) => {
         return data.id === id
       }, (data, index, list) => {
         list.splice(index, 1)
       })
-      state.widget.datas = clone(state.widget.datas)
+      state.widget[state.currentTab] = clone(currendData)
     },
     setCopy(state, id) {
+      let currendData = state.widget[state.currentTab]
       if (id) {
-        loop(state.widget.datas, (data) => {
+        loop(currendData, (data) => {
           return data.id === id
         }, (data) => {
           state.currentCopy = clone(data)
@@ -122,10 +134,11 @@ export default {
       id1,
       id2
     }) {
+      let currendData = state.widget[state.currentTab]
       var _arr = []
       var index1 = 0
       var index2 = 0
-      loop(state.widget.datas, (data) => {
+      loop(currendData, (data) => {
         return data.id === id1
       }, (data, index, arr, parent) => {
         index1 = index
@@ -135,10 +148,13 @@ export default {
       let temp = clone(_arr[index1])
       _arr[index1] = clone(_arr[index2])
       _arr[index2] = temp
-      state.widget.datas = clone(state.widget.datas)
+      state.widget[state.currentTab] = clone(currendData)
     }
   },
   actions: {
+    setTab(context, tab) {
+      context.commit('setTab', tab)
+    },
     add(context, widget) {
       context.commit('add', widget)
     },
@@ -166,7 +182,7 @@ export default {
     exchange(context, data) {
       context.commit('exchange', data)
     },
-    setAll(context, data){
+    setAll(context, data) {
       context.commit('setAll', data)
     }
   }

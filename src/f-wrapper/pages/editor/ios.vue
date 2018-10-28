@@ -8,6 +8,7 @@
     .ios-inner {
       background-color: #eee;
       box-shadow: 0 0 4px #eee;
+      position: relative;
     }
     .ios-radius {
       height: 38px;

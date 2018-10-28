@@ -39,8 +39,8 @@
 			this.$source.send("widgetnav", widgetlist.map((_data) => {
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
-			this.$source.receive("widgetlist", (widgetdata) => {
-				this.datas = clone(widgetdata.datas)
+			this.$source.receive("widgetlist", (widgetlist) => {
+				this.datas = clone(widgetlist)
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {
 				this.currentId = currentwidget.id

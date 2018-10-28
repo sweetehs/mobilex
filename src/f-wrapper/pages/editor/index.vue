@@ -3,7 +3,7 @@
     color: #ddd;
     height: 100%;
     display: flex;
-    a{
+    a {
       color: #ddd;
     }
     .action-wrapper,
@@ -99,6 +99,13 @@
         height: 614px;
       }
     }
+    .switch-body {
+      position: absolute;
+      left: -54px;
+      .el-tabs__item {
+        padding: 0 5px;
+      }
+    }
   }
 </style>
 
@@ -118,7 +125,7 @@
               <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
             </div>
           </header>
-          <Pstree :index="1" :datas="widgetList" />
+          <Pstree :index="1" :datas="widgetlist" />
         </div>
       </div>
       <div class="nav-wrapper">
@@ -135,6 +142,12 @@
     <div class="editor-wrapper">
       <div class="editor-inner">
         <Ioswrapper @save="peventSave">
+          <div class="switch-body">
+            <el-tabs v-model="vsTabIndex" tab-position="left" @tab-click="vsTabChange">
+              <el-tab-pane label="显" name="datas"></el-tab-pane>
+              <el-tab-pane label="隐" name="hidden"></el-tab-pane>
+            </el-tabs>
+          </div>
           <iframe ref="editor" src="/?inner=true" frameborder="0"></iframe>
         </Ioswrapper>
       </div>
@@ -162,18 +175,19 @@
       Ioswrapper,
       Pstree
     },
-    created(){
+    created() {
       axios({
         url: "/mobilex/subject/get",
         params: {
           id: "5bd29730e3cd3d3c7387b36d"
         }
-      }).then((ajaxData)=>{
-        this.$store.dispatch("$widget/setAll",JSON.parse(ajaxData.data.data))
+      }).then((ajaxData) => {
+        this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data))
       })
     },
     data() {
       return {
+        vsTabIndex: "datas",
         widgetnav: [],
         showNav: false,
         curwidget: {
@@ -188,6 +202,12 @@
       }
     },
     computed: {
+      $widget() {
+        return this.$store.state.$widget.widget
+      },
+      widgetlist() {
+        return this.$widget[this.vsTabIndex]
+      },
       currentWidget() {
         return this.$store.state.$widget.currentWidget
       },
@@ -195,10 +215,7 @@
         return this.$store.state.$widget.currentCopy
       },
       currentIsWrapper() {
-        return this.currentWidget.isWrapper || this.currentWidget === ""
-      },
-      widgetList() {
-        return this.$store.state.$widget.widget.datas
+        return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
       }
     },
     watch: {
@@ -209,14 +226,18 @@
       copyWidget() {
         this.$source.send("widgetcopy", clone(this.copyWidget))
       },
-      widgetList:{
+      widgetlist(){
+        this.postWidgetListSend()
+      },
+      $widget: {
         deep: true,
-        handler(){
+        handler() {
           this.postWidgetListSend()
         }
       }
     },
     mounted() {
+      this.$store.dispatch("$widget/setTab", this.vsTabIndex)
       this.$source = new postMessage(this.$refs.editor.contentWindow, window)
       // 获取左侧菜单列表
       this.$source.receive('widgetnav', (widgetnav) => {
@@ -231,13 +252,16 @@
       }, 1000)
     },
     methods: {
+      vsTabChange(tab) {
+        this.$store.dispatch("$widget/setTab", this.vsTabIndex)
+      },
       setRoot() {
         this.$store.dispatch("$widget/setCur", "")
         this.$store.dispatch("$widget/setCopy", "")
       },
       postWidgetListSend() {
         // 发送list数据内部显示
-        this.$source.send("widgetlist", this.$store.state.$widget.widget)
+        this.$source.send("widgetlist", this.widgetlist)
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
@@ -266,17 +290,17 @@
       peventUpdateBase(data) {
         this.$store.dispatch("$widget/updateBase", data)
       },
-      peventSave(){
+      peventSave() {
         axios({
-        url: "/mobilex/subject/update",
-        method: "post",
-        data: {
-          id: "5bd29730e3cd3d3c7387b36d",
-          subject: JSON.stringify(this.$store.state.$widget.widget)
-        }
-      }).then((ajaxData)=>{
-        this.$message.success("保存成功")
-      })
+          url: "/mobilex/subject/update",
+          method: "post",
+          data: {
+            id: "5bd29730e3cd3d3c7387b36d",
+            subject: JSON.stringify(this.$widget)
+          }
+        }).then((ajaxData) => {
+          this.$message.success("保存成功")
+        })
       }
     }
   }
