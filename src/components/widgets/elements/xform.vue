@@ -19,9 +19,9 @@
         flex: 1;
       }
     }
-    .action{
+    .action {
       text-align: center;
-      a{
+      a {
         color: #333;
         display: inline-block;
         padding: 10px;
@@ -35,7 +35,7 @@
       border: 1px solid #b6b6b6;
       border-radius: 5px;
     }
-    .x_select{
+    .x_select {
       min-width: 100px;
     }
   }
@@ -49,37 +49,71 @@
         <input v-if="item.type=='input'" class="x_input" type="text">
         <div v-if="item.type=='radio'" class="x_radio">
           <label v-for="radio in item.values" :key="radio">
-            <input type="radio" :name="item.label">{{radio}}
-          </label>
+                                  <input type="radio" :name="item.label">{{radio}}
+                                </label>
         </div>
         <div v-if="item.type=='select'" class="x_select">
           <select>
-            <option value="">请选择</option>
-            <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
-          </select>
+                                  <option value="">请选择</option>
+                                  <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
+                                </select>
         </div>
       </div>
     </div>
     <div class="action">
-      <a href="javascript:;">提交</a>
+      <a href="javascript:;" @click="submit">提交</a>
     </div>
   </div>
 </template>
 
 <script>
-  import { clone } from "../utils/util"
+  import {
+    clone
+  } from "../utils/util"
   export default {
     props: ["formitems"],
     data() {
       return {
-        forms: clone(this.formitems) || []
+        forms: clone(this.formitems) || [],
+        rules: {
+          required(value) {
+            if (!value) {
+              return false
+            }
+            return true
+          },
+          phone(value) {
+            if (value.replace(/\s/g, "").length !== 11 && !value.test(/^\d{10}\d$/)) {
+              return false
+            }
+            return true
+          },
+          email() {
+            return;
+          }
+        }
       }
     },
     watch: {
-      formitems(){
+      formitems() {
         this.forms = clone(this.formitems)
       }
+    },
+    methods: {
+      submit() {
+        let error = ""
+        this.forms.forEach((_data) => {
+            if (!error) {
+              if(_data.value || !this.rules[_data.rule](_data.value)) {
+              error = "请输入正确的" + _data.label
+            }
+          }
+        })
+      if (error) {
+        alert(error)
+      }
     }
+  }
   }
 </script>
 

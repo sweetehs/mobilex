@@ -103,6 +103,12 @@
           this.$set(data, "values", [])
         }
         data.values.push('')
+      },
+      reverseData(props){
+        return props.formitems.map((_data)=>{
+          _data.value = ""
+          return _data
+        })
       }
     }
   }
