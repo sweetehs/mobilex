@@ -261,7 +261,10 @@
       },
       postWidgetListSend() {
         // 发送list数据内部显示
-        this.$source.send("widgetlist", this.widgetlist)
+        this.$source.send("widgetlist", {
+          list: this.widgetlist,
+          type: this.vsTabIndex
+        })
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件

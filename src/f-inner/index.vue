@@ -1,7 +1,7 @@
 <template>
 	<div class="f-inner-wrapper">
 		<!-- <controlwrapper :datas="datas||[]" :currentId="currentId" /> -->
-		<controlwrappero :datas="datas||[]" :currentId="currentId" :copyId="copyId"/>
+		<controlwrappero :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" />
 	</div>
 </template>
 
@@ -31,7 +31,8 @@
 			return {
 				datas: [],
 				currentId: '',
-				copyId: ''
+				copyId: '',
+				isDialog: ''
 			}
 		},
 		mounted() {
@@ -39,13 +40,14 @@
 			this.$source.send("widgetnav", widgetlist.map((_data) => {
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
-			this.$source.receive("widgetlist", (widgetlist) => {
-				this.datas = clone(widgetlist)
+			this.$source.receive("widgetlist", (data) => {
+				this.datas = clone(data.list)
+				this.isDialog = data.type === "hidden"
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {
 				this.currentId = currentwidget.id
 			})
-			this.$source.receive("widgetcopy", (copyWidget)=>{
+			this.$source.receive("widgetcopy", (copyWidget) => {
 				this.copyId = copyWidget.id
 			})
 			event.$on("setControl", (id) => {
