@@ -109,13 +109,14 @@ export default {
       }
     },
     setPaste(state, id) {
+      let currendData = state.widget[state.currentTab]
       let currentCopy = clone(state.currentCopy)
       currentCopy.id = randomId()
       loop(currentCopy.children, () => true, (_data) => {
         _data.id = randomId()
       })
       if (id) {
-        loop(state.widget.datas, (data) => {
+        loop(currendData, (data) => {
           return data.id === id
         }, (data) => {
           // 遍历每个元素重新设置ID
@@ -123,7 +124,7 @@ export default {
           state.currentCopy = ""
         })
       } else {
-        state.widget.datas.push(currentCopy)
+        currendData.push(currentCopy)
         state.currentCopy = ""
       }
     },
