@@ -1,3 +1,7 @@
+import {
+  clone
+} from "@/util/util"
+const actionRepeat = {}
 export default {
   functional: true,
   props: {
@@ -6,7 +10,7 @@ export default {
     parentMiddle: {}
   },
   render(h, context) {
-    const self = this
+    const hidden = clone(context.props.hidden)
     const loop = (arr) => {
       let temp = []
       temp = arr.reduce((result, data) => {
@@ -17,26 +21,16 @@ export default {
         const {
           action
         } = data.controls
-        var base = h(data.wid, {
-          props: data.controls.props,
-          style: data.controls.style,
-          nativeOn: {
-            click() {
-              context.listeners.changeParent(action.value, true)
-            }
-          }
-        }, childtemp)
-        result.push(base)
         if (action) {
           if (action.type === 'xdialog') {
             // 处理弹层
-            const dialogData = context.props.hidden.filter(_d => _d.id === action.value)
-            const dialog = h(action.type, {
+            const dialogData = hidden.filter(_d => _d.id === action.value)
+            const dialog = h('xdialog', {
               props: {
                 visible: context.parent.middle[action.value]
               },
               on: {
-                changeVisible(flag){
+                changeVisible(flag) {
                   context.listeners.changeParent(action.value, flag)
                 }
               }
@@ -44,10 +38,22 @@ export default {
             result.push(dialog)
           }
         }
+        var base = h(data.wid, {
+          props: data.controls.props,
+          style: data.controls.style,
+          nativeOn: {
+            click() {
+              if (action.type === 'xdialog') {
+                context.listeners.changeParent(action.value, true)
+              }
+            }
+          }
+        }, childtemp)
+        result.push(base)
         return result
       }, [])
       return temp
     }
-    return loop(context.props.datas)
+    return loop(clone(context.props.datas))
   }
 }

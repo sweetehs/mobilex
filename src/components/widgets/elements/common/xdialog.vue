@@ -22,13 +22,16 @@
       left: 50%;
       top: 40%;
       transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 </style>
 
 <template>
   <div :class="`xdialog-wrapper ${visible?'active':''}`" @click="closeDialog">
-    <div class="xdialog-inner">
+    <div class="xdialog-inner" @click="stop">
       <slot></slot>
     </div>
   </div>
@@ -37,7 +40,15 @@
 <script>
   export default {
     props: ['visible'],
+    watch: {
+      visible(){
+        debugger
+      }
+    },
     methods: {
+      stop(e){
+        e.stopPropagation()
+      },
       closeDialog() {
         this.$emit("changeVisible", false)
       }
