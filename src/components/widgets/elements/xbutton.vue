@@ -23,6 +23,9 @@
           return "small"
         }
       }
+    },
+    created(){
+      
     }
   }
 </script>

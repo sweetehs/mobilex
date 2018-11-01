@@ -19,7 +19,6 @@
   import mixin from "@/components/widgets/mixin-control"
   export default {
     mixins: [mixin],
-    props: ["tdata"],
     data() {
       const that = this
       const defaultData = [{
@@ -90,14 +89,14 @@
         this.setDefault()
         this.props.forEach((_data) => {
           if(_data.key === "flex"){
-            if(this.tdata.parentFlex){
+            if(this.tdata && this.tdata.parentFlex){
               _data.disabled = false
             }else{
               _data.disabled = true
             }
           }
           if(_data.key === "display"){
-            if(this.tdata.disabledFlex){
+            if(this.tdata && this.tdata.disabledFlex){
               _data.radio = _data.radio.filter((data)=>data !== "flex")
             }
           }

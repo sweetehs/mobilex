@@ -286,14 +286,18 @@
         e.stopPropagation()
       },
       peventUpdateById(data) {
+        // 更新数据
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
         })
       },
       peventUpdateBase(data) {
+        // 更新基础数据
         this.$store.dispatch("$widget/updateBase", data)
       },
       peventSave() {
+        // 报错接口
+        console.log(clone(this.$widget))
         axios({
           url: "/mobilex/subject/update",
           method: "post",

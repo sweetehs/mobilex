@@ -27,7 +27,10 @@
       <el-tab-pane label="样式" name="1" v-if="currentWidget ? true : false">
         <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" :tdata="currentWidget.controls.temp"/>
       </el-tab-pane>
-      <el-tab-pane label="个性化" name="2" v-if="currentWidget ? true : false">
+      <el-tab-pane label="操作" name="2" v-if="currentWidget ? true : false">
+        <Controlaction @change="preventChangeActionData" :bdata="currentWidget.controls.action"/>
+      </el-tab-pane>
+      <el-tab-pane label="个性化" name="3" v-if="currentWidget ? true : false">
         <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="(currentWidget) ? currentWidget.controls.props : {}" />
       </el-tab-pane>
     </el-tabs>
@@ -37,6 +40,7 @@
 <script>
   import Controlstyle from "./style"
   import Controlbase from "./base"
+  import Controlaction from "./action"
   import mixinlist from "@/components/widgets/list-controls"
   import {
     clone
@@ -45,7 +49,8 @@
     mixins: [mixinlist],
     components: {
       Controlstyle,
-      Controlbase
+      Controlbase,
+      Controlaction
     },
     data() {
       return {
@@ -72,6 +77,13 @@
         this.$emit("change", {
           controls: {
             props: clone(data)
+          }
+        })
+      },
+      preventChangeActionData(data){
+        this.$emit("change", {
+          controls: {
+            action: clone(data)
           }
         })
       },
