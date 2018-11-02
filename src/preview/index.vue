@@ -1,6 +1,7 @@
 <template>
   <div class="preview-wrapper">
-    <previewinner :datas="datas" :hidden="hidden" @changeParent="changeData" />
+    <previewinner :datas="datas" @changeParent="changeData" />
+    <previewinner :datas="hidden" @changeParent="changeData" type="xdialog"/>
   </div>
 </template>
 
