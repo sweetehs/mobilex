@@ -78,7 +78,7 @@
         this.$emit("save")
       },
       eventPreview(){
-        window.open("#/?preview=true")
+        window.open("/preview.html")
       }
     }
   }
