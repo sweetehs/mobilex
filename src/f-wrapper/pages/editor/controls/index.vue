@@ -15,7 +15,7 @@
         padding: 0 5px;
       }
     }
-    .el-input{
+    .el-input,.el-select{
       width: 100%;
     }
   }

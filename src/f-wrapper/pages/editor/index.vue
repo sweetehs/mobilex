@@ -167,6 +167,7 @@
   import "@/assets/less/wrapper-element.less"
   import {
     clone,
+    extendDeep,
     randomId
   } from "@/util/util.js"
   export default {
@@ -226,7 +227,7 @@
       copyWidget() {
         this.$source.send("widgetcopy", clone(this.copyWidget))
       },
-      widgetlist(){
+      widgetlist() {
         this.postWidgetListSend()
       },
       $widget: {
@@ -272,13 +273,17 @@
           return
         }
         // 增加一个组件
-        let newWidget = Object.assign({
+  
+        let newWidget = {
           id: randomId(),
           controls: {
             style: {},
-            props: {}
+            props: {},
+            action: {},
+            base: {}
           }
-        }, clone(widget))
+        }
+        extendDeep(clone(widget), newWidget)
         this.$store.dispatch("$widget/add", newWidget)
       },
       eventPaste(e) {

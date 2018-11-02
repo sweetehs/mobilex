@@ -25,7 +25,7 @@ export default {
           style: data.controls.style,
           nativeOn: {
             click() {
-              if (action.type === 'xdialog') {
+              if (action && action.type === 'xdialog') {
                 context.listeners.changeParent(action.value, true)
               }
             }
