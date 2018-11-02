@@ -41,7 +41,6 @@ export default {
             }
           },"弹层"))
         }
-
         result.push(h(control, {
           class: {
             active: data.id === context.props.currentId,

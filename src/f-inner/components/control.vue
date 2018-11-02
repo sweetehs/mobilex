@@ -1,6 +1,7 @@
 <style lang="less">
   .item-control-wrapper {
     position: relative;
+    margin: -1px;
     .overlay {
       position: absolute;
       height: 100%;
@@ -8,8 +9,9 @@
       left: 0;
       top: 0;
       box-sizing: border-box;
-      border: 1px dashed #333;
+      border: 2px dashed #333;
       overflow: hidden;
+      box-sizing: border-box;
     }
     &.hover {
       >.overlay{
