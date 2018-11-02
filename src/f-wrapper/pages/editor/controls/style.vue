@@ -19,6 +19,7 @@
   import mixin from "@/components/widgets/mixin-control"
   export default {
     mixins: [mixin],
+    props: ["tdata"],
     data() {
       const that = this
       const defaultData = [{
