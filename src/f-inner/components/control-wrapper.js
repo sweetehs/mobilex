@@ -47,7 +47,8 @@ export default {
               "is-copy": data.id === context.props.copyId
           },
           props: {
-            id: data.id
+            id: data.id,
+            controls: data.controls
           },
           style: controlStyle
         }, [h(data.wid, {

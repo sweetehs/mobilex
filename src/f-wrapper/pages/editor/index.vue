@@ -280,7 +280,9 @@
             style: {},
             props: {},
             action: {},
-            base: {}
+            base: {
+              isLock: false
+            }
           }
         }
         extendDeep(clone(widget), newWidget)

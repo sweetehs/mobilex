@@ -12,7 +12,7 @@
 
 <template>
 	<div class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
-		<controlwrappero :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" />
+		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" />
 	</div>
 </template>
 
@@ -21,7 +21,7 @@
 	import widgetlist from "@/components/widgets/list-elements"
 	import postMessage from "@/util/postMessage"
 	import event from "./components/event"
-	import controlwrappero from "./components/control-wrapper-o"
+	import controlwrapper from "./components/control-wrapper"
 	import rem from "@/util/rem"
 	import {
 		clone,
@@ -36,8 +36,7 @@
 	setGlobalComponents()
 	export default {
 		components: {
-			// controlwrapper,
-			controlwrappero
+			controlwrapper
 		},
 		data() {
 			return {

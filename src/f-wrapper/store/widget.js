@@ -150,6 +150,26 @@ export default {
       _arr[index1] = clone(_arr[index2])
       _arr[index2] = temp
       state.widget[state.currentTab] = clone(currendData)
+    },
+    setLock(state, id) {
+      let currendData = state.widget[state.currentTab]
+      loop(currendData, (data) => data.id == id, (data, index, arr, parent) => {
+        let isLock = !data.controls.base.isLock
+        if (isLock) {
+          data.controls.base.isLock = data.id
+        } else {
+          data.controls.base.isLock = false
+        }
+        //子元素设置lock
+        loop(data.children, () => true, (data1) => {
+          // 
+          if (isLock) {
+            data1.controls.base.isLock = data.id
+          } else {
+            data1.controls.base.isLock = false
+          }
+        })
+      })
     }
   },
   actions: {
@@ -170,6 +190,9 @@ export default {
     },
     deletei(context, id) {
       context.commit('deletei', id)
+    },
+    setLock(context, id) {
+      context.commit('setLock', id)
     },
     setCopy(context, id) {
       context.commit('setCopy', id)

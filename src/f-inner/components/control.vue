@@ -14,12 +14,12 @@
       box-sizing: border-box;
     }
     &.hover {
-      >.overlay{
+      >.overlay {
         border: 2px dashed #e12134;
       }
     }
-    &.active{
-       >.overlay {
+    &.active {
+      >.overlay {
         border: 2px dashed #48D1CC;
       }
     }
@@ -35,10 +35,12 @@
 
 <script>
   import event from "./event"
-  import { getComputedStyle } from "@/util/util"
+  import {
+    getComputedStyle
+  } from "@/util/util"
   export default {
     name: "control",
-    props: ["id"],
+    props: ["id", "controls"],
     data() {
       return {
         style: {},
@@ -46,16 +48,25 @@
       }
     },
     methods: {
+      canClick(){
+        return !this.controls.base.isLock || this.id === this.controls.base.isLock
+      },
       eventItemClick(e) {
-        event.$emit("setControl",this.id)
+        if(this.canClick()){
+          event.$emit("setControl", this.id)
+        }
         e.stopPropagation()
       },
       eventEnter(e) {
-        this.isHover = true
+        if(this.canClick()){
+          this.isHover = true
+        }
         e.stopPropagation()
       },
       eventLeave(e) {
-        this.isHover = false
+        if(this.canClick()){
+          this.isHover = false
+        }
         e.stopPropagation()
       }
     }
