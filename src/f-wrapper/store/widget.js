@@ -112,8 +112,18 @@ export default {
       let currendData = state.widget[state.currentTab]
       let currentCopy = clone(state.currentCopy)
       currentCopy.id = randomId()
+      // 如果此时的状态是lock，要设置lock
+      const {
+        isLock
+      } = state.currentCopy.controls.base
+      if (state.currentCopy.id === isLock) {
+        currentCopy.controls.base.isLock = currentCopy.id
+      }
       loop(currentCopy.children, () => true, (_data) => {
         _data.id = randomId()
+        if (isLock) {
+          _data.controls.base.isLock = _data.id
+        }
       })
       if (id) {
         loop(currendData, (data) => {
