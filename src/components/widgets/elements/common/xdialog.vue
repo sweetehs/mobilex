@@ -40,13 +40,8 @@
 <script>
   export default {
     props: ['visible'],
-    watch: {
-      visible(){
-        debugger
-      }
-    },
     methods: {
-      stop(e){
+      stop(e) {
         e.stopPropagation()
       },
       closeDialog() {

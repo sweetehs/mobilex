@@ -50,15 +50,19 @@
             'is-copy': (copyWidget && item.id === copyWidget.id)
           }">
         <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
-          <div class="name" :style="{
-                  'paddingLeft': (index === 1 ? 20 : index*15)+'px'
-                }">
+          <div :style="{
+              'paddingLeft': (index === 1 ? 20 : index*15)+'px'
+            }">
             <span class="fa" :class="{
-                    'fa-folder': item.children,
-                    'fa-file': !item.children,
-                    'fa-folder-open': isOpens.indexOf(item.id) !== -1
-                  }" @click="eventOpen($event,item)"></span>
+              'fa-folder': item.children,
+              'fa-file': !item.children,
+              'fa-folder-open': isOpens.indexOf(item.id) !== -1
+            }" @click="eventOpen($event,item)"></span>
             <span>{{item.name}}</span>
+            =>
+            <!--会双向绑定直接修改值，没通过vuex-->
+            <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
+            <span v-else @dblclick="eventEditName(item)">{{item.label || item.name}}</span>
           </div>
           <div class="action">
             <a v-if="copyWidget && item.isWrapper && copyWidget.id !== item.id" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
@@ -83,7 +87,8 @@
     data() {
       return {
         isOpens: [],
-        id: randomId()
+        id: randomId(),
+        isEdit: false
       }
     },
     computed: {
@@ -107,6 +112,12 @@
           this.isOpens.push(data.id)
         }
         e.stopPropagation()
+      },
+      eventEditName(item){
+        this.isEdit = true
+      },
+      eventSetLabelName(){
+        this.isEdit = false
       },
       eventDeleteItem(e, data) {
         this.$store.dispatch("$widget/deletei", data.id)

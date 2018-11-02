@@ -46,8 +46,6 @@
     },
     methods: {
       changeData(key, value) {
-        debugger
-        
         this.middle[key] = value
       }
     }
