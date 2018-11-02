@@ -2,6 +2,8 @@
 	.f-inner-wrapper{
 		min-height: 100%;
 		transition: all .25s ease;
+		padding: 1px;
+		box-sizing: border-box;
 		&.dark{
 			background: #b6b6b6;
 		}

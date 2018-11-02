@@ -21,6 +21,7 @@
     &.active{
        >.overlay {
         border: 2px dashed #48D1CC;
+        z-index: 9;
       }
     }
   }
