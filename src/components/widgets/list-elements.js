@@ -17,7 +17,7 @@ export default [{
   controls: {
     style: {
       "display": "block",
-      "padding": "10px 10px 10px 10px",
+      "padding": "10px",
     }
   },
   component: layout
@@ -45,11 +45,11 @@ export default [{
   controls: {
     style: {
       "display": "inline-block",
-      "margin": "10px 10px 10px 10px",
+      "margin": "10px",
       "color": "#abcdef",
-      "width": "100px",
-      "height": "100px",
-      "border-radius": "100px"
+      "width": "200px",
+      "height": "200px",
+      "border-radius": "200px"
     },
     props: {
       url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"

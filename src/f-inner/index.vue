@@ -1,10 +1,10 @@
 <style lang="less">
-	.f-inner-wrapper{
+	.f-inner-wrapper {
 		min-height: 100%;
 		transition: all .25s ease;
 		padding: 1px;
 		box-sizing: border-box;
-		&.dark{
+		&.dark {
 			background: #b6b6b6;
 		}
 	}
@@ -22,8 +22,10 @@
 	import postMessage from "@/util/postMessage"
 	import event from "./components/event"
 	import controlwrappero from "./components/control-wrapper-o"
+	import rem from "@/util/rem"
 	import {
-		clone
+		clone,
+		parseToRem
 	} from "@/util/util"
 	// 全局注册component widget
 	const setGlobalComponents = () => {
@@ -46,12 +48,16 @@
 			}
 		},
 		mounted() {
+			// 设置尺寸
+			rem(750)
 			this.$source = new postMessage(window.parent, window)
 			this.$source.send("widgetnav", widgetlist.map((_data) => {
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (data) => {
-				this.datas = clone(data.list)
+				const list = clone(data.list)
+				parseToRem(list)
+				this.datas = list
 				this.isDialog = data.type === "hidden"
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {

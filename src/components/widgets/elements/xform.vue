@@ -1,19 +1,19 @@
 <style lang="less">
   .xform-wrapper {
-    padding: 20px;
+    padding: 0.4rem;
     overflow: hidden;
     .form-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 30px;
+      height: 0.6rem;
       &:not(:last-child) {
-        margin-bottom: 10px;
+        margin-bottom: 0.2rem;
       }
       >span {
-        width: 60px;
+        width: 1.2rem;
         text-align: right;
-        margin-right: 10px;
+        margin-right: 0.2rem;
       }
       >div {
         flex: 1;
@@ -24,19 +24,19 @@
       a {
         color: #333;
         display: inline-block;
-        padding: 10px;
+        padding: 0.2rem;
       }
     }
     .x_input {
       box-sizing: border-box;
-      padding: 0 10px;
-      height: 30px;
+      padding: 0 0.2rem;
+      height: 0.6rem;
       width: 100%;
-      border: 1px solid #b6b6b6;
-      border-radius: 5px;
+      border: 0.02rem solid #b6b6b6;
+      border-radius: 0.1rem;
     }
     .x_select {
-      min-width: 100px;
+      min-width: 2rem;
     }
   }
 </style>

@@ -14,7 +14,7 @@ export function compare(data1, data2) {
   var flag = true
   for (var i in data1) {
     if (isObject(data1[i])) {
-      flag = compare(data1[i], data2[i]||{})
+      flag = compare(data1[i], data2[i] || {})
     } else {
       if (data1[i] !== data2[i]) {
         flag = false
@@ -25,7 +25,7 @@ export function compare(data1, data2) {
 }
 export function extendDeep(data1, data2) {
   for (var i in data1) {
-    if(!data2[i]){
+    if (!data2[i]) {
       data2[i] = {}
     }
     if (isObject(data1[i])) {
@@ -36,18 +36,33 @@ export function extendDeep(data1, data2) {
   }
 }
 export function loop(arr, judge, callback, parent) {
-  if(!arr){
-    return 
+  if (!arr) {
+    return
   }
   arr.forEach((data, index) => {
     if (judge(data)) {
       callback && callback(data, index, arr, parent)
-    } 
+    }
     if (isArray(data.children)) {
       loop(data.children, judge, callback, data)
     }
   })
 }
-export function getComputedStyle($el){
+export function getComputedStyle($el) {
   return document.defaultView.getComputedStyle($el)
+}
+export function parseToRem(arr) {
+  arr.forEach((data) => {
+    if (data.children) {
+      parseToRem(data.children)
+    }
+    if (data.controls && data.controls.style) {
+      for (var i in data.controls.style) {
+        let _style = data.controls.style[i]
+        data.controls.style[i] = _style.replace(/(\d.*?)(px)/g, (a, b, c) => {
+          return (parseInt(b) / 100) + "rem"
+        })
+      }
+    }
+  })
 }

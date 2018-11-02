@@ -8,6 +8,7 @@ export default {
     layout,
     xtext,
     xbutton,
+    ximage,
     xform
   }
 }
