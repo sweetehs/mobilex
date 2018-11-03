@@ -1,5 +1,6 @@
 import {
-  clone
+  clone,
+  getObjectLength
 } from "@/util/util"
 export default {
   props: ["bdata"],
@@ -7,10 +8,10 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        if (!this.$parseData) {
-          this.props = clone(this.bdata)
-        } else {
+        if (this.$parseData) {
           this.$parseData(clone(this.bdata))
+        } else {
+          this.props = clone(this.bdata)
         }
       }
     },
@@ -26,10 +27,14 @@ export default {
     }
   },
   created() {
+    debugger
     if(this.$parseData){
       this.$parseData(clone(this.bdata))
     }else{
-      this.props = clone(this.bdata)
+      // 如果bdata为空 则不进行赋值
+      if(getObjectLength(this.bdata)){
+        this.props = clone(this.bdata)
+      }
     }
   }
 }

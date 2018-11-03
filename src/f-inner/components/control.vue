@@ -35,9 +35,6 @@
 
 <script>
   import event from "./event"
-  import {
-    getComputedStyle
-  } from "@/util/util"
   export default {
     name: "control",
     props: ["id", "controls"],

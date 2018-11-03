@@ -26,11 +26,16 @@ export default {
           nativeOn: {
             click() {
               if (action && action.type === 'xdialog') {
-                context.listeners.changeParent(action.value, true)
+                context.listeners.changeParent(action.xdialog.id, true)
               }
             }
           }
         }, childtemp)
+        if (data.controls.action.type === 'xlink') {
+          base = h('xlink', {
+            props: data.controls.action.xlink
+          }, [base])
+        }
         base.xid = data.id
         result.push(base)
         return result

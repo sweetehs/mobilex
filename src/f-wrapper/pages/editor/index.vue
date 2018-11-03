@@ -10,7 +10,7 @@
     .controls-wrapper {
       background: rgb(77, 77, 77);
       flex: 1;
-      min-width: 300px;
+      min-width: 400px;
       flex-shrink: 0;
     }
     .action-wrapper {
@@ -134,7 +134,6 @@
         </header>
         <div>
           <ul>
-
             <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
           </ul>
         </div>
@@ -184,6 +183,7 @@
           id: "5bd29730e3cd3d3c7387b36d"
         }
       }).then((ajaxData) => {
+        console.log(JSON.parse(ajaxData.data.data))
         this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data))
       })
     },
@@ -273,18 +273,10 @@
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
-        if (this.currentIsWrapper && !widget.controls.base.isLock) {
+        if (this.currentWidget == "" || (this.currentIsWrapper && !widget.controls.base.isLock)) {
           // 增加一个组件
           let newWidget = {
-            id: randomId(),
-            controls: {
-              style: {},
-              props: {},
-              action: {},
-              base: {
-                isLock: false
-              }
-            }
+            id: randomId()
           }
           extendDeep(clone(widget), newWidget)
           this.$store.dispatch("$widget/add", newWidget)

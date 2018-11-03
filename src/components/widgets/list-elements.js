@@ -1,3 +1,7 @@
+import {
+  extendDeep,
+} from "@/util/util.js"
+
 import layout from "./elements/layout"
 import xtext from "./elements/xtext"
 import xbutton from "./elements/xbutton"
@@ -9,7 +13,7 @@ import xform from "./elements/xform"
     display: ""
   }
 */
-export default [{
+const list = [{
   name: "布局",
   wid: "layout",
   isWrapper: true,
@@ -86,3 +90,16 @@ export default [{
   },
   component: xform
 }]
+list.forEach((data) => {
+  extendDeep({
+    controls: {
+      style: {},
+      props: {},
+      action: {},
+      base: {
+        isLock: false
+      }
+    }
+  }, data)
+})
+export default list

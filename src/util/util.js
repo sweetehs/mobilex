@@ -13,7 +13,7 @@ export function isArray(obj) {
 export function compare(data1, data2) {
   var flag = true
   for (var i in data1) {
-    if (isObject(data1[i])) {
+    if (isObject(data1[i]) && flag) {
       flag = compare(data1[i], data2[i] || {})
     } else {
       if (data1[i] !== data2[i]) {
@@ -65,4 +65,11 @@ export function parseToRem(arr) {
       }
     }
   })
+}
+export function getObjectLength(obj){
+  let l = 0
+  for(let i in obj){
+    l ++ 
+  }
+  return l
 }
