@@ -27,7 +27,6 @@ export default {
     }
   },
   created() {
-    debugger
     if(this.$parseData){
       this.$parseData(clone(this.bdata))
     }else{

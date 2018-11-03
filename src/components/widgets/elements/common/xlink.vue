@@ -1,3 +1,9 @@
+<style>
+  .xlink-wrapper{
+    display: inline;
+  }
+</style>
+
 <template>
   <div class="xlink-wrapper" @click="to">
     <slot></slot>

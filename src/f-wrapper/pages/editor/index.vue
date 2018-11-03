@@ -273,7 +273,7 @@
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
-        if (this.currentWidget == "" || (this.currentIsWrapper && !widget.controls.base.isLock)) {
+        if (this.currentWidget == "" || (this.currentIsWrapper && !this.currentWidget.controls.base.isLock)) {
           // 增加一个组件
           let newWidget = {
             id: randomId()
