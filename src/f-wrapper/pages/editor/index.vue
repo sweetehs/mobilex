@@ -134,7 +134,8 @@
         </header>
         <div>
           <ul>
-            <li :class="{disabled:!currentIsWrapper}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
+
+            <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
           </ul>
         </div>
       </div>
@@ -217,6 +218,9 @@
       },
       currentIsWrapper() {
         return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
+      },
+      disabledAdd(){
+        return !this.currentIsWrapper||(this.currentWidget && this.currentWidget.controls.base.isLock)
       }
     },
     watch: {
@@ -269,24 +273,23 @@
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
-        if (!this.currentIsWrapper) {
-          return
-        }
-        // 增加一个组件
-  
-        let newWidget = {
-          id: randomId(),
-          controls: {
-            style: {},
-            props: {},
-            action: {},
-            base: {
-              isLock: false
+        if (this.currentIsWrapper && !widget.controls.base.isLock) {
+          // 增加一个组件
+          let newWidget = {
+            id: randomId(),
+            controls: {
+              style: {},
+              props: {},
+              action: {},
+              base: {
+                isLock: false
+              }
             }
           }
+          extendDeep(clone(widget), newWidget)
+          this.$store.dispatch("$widget/add", newWidget)
+          return
         }
-        extendDeep(clone(widget), newWidget)
-        this.$store.dispatch("$widget/add", newWidget)
       },
       eventPaste(e) {
         this.$store.dispatch("$widget/setPaste")

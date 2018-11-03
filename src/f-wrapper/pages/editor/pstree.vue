@@ -131,7 +131,6 @@
             this.isOpens.splice(index, 1)
           }
         }
-        e.stopPropagation()
       },
       eventOpen(e, data) {
         if (data.controls.base.isLock) {
