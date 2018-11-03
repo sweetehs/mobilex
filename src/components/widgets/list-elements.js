@@ -39,7 +39,11 @@ const list = [{
   wid: "xbutton",
   controls: {
     style: {
-      "display": "inline-block"
+      "display": "inline-block",
+      "padding": "24px 40px",
+      "border-radius": "20px",
+      "background-color": "#409eff",
+      "color": "#fff"
     }
   },
   component: xbutton

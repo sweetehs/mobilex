@@ -6,7 +6,6 @@ import {
   loop,
   randomId
 } from "@/util/util"
-import mockData from "./mock"
 export default {
   namespaced: true,
   state: {
