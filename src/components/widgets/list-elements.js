@@ -72,21 +72,26 @@ const list = [{
       "display": "block",
     },
     props: {
+      url: "www.baidu.com",
       formitems: [{
         label: "名字",
+        key: "name",
         type: "input",
         rule: "required"
       }, {
         label: "手机",
+        key: "phone",
         type: "input",
         rule: "phone"
       }, {
         label: "性别",
+        key: "sex",
         type: "radio",
         values: ["男", "女"],
         rule: "required"
       }, {
         label: "城市",
+        key: "city",
         type: "select",
         values: ["北京", "上海"]
       }]

@@ -1,13 +1,12 @@
 <style lang="less">
   .ios-wrapper {
-    background-color: #fff;
+    background-color: #eee;
     padding: 60px 20px;
     border-radius: 20px;
-    box-shadow: 0 0 8px #b6b6b6;
     position: relative;
     .ios-inner {
-      background-color: #eee;
-      box-shadow: 0 0 4px #eee;
+      background: #fff;
+      border-radius: 4px;
       position: relative;
     }
     .ios-radius {

@@ -6,6 +6,7 @@
       .item-common,
       .item-special {
         position: relative;
+        margin-bottom: 5px;
         .fa {
           position: absolute;
           right: -15px;
@@ -35,15 +36,21 @@
 <template>
   <div class="control-xform">
     <el-form label-width="100px">
+      <el-form-item label="ajax地址">
+        <el-input v-model="props.url"></el-input>
+      </el-form-item>
       <el-form-item class="item" v-for="(item,i) in props.formitems" :key="i">
-        <span slot="label"><el-input v-model="item.label"></el-input></span>
+        <div slot="label">
+          <div class="fn-mb5"><el-input v-model="item.label"></el-input></div>
+          <div><el-input v-model="item.key"></el-input></div>
+        </div>
         <div class="item-common">
           <a v-if="item.type !== 'input'" href="javascript:;" class="fa fa-plus" @click="eventAddItem(item)"></a>
           <el-select v-model="item.type">
             <el-option v-for="(t,i) in formType" :key="i" :value="t.value" :label="t.name"></el-option>
           </el-select>
         </div>
-        <div class="item-rule">
+        <div class="item-rule fn-mb5">
           <el-radio-group v-model="item.rule">
             <el-radio v-for="(item,i) in formRule" :label="item.value" :key="i">{{item.name}}</el-radio>
           </el-radio-group>

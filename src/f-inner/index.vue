@@ -1,5 +1,6 @@
 <style lang="less">
 	.f-inner-wrapper {
+		background: #fff;
 		min-height: 100%;
 		transition: all .25s ease;
 		padding: 1px;
