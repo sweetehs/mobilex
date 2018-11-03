@@ -113,9 +113,7 @@
   <div class="editor-main-wrapper">
     <div class="action-wrapper">
       <div class="ps-wrapper">
-        <header>
-          <span>组件层级</span>
-        </header>
+        <header><span>组件层级</span></header>
         <div>
           <header class="tree-root" :class="{active:currentWidget===''}" @click="setRoot">
             <div>
@@ -129,9 +127,7 @@
         </div>
       </div>
       <div class="nav-wrapper">
-        <header>
-          <span>组件库</span>
-        </header>
+        <header><span>组件库</span></header>
         <div>
           <ul>
             <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
@@ -219,8 +215,8 @@
       currentIsWrapper() {
         return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
       },
-      disabledAdd(){
-        return !this.currentIsWrapper||(this.currentWidget && this.currentWidget.controls.base.isLock)
+      disabledAdd() {
+        return !this.currentIsWrapper || (this.currentWidget && this.currentWidget.controls.base.isLock)
       }
     },
     watch: {
