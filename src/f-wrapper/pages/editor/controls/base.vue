@@ -1,45 +1,56 @@
 <template>
   <div class="control-base-wrapper">
     <el-form>
-      <el-form-item label="名称" label-width="50px">
-        <el-input v-model="props.name"></el-input>
-      </el-form-item>
+      <div v-if="props.style">
+        <el-form-item label="文字颜色" label-width="80px">
+          <el-input v-model="props.style.color"></el-input>
+        </el-form-item>
+         <el-form-item label="内边距" label-width="80px">
+          <el-input v-model="props.style.padding"></el-input>
+        </el-form-item>
+        <el-form-item label="背景颜色" label-width="80px">
+          <el-input v-model="props.style['background-color']"></el-input>
+        </el-form-item>
+        <el-form-item label="背景url" label-width="80px">
+          <el-input v-model="props.style['background-image']"></el-input>
+        </el-form-item>
+        <el-form-item label="背景重复" label-width="80px">
+          <el-radio-group v-model="props.style['background-repeat']">
+            <el-radio label="no-repeat">无重复</el-radio>
+            <el-radio label="repeat">重复</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-  import { clone } from "@/util/util"
+  import {
+    clone
+  } from "@/util/util"
+  import mixin from "@/components/widgets/mixin-control"
   export default {
-    props: ["bdata"],
-    data(){
+    mixins: [mixin],
+    data() {
       return {
         props: {}
       }
     },
-    watch: {
-      bdata: {
-        deep: true,
-        handler() {
-          this.$parseData && this.$parseData(this.bdata)
-        }
-      },
-      props: {
-        deep: true,
-        handler() {
-          this.$emit("change", this.$reverseData())
-        }
-      }
-    },
-    created() {
-      this.$parseData && this.$parseData(this.bdata)
-    },
     methods: {
-      $parseData() {
-        this.props = clone(this.bdata)
-      },
-      $reverseData(){
-        return clone(this.props)
+      $parseData(data) {
+        // data.style.padding = "10px"
+        if (!data.style) {
+          data.style = {
+            "padding": "",
+            "color": "",
+            "background-image": "",
+            "background-color": "",
+            "background-size": "100%",
+            "background-repeat": "no-repeat"
+          }
+        }
+        this.props = data
       }
     }
   }

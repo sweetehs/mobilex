@@ -262,10 +262,11 @@
       },
       postWidgetListSend() {
         // 发送list数据内部显示
-        this.$source.send("widgetlist", {
+        this.$source.send("widgetlist", clone({
           list: this.widgetlist,
-          type: this.vsTabIndex
-        })
+          type: this.vsTabIndex,
+          base: this.$widget.base
+        }))
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
@@ -291,7 +292,9 @@
       },
       peventUpdateBase(data) {
         // 更新基础数据
-        this.$store.dispatch("$widget/updateBase", data)
+        this.$store.dispatch("$widget/updateBase", data).then(() => {
+          this.postWidgetListSend()
+        })
       },
       peventSave() {
         // 报错接口

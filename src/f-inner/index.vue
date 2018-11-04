@@ -12,7 +12,7 @@
 </style>
 
 <template>
-	<div class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
+	<div :style="base.style" class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
 		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" />
 	</div>
 </template>
@@ -26,7 +26,8 @@
 	import rem from "@/util/rem"
 	import {
 		clone,
-		parseToRem
+		parseToRem,
+		handelCssData
 	} from "@/util/util"
 	// 全局注册component widget
 	const setGlobalComponents = () => {
@@ -42,6 +43,7 @@
 		data() {
 			return {
 				datas: [],
+				base: {},
 				currentId: '',
 				copyId: '',
 				isDialog: ''
@@ -56,8 +58,10 @@
 			}))
 			this.$source.receive("widgetlist", (data) => {
 				const list = clone(data.list)
+				handelCssData(data.base.style)
 				parseToRem(list)
 				this.datas = list
+				this.base = data.base
 				this.isDialog = data.type === "hidden"
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {

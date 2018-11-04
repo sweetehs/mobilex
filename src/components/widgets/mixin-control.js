@@ -8,10 +8,16 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        if (this.$parseData) {
-          this.$parseData(clone(this.bdata))
-        } else {
-          this.props = clone(this.bdata)
+        let temp = ""
+        if(!getObjectLength(this.bdata)){
+          temp = clone(this.defaultData)
+        }else{
+          temp = clone(this.bdata)
+        }
+        if(this.$parseData){
+          this.$parseData(temp)
+        }else{
+          this.props = clone(temp)
         }
       }
     },
@@ -27,11 +33,14 @@ export default {
     }
   },
   created() {
-    if(this.$parseData){
+    //暂存一下默认数据
+    
+    this.defaultData = clone(this.props)
+    if (this.$parseData) {
       this.$parseData(clone(this.bdata))
-    }else{
+    } else {
       // 如果bdata为空 则不进行赋值
-      if(getObjectLength(this.bdata)){
+      if (getObjectLength(this.bdata)) {
         this.props = clone(this.bdata)
       }
     }

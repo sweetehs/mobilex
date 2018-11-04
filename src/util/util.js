@@ -73,3 +73,12 @@ export function getObjectLength(obj){
   }
   return l
 }
+export function handelCssData(css){
+  if(!css){
+    return 
+  }
+  if(css["background-image"]){
+    css["background-image"] = `url(${css["background-image"]})`
+  }
+  return clone(css)
+}
