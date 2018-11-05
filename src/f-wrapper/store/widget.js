@@ -119,12 +119,16 @@ export default {
         currentCopy.base.isLock = currentCopy.id
       }
       loop(currentCopy.children, () => true, (_data) => {
+        // 设置子元素id和lock
         _data.id = randomId()
         if (isLock) {
-          _data.base.isLock = _data.id
+          _data.base.isLock = isLock
+        }else{
+          _data.base.isLock = false
         }
       })
       if (id) {
+        // 找到父级元素并且复制到父级元素
         loop(currendData, (data) => {
           return data.id === id
         }, (data) => {

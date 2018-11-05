@@ -77,7 +77,7 @@
                       'fa-file': !item.children,
                       'fa-folder-open': isOpens.indexOf(item.id) !== -1
                     }" @click="eventOpen($event,item)"></span>
-            <span>{{item.name}}</span> =>
+            <span>{{item.name}}</span> ->
             <!--会双向绑定直接修改值，没通过vuex-->
             <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
             <span v-else @dblclick="eventEditName(item)">{{item.label || item.name}}</span>

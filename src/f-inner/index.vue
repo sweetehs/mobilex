@@ -59,7 +59,6 @@
 			this.$source.receive("widgetlist", (data) => {
 				const list = clone(data.list)
 				handelCssData(data.base.style)
-				debugger
 				parseToRem(list)
 				this.datas = list
 				this.base = data.base
