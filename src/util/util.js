@@ -56,10 +56,10 @@ export function parseToRem(arr) {
     if (data.children) {
       parseToRem(data.children)
     }
-    if (data.controls && data.controls.style) {
-      for (var i in data.controls.style) {
-        let _style = data.controls.style[i]
-        data.controls.style[i] = _style.replace(/(\d.*?)(px)/g, (a, b, c) => {
+    if (data.style) {
+      for (var i in data.style) {
+        let _style = data.style[i]
+        data.style[i] = _style.replace(/(\d.*?)(px)/g, (a, b, c) => {
           return (parseInt(b) / 100) + "rem"
         })
       }

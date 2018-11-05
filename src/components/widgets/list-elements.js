@@ -18,96 +18,84 @@ const list = [{
   wid: "layout",
   isWrapper: true,
   children: [],
-  controls: {
-    style: {
-      "display": "block",
-      "padding": "10px",
-    }
+  style: {
+    "display": "block",
+    "padding": "10px",
   },
   component: layout
 }, {
   name: "文字",
   wid: "xtext",
   component: xtext,
-  controls: {
-    style: {
-      "display": "block"
-    }
+  style: {
+    "display": "block"
   }
 }, {
   name: "按钮",
   wid: "xbutton",
-  controls: {
-    style: {
-      "display": "inline-block",
-      "padding": "24px 40px",
-      "border-radius": "20px",
-      "background-color": "#409eff",
-      "color": "#fff"
-    }
+  style: {
+    "display": "inline-block",
+    "padding": "24px 40px",
+    "border-radius": "20px",
+    "background-color": "#409eff",
+    "color": "#fff"
   },
   component: xbutton
 }, {
   name: "图片",
   wid: "ximage",
-  controls: {
-    style: {
-      "display": "inline-block",
-      "margin": "10px",
-      "color": "#abcdef",
-      "width": "200px",
-      "height": "200px",
-      "border-radius": "200px"
-    },
-    props: {
-      url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
-    }
+  style: {
+    "display": "inline-block",
+    "margin": "10px",
+    "color": "#abcdef",
+    "width": "200px",
+    "height": "200px",
+    "border-radius": "200px"
+  },
+  props: {
+    url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
   },
   component: ximage
 }, {
   name: "表单",
   wid: "xform",
-  controls: {
-    style: {
-      "display": "block",
-    },
-    props: {
-      url: "www.baidu.com",
-      formitems: [{
-        label: "名字",
-        key: "name",
-        type: "input",
-        rule: "required"
-      }, {
-        label: "手机",
-        key: "phone",
-        type: "input",
-        rule: "phone"
-      }, {
-        label: "性别",
-        key: "sex",
-        type: "radio",
-        values: ["男", "女"],
-        rule: "required"
-      }, {
-        label: "城市",
-        key: "city",
-        type: "select",
-        values: ["北京", "上海"]
-      }]
-    }
+  style: {
+    "display": "block",
+  },
+  props: {
+    url: "www.baidu.com",
+    formitems: [{
+      label: "名字",
+      key: "name",
+      type: "input",
+      rule: "required"
+    }, {
+      label: "手机",
+      key: "phone",
+      type: "input",
+      rule: "phone"
+    }, {
+      label: "性别",
+      key: "sex",
+      type: "radio",
+      values: ["男", "女"],
+      rule: "required"
+    }, {
+      label: "城市",
+      key: "city",
+      type: "select",
+      values: ["北京", "上海"]
+    }]
   },
   component: xform
 }]
 list.forEach((data) => {
   extendDeep({
-    controls: {
-      style: {},
-      props: {},
-      action: {},
-      base: {
-        isLock: false
-      }
+    style: {},
+    props: {},
+    action: {},
+    base: {
+      isLock: false
     }
   }, data)
 })

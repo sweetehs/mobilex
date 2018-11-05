@@ -68,8 +68,8 @@
                       'paddingLeft': (index === 1 ? 20 : index*15)+'px'
                     }">
             <span class="fa btn-lock" :class="{
-                      'fa-lock': item.controls.base.isLock,
-                      'fa-unlock': !item.controls.base.isLock,
+                      'fa-lock': item.base.isLock,
+                      'fa-unlock': !item.base.isLock,
                       'hidden': !item.isWrapper
                     }" @click="eventToggleLock($event, item)"></span>
             <span class="fa btn-open" :class="{
@@ -124,7 +124,7 @@
       },
       eventToggleLock(e, data) {
         this.$store.dispatch("$widget/setLock", data.id)
-        if(data.controls.base.isLock){
+        if(data.base.isLock){
           this.$store.dispatch("$widget/setCur")
           let index = this.isOpens.indexOf(data.id)
           if(index !== -1){
@@ -133,7 +133,7 @@
         }
       },
       eventOpen(e, data) {
-        if (data.controls.base.isLock) {
+        if (data.base.isLock) {
           return
         }
         let index = this.isOpens.indexOf(data.id)

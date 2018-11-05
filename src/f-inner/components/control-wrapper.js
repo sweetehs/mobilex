@@ -22,7 +22,7 @@ export default {
         const {
           display,
           flex
-        } = data.controls.style
+        } = data.style
         let controlStyle = {
           display: display,
           flex: flex || 'none'
@@ -48,12 +48,12 @@ export default {
           },
           props: {
             id: data.id,
-            controls: data.controls
+            base: data.base
           },
           style: controlStyle
         }, [h(data.wid, {
-          style: data.controls.style,
-          props: data.controls.props
+          style: data.style,
+          props: data.props
         }, childtemp)]))
         return result
       }, [])

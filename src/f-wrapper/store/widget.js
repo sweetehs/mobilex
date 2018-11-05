@@ -47,18 +47,18 @@ export default {
           return data.id === id
         }, (data, index, arr, parent) => {
           const tempData = clone(data)
-          if (!tempData.controls.temp) {
-            tempData.controls.temp = {}
+          if (!tempData.temp) {
+            tempData.temp = {}
           }
           // 特殊处理 如果parent是flex,则显示flex值得框
           if (parent) {
-            if (parent.controls.style.display && parent.controls.style.display === "flex") {
-              tempData.controls.temp.parentFlex = true
+            if (parent.style.display && parent.style.display === "flex") {
+              tempData.temp.parentFlex = true
             }
           }
           if (!data.isWrapper) {
             // 禁止显示disable:flex
-            tempData.controls.temp.disabledFlex = true
+            tempData.temp.disabledFlex = true
           }
           state.currentWidget = tempData
         })
@@ -114,14 +114,14 @@ export default {
       // 如果此时的状态是lock，要设置lock
       const {
         isLock
-      } = state.currentCopy.controls.base
+      } = state.currentCopy.base
       if (state.currentCopy.id === isLock) {
-        currentCopy.controls.base.isLock = currentCopy.id
+        currentCopy.base.isLock = currentCopy.id
       }
       loop(currentCopy.children, () => true, (_data) => {
         _data.id = randomId()
         if (isLock) {
-          _data.controls.base.isLock = _data.id
+          _data.base.isLock = _data.id
         }
       })
       if (id) {
@@ -163,19 +163,19 @@ export default {
     setLock(state, id) {
       let currendData = state.widget[state.currentTab]
       loop(currendData, (data) => data.id == id, (data, index, arr, parent) => {
-        let isLock = !data.controls.base.isLock
+        let isLock = !data.base.isLock
         if (isLock) {
-          data.controls.base.isLock = data.id
+          data.base.isLock = data.id
         } else {
-          data.controls.base.isLock = false
+          data.base.isLock = false
         }
         //子元素设置lock
         loop(data.children, () => true, (data1) => {
           // 
           if (isLock) {
-            data1.controls.base.isLock = data.id
+            data1.base.isLock = data.id
           } else {
-            data1.controls.base.isLock = false
+            data1.base.isLock = false
           }
         })
       })

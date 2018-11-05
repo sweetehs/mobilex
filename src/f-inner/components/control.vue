@@ -37,7 +37,7 @@
   import event from "./event"
   export default {
     name: "control",
-    props: ["id", "controls"],
+    props: ["id", "base"],
     data() {
       return {
         style: {},
@@ -45,23 +45,23 @@
       }
     },
     methods: {
-      canClick(){
-        return !this.controls.base.isLock || this.id === this.controls.base.isLock
+      canClick() {
+        return !this.base.isLock || this.id === this.base.isLock
       },
       eventItemClick(e) {
-        if(this.canClick()){
+        if (this.canClick()) {
           event.$emit("setControl", this.id)
         }
         e.stopPropagation()
       },
       eventEnter(e) {
-        if(this.canClick()){
+        if (this.canClick()) {
           this.isHover = true
         }
         e.stopPropagation()
       },
       eventLeave(e) {
-        if(this.canClick()){
+        if (this.canClick()) {
           this.isHover = false
         }
         e.stopPropagation()

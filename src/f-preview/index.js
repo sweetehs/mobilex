@@ -19,10 +19,10 @@ export default {
         }
         const {
           action
-        } = data.controls
+        } = data
         var base = h(data.wid, {
-          props: data.controls.props,
-          style: data.controls.style,
+          props: data.props,
+          style: data.style,
           nativeOn: {
             click() {
               if (action && action.type === 'xdialog') {
@@ -31,9 +31,9 @@ export default {
             }
           }
         }, childtemp)
-        if (data.controls.action.type === 'xlink') {
+        if (data.action.type === 'xlink') {
           base = h('xlink', {
-            props: data.controls.action.xlink
+            props: data.action.xlink
           }, [base])
         }
         base.xid = data.id

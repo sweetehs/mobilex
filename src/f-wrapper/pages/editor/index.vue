@@ -216,7 +216,7 @@
         return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
       },
       disabledAdd() {
-        return !this.currentIsWrapper || (this.currentWidget && this.currentWidget.controls.base.isLock)
+        return !this.currentIsWrapper || (this.currentWidget && this.currentWidget.base.isLock)
       }
     },
     watch: {
@@ -270,7 +270,7 @@
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
-        if (this.currentWidget == "" || (this.currentIsWrapper && !this.currentWidget.controls.base.isLock)) {
+        if (this.currentWidget == "" || (this.currentIsWrapper && !this.currentWidget.base.isLock)) {
           // 增加一个组件
           let newWidget = {
             id: randomId()

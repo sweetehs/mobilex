@@ -15,7 +15,8 @@
         padding: 0 5px;
       }
     }
-    .el-input,.el-select{
+    .el-input,
+    .el-select {
       width: 100%;
     }
   }
@@ -28,13 +29,13 @@
         <Controlbase @change="peventChangeBaseData" :bdata="baseData" />
       </el-tab-pane>
       <el-tab-pane label="样式" name="1" v-if="currentWidget ? true : false">
-        <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.controls.style" :tdata="currentWidget.controls.temp"/>
+        <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.style" :tdata="currentWidget.temp" />
       </el-tab-pane>
       <el-tab-pane label="操作" name="2" v-if="currentWidget ? true : false">
-        <Controlaction @change="preventChangeActionData" :bdata="currentWidget.controls.action"/>
+        <Controlaction @change="preventChangeActionData" :bdata="currentWidget.action" />
       </el-tab-pane>
       <el-tab-pane label="个性化" name="3" v-if="currentWidget ? true : false">
-        <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="(currentWidget) ? currentWidget.controls.props : {}" />
+        <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="(currentWidget) ? currentWidget.props : {}" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -71,23 +72,17 @@
     methods: {
       peventChangeStyleData(data) {
         this.$emit("change", {
-          controls: {
-            style: clone(data)
-          }
+          style: clone(data)
         })
       },
       peventChangePropsData(data) {
         this.$emit("change", {
-          controls: {
-            props: clone(data)
-          }
+          props: clone(data)
         })
       },
-      preventChangeActionData(data){
+      preventChangeActionData(data) {
         this.$emit("change", {
-          controls: {
-            action: clone(data)
-          }
+          action: clone(data)
         })
       },
       peventChangeBaseData(data) {
