@@ -51,20 +51,20 @@
       eventItemClick(e) {
         if (this.canClick()) {
           event.$emit("setControl", this.id)
+          e.stopPropagation()
         }
-        e.stopPropagation()
       },
       eventEnter(e) {
         if (this.canClick()) {
           this.isHover = true
+          e.stopPropagation()
         }
-        e.stopPropagation()
       },
       eventLeave(e) {
         if (this.canClick()) {
           this.isHover = false
+          e.stopPropagation()
         }
-        e.stopPropagation()
       }
     }
   }
