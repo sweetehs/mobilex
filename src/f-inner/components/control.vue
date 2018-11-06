@@ -2,6 +2,11 @@
   .item-control-wrapper {
     position: relative;
     margin: -1px;
+    &.lock{
+      .overlay:not(.lock-root){
+        border: none;
+      }
+    }
     .overlay {
       position: absolute;
       height: 100%;
@@ -27,8 +32,14 @@
 </style>
 
 <template>
-  <div :class="{'item-control-wrapper':true,'hover':isHover}" :style="style" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
-    <div class="overlay"></div>
+  <div :class="{
+    'item-control-wrapper':true,
+    'hover':isHover,
+    'lock': base.isLock
+  }" :style="style" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
+    <div class="overlay" :class="{
+      'lock-root': base.isLock == id
+    }"></div>
     <slot></slot>
   </div>
 </template>
