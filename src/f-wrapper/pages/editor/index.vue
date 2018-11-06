@@ -1,6 +1,7 @@
 <style lang="less">
   .editor-main-wrapper {
     height: 100%;
+    width: 100%;
     display: flex;
     .editor-main-wrapper {
       color: #ddd;
