@@ -93,7 +93,13 @@
         }
       }
       .nav-wrapper {
+        header{
+          .el-tabs__nav{
+            margin-left: 10px;
+          }
+        }
         ul {
+          padding: 0 10px;
           li {
             // line-height: 40px;
             display: inline-block;
@@ -160,10 +166,14 @@
           </div>
         </div>
         <div class="nav-wrapper">
-          <header><span>组件库</span></header>
-          <div>
+          <header>
+            <el-tabs v-model="widgettab">
+              <el-tab-pane v-for="(item,i) in widgetnav" :label="item.name" :name="i+''" :key="i"></el-tab-pane>
+            </el-tabs>
+          </header>
+          <div v-if="widgetnav[widgettab]">
             <ul>
-              <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
+              <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav[widgettab].list" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
             </ul>
           </div>
         </div>
@@ -239,6 +249,7 @@
     },
     data() {
       return {
+        widgettab: "0",
         vsTabIndex: "datas",
         widgetnav: [],
         showNav: false,
@@ -309,7 +320,7 @@
     },
     methods: {
       saveAjax() {
-        this.$store.dispatch("$widget/setAjax").then(()=>{
+        this.$store.dispatch("$widget/setAjax").then(() => {
           this.ajaxDialog = false
         })
       },

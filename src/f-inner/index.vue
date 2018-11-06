@@ -31,8 +31,10 @@
 	} from "@/util/util"
 	// 全局注册component widget
 	const setGlobalComponents = () => {
-		widgetlist.forEach((_c) => {
-			Vue.component(_c.wid, _c.component)
+		widgetlist.forEach((data) => {
+			data.list.forEach((_c)=>{
+				Vue.component(_c.wid, _c.component)
+			})
 		});
 	}
 	setGlobalComponents()

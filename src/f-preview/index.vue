@@ -27,8 +27,10 @@
     clone
   } from "@/util/util"
   const setGlobalComponents = () => {
-    widgetlist.forEach((_c) => {
-      Vue.component(_c.wid, _c.component)
+    widgetlist.forEach((data) => {
+      data.list.map((_c)=>{
+        Vue.component(_c.wid, _c.component)
+      })
     });
   }
   setGlobalComponents()
