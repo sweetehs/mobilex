@@ -101,7 +101,7 @@
                   // 如果没有父元素 则需要删除原来的项数，在增加几项
                   Array.prototype.splice.apply(tempDatas, [tempDatas.length, 0].concat(list))
                 }
-                // 以后元素不进行遍历
+                // 子元素不在进行遍历
                 return false
               }
             } else {

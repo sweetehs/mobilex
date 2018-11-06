@@ -1,11 +1,11 @@
 <style lang="less">
-	.keytree-wrapper{
-		ul{
-			padding-left:30px;
-			&.padding0{
+	.keytree-wrapper {
+		ul {
+			padding-left: 30px;
+			&.padding0 {
 				padding: 0;
 			}
-			li{
+			li {
 				margin-bottom: 10px;
 			}
 		}
@@ -16,7 +16,7 @@
 	<div class="keytree-wrapper">
 		<ul :class="{padding0:index == 1}">
 			<li v-for="(item) in datas" :key="item.id">
-				<div>
+				<div v-if="!item.ajax.id || currentWidget.id == item.ajax.id">
 					<el-input v-model="item.key" v-if="!item.isWrapper" class="middle"></el-input>
 					<span>{{item.name}}->{{item.label||'暂无描述'}}</span>
 				</div>
@@ -29,7 +29,12 @@
 <script>
 	export default {
 		name: "keytree",
-		props: ["datas","index"]
+		props: ["datas", "index"],
+		computed: {
+			currentWidget() {
+				return this.$store.state.$widget.currentWidget
+			}
+		},
 	}
 </script>
 
