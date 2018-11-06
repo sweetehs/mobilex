@@ -2,7 +2,13 @@ export function clone(data) {
   return data ? JSON.parse(JSON.stringify(data)) : {}
 }
 export function randomId() {
-  return "id" + parseInt(Math.random() * 100000000000)
+  var returnStr = "",
+    charStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (var i = 0; i < 12; i++) {
+    var index = Math.round(Math.random() * (charStr.length - 1));
+    returnStr += charStr.substring(index, index + 1);
+  }
+  return returnStr;
 }
 export function isObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]"
@@ -42,7 +48,7 @@ export function loop(arr, judge, callback, parent) {
   arr.forEach((data, index) => {
     var flag = true
     if (judge(data)) {
-      if(callback){
+      if (callback) {
         flag = callback(data, index, arr, parent)
       }
     }
@@ -69,18 +75,18 @@ export function parseToRem(arr) {
     }
   })
 }
-export function getObjectLength(obj){
+export function getObjectLength(obj) {
   let l = 0
-  for(let i in obj){
-    l ++ 
+  for (let i in obj) {
+    l++
   }
   return l
 }
-export function handelCssData(css){
-  if(!css){
-    return 
+export function handelCssData(css) {
+  if (!css) {
+    return
   }
-  if(css["background-image"]){
+  if (css["background-image"]) {
     css["background-image"] = `url(${css["background-image"]})`
   }
   return clone(css)
