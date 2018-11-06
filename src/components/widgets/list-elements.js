@@ -1,5 +1,6 @@
 import {
   extendDeep,
+  loop
 } from "@/util/util.js"
 
 import layout from "./elements/layout"
@@ -15,7 +16,7 @@ import xform from "./elements/xform"
 */
 const mapList = [{
   name: "布局",
-  list: [{
+  children: [{
     name: "布局",
     wid: "layout",
     isWrapper: true,
@@ -33,6 +34,7 @@ const mapList = [{
     component: layout,
     style: {
       "display": "flex",
+      "width": "100%",
       "min-height": "100px"
     },
     children: [{
@@ -41,7 +43,7 @@ const mapList = [{
       isWrapper: true,
       children: [],
       style: {
-        "felx": "1",
+        "flex": "1",
         "display": "block",
         "padding": "20px"
       },
@@ -52,7 +54,7 @@ const mapList = [{
       isWrapper: true,
       children: [],
       style: {
-        "felx": "1",
+        "flex": "1",
         "display": "block",
         "padding": "20px"
       },
@@ -61,7 +63,7 @@ const mapList = [{
   }]
 }, {
   name: "基础",
-  list: [{
+  children: [{
     name: "文字",
     wid: "xtext",
     component: xtext,
@@ -102,7 +104,7 @@ const mapList = [{
   }]
 }, {
   name: "复合",
-  list: [{
+  children: [{
     name: "表单",
     wid: "xform",
     style: {
@@ -136,8 +138,8 @@ const mapList = [{
     component: xform
   }]
 }]
-mapList.forEach((data1) => {
-  data1.list.forEach((data2) => {
+loop(mapList, () => true, (data, index, arr, parent) => {
+  if (parent) {
     extendDeep({
       key: "",
       style: {},
@@ -147,7 +149,7 @@ mapList.forEach((data1) => {
       base: {
         isLock: false
       }
-    }, data2)
-  })
+    }, data)
+  }
 })
 export default mapList

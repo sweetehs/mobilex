@@ -32,7 +32,7 @@
 	// 全局注册component widget
 	const setGlobalComponents = () => {
 		widgetlist.forEach((data) => {
-			data.list.forEach((_c)=>{
+			data.children.forEach((_c)=>{
 				Vue.component(_c.wid, _c.component)
 			})
 		});

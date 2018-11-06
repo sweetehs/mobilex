@@ -194,7 +194,6 @@
         const that = this
         let error = ""
         this.forms.forEach((_data) => {
-          debugger
           if (!error) {
             if (_data.rule && !that.rules[_data.rule](_data.value)) {
               error = "请输入正确的" + _data.label

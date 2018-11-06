@@ -93,8 +93,8 @@
         }
       }
       .nav-wrapper {
-        header{
-          .el-tabs__nav{
+        header {
+          .el-tabs__nav {
             margin-left: 10px;
           }
         }
@@ -173,7 +173,7 @@
           </header>
           <div v-if="widgetnav[widgettab]">
             <ul>
-              <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav[widgettab].list" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
+              <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav[widgettab].children" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
             </ul>
           </div>
         </div>
@@ -226,7 +226,7 @@
   import Ioswrapper from "./widget/ios"
   import {
     clone,
-    extendDeep,
+    loop,
     randomId
   } from "@/util/util.js"
   export default {
@@ -325,7 +325,6 @@
         })
       },
       setAjax() {
-        debugger
         // 设置ajax数据
         this.ajaxDialog = true
       },
@@ -348,10 +347,11 @@
         // 不是wrapper不能增加组件
         if (this.currentWidget == "" || (this.currentIsWrapper && !this.currentWidget.base.isLock)) {
           // 增加一个组件
-          let newWidget = {
-            id: randomId()
-          }
-          extendDeep(clone(widget), newWidget)
+          const newWidget = clone(widget)
+          newWidget.id = randomId()
+          loop(newWidget.children, () => true, (data) => {
+            data.id = randomId()
+          })
           this.$store.dispatch("$widget/add", newWidget)
           return
         }

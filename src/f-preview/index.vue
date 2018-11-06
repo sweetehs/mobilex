@@ -28,7 +28,7 @@
   } from "@/util/util"
   const setGlobalComponents = () => {
     widgetlist.forEach((data) => {
-      data.list.map((_c)=>{
+      data.children.map((_c)=>{
         Vue.component(_c.wid, _c.component)
       })
     });
