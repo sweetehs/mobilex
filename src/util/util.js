@@ -40,10 +40,13 @@ export function loop(arr, judge, callback, parent) {
     return
   }
   arr.forEach((data, index) => {
+    var flag = true
     if (judge(data)) {
-      callback && callback(data, index, arr, parent)
+      if(callback){
+        flag = callback(data, index, arr, parent)
+      }
     }
-    if (isArray(data.children)) {
+    if (isArray(data.children) && flag !== false) {
       loop(data.children, judge, callback, data)
     }
   })

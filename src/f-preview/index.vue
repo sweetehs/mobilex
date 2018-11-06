@@ -79,36 +79,40 @@
         })
         Promise.all(promise).then(() => {
           // 设置props
-          let flag = true
+          // let flag = true
           let tempRoot = []
           loop(datas, () => true, (data, index, arr, parent) => {
             if (data.ajax.flag) {
               if (data.ajax.repeat) {
-                flag = false
+                // flag = false
                 const ajaxData = this.ajaxList[data.id]
                 const list = ajaxData.map((_data) => {
                   const widget = clone(data)
                   // 查找有ajax的元素
-                  loop(widget.children, (_d) => _d.ajax && _d.ajax.id == data.id,(_child)=>{
+                  loop(widget.children, (_d) => _d.ajax && _d.ajax.id == data.id, (_child) => {
                     _child.props[_child.ajaxkey] = _data[_child.key]
                   })
                   return widget
                 })
                 if (parent && parent.children) {
                   parent.children = list
+                  // 不进行剩下child的遍历
+                  // return false
                 } else {
-                  tempRoot = tempRoot.concat(list)
-                  this.datas = tempRoot
+                  // 如果没有父元素 则需要删除原来的项数，在增加几项
+                  Array.prototype.splice.apply(this.datas, [index, 1].concat(list))
                 }
-                this.loadView = true
               }
             }
-            if (data.ajaxkey && data.ajax.id && flag) {
-              const ajaxData = this.ajaxList[data.ajax.id]
-              data.props[data.ajaxkey] = ajaxData[data.key]
-            }
+            // if (data.ajaxkey && data.ajax.id) {
+            //   const ajaxData = this.ajaxList[data.ajax.id]
+            //   data.props[data.ajaxkey] = ajaxData[data.key]
+            // }
           })
-          console.log(datas)
+          setTimeout(() => {
+            this.loadView = true
+            console.log(clone(this.datas))
+          }, 1000)
         })
         // 需要注册弹出层的数据
         this.hidden.forEach((_d) => {
