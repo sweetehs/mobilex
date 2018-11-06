@@ -104,7 +104,7 @@
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
-        <treewrapper :index="index+1" v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" />
+        <treewrapper @setAjax="eventSetAjax(item)" :index="index+1" v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" />
       </li>
     </ul>
   </div>

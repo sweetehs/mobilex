@@ -79,9 +79,10 @@
         })
         Promise.all(promise).then(() => {
           // 设置props
-          // let flag = true
-          let tempRoot = []
+          let tempDatas = []
+          let tempParent = {}
           loop(datas, () => true, (data, index, arr, parent) => {
+            // 需要重新生成一个树
             if (data.ajax.flag) {
               if (data.ajax.repeat) {
                 // flag = false
@@ -95,13 +96,22 @@
                   return widget
                 })
                 if (parent && parent.children) {
-                  parent.children = list
-                  // 不进行剩下child的遍历
-                  // return false
+                  Array.prototype.splice.apply(tempParent.children, [tempParent.children.length, 0].concat(list))
                 } else {
                   // 如果没有父元素 则需要删除原来的项数，在增加几项
-                  Array.prototype.splice.apply(this.datas, [index, 1].concat(list))
+                  Array.prototype.splice.apply(tempDatas, [tempDatas.length, 0].concat(list))
                 }
+              }
+              this.datas = tempDatas
+            } else {
+              if (parent && parent.children) {
+                if(!data.ajax.id){
+                  tempParent.children.push(clone(data))
+                }
+              } else {
+                tempParent = clone(arr[index])
+                tempParent.children = []
+                tempDatas.splice(tempDatas.length, 0, tempParent)
               }
             }
             // if (data.ajaxkey && data.ajax.id) {

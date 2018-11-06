@@ -313,6 +313,7 @@
         })
       },
       setAjax() {
+        debugger
         // 设置ajax数据
         this.ajaxDialog = true
       },
