@@ -17,9 +17,24 @@
 
 <template>
   <div class="f-wrapper-wrapper">
-		<!-- <div class="top-wrapper"></div> -->
 		<div class="bottom-wrapper">
 			<router-view/>
 		</div>
 	</div>
 </template>
+<script>
+// import * as monaco from 'monaco-editor';
+export default {
+	mounted(){
+		// monaco.editor.create(this.$refs.editor, {
+    //     value: [
+    //       'function x() {',
+    //       '\tconsole.log("Hello world!");',
+    //       '}'
+    //     ].join('\n'),
+    //     language: 'javascript'
+    //   });
+	}
+}
+</script>
+
