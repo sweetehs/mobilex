@@ -1,5 +1,6 @@
 # mobilex
-MonacoWebpackPlugin
+
+Editor https://github.com/Microsoft/monaco-editor
 
 ```javascript
 {
