@@ -32,6 +32,17 @@
           visibility: hidden;
         }
       }
+      .fa-book {
+        color: #888;
+        width: 12px;
+        display: inline-block;
+        &.active {
+          color: #409EFF;
+        }
+        &.hidden {
+          visibility: hidden;
+        }
+      }
       .btn-open {
         display: inline-block;
         width: 12px;
@@ -60,23 +71,27 @@
   <div class="ps-tree-wrapper">
     <ul :class="{root: index === 1}">
       <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{
-                    active:(currentWidget && item.id === currentWidget.id),
-                    'is-copy': (copyWidget && item.id === copyWidget.id)
-                  }">
+            active:(currentWidget && item.id === currentWidget.id),
+            'is-copy': (copyWidget && item.id === copyWidget.id)
+          }">
         <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
           <div :style="{
-                      'paddingLeft': (index === 1 ? 20 : index*15)+'px'
-                    }">
+                  'paddingLeft': (index === 1 ? 20 : index*15)+'px'
+                }">
+            <span class="fa fa-book" :class="{
+                  'active': item.ajax && item.ajax.flag,
+                  'hidden': !item.isWrapper
+                }" @click="eventSetAjax(item)"></span>
             <span class="fa btn-lock" :class="{
-                      'fa-lock': item.base.isLock,
-                      'fa-unlock': !item.base.isLock,
-                      'hidden': !item.isWrapper
-                    }" @click="eventToggleLock($event, item)"></span>
+                  'fa-lock': item.base.isLock,
+                  'fa-unlock': !item.base.isLock,
+                  'hidden': !item.isWrapper
+                }" @click="eventToggleLock($event, item)"></span>
             <span class="fa btn-open" :class="{
-                      'fa-folder': item.children,
-                      'fa-file': !item.children,
-                      'fa-folder-open': isOpens.indexOf(item.id) !== -1
-                    }" @click="eventOpen($event,item)"></span>
+                  'fa-folder': item.children,
+                  'fa-file': !item.children,
+                  'fa-folder-open': isOpens.indexOf(item.id) !== -1
+                }" @click="eventOpen($event,item)"></span>
             <span>{{item.name}}</span> ->
             <!--会双向绑定直接修改值，没通过vuex-->
             <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
@@ -124,10 +139,10 @@
       },
       eventToggleLock(e, data) {
         this.$store.dispatch("$widget/setLock", data.id)
-        if(data.base.isLock){
+        if (data.base.isLock) {
           this.$store.dispatch("$widget/setCur")
           let index = this.isOpens.indexOf(data.id)
-          if(index !== -1){
+          if (index !== -1) {
             this.isOpens.splice(index, 1)
           }
         }
@@ -159,6 +174,9 @@
       },
       eventPasteItem(data) {
         this.$store.dispatch("$widget/setPaste", data.id)
+      },
+      eventSetAjax(data) {
+        this.$emit("setAjax", data)
       },
       dragStart(item) {
         this.$store.dispatch("$widget/setDrag", {

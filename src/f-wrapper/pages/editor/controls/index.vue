@@ -6,15 +6,6 @@
     .el-tab-pane {
       padding: 0 10px;
     }
-    .el-input {
-      &.small {
-        width: 50px;
-        margin-right: 2px;
-      }
-      .el-input__inner {
-        padding: 0 5px;
-      }
-    }
     .el-input,
     .el-select {
       width: 100%;

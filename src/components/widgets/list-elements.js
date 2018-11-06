@@ -20,30 +20,25 @@ const list = [{
   children: [],
   style: {
     "display": "block",
-    "padding": "10px",
+    "padding": "20px",
+    "min-height": "60px"
   },
   component: layout
 }, {
   name: "文字",
   wid: "xtext",
   component: xtext,
+  ajaxkey: "text",
   style: {
     "display": "block"
-  }
-}, {
-  name: "按钮",
-  wid: "xbutton",
-  style: {
-    "display": "inline-block",
-    "padding": "24px 40px",
-    "border-radius": "20px",
-    "background-color": "#409eff",
-    "color": "#fff"
   },
-  component: xbutton
+  props: {
+    text: "默认文字"
+  }
 }, {
   name: "图片",
   wid: "ximage",
+  ajaxkey: "url",
   style: {
     "display": "inline-block",
     "margin": "10px",
@@ -56,6 +51,17 @@ const list = [{
     url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
   },
   component: ximage
+}, {
+  name: "按钮",
+  wid: "xbutton",
+  style: {
+    "display": "inline-block",
+    "padding": "24px 40px",
+    "border-radius": "20px",
+    "background-color": "#409eff",
+    "color": "#fff"
+  },
+  component: xbutton
 }, {
   name: "表单",
   wid: "xform",
@@ -91,9 +97,11 @@ const list = [{
 }]
 list.forEach((data) => {
   extendDeep({
+    key: "",
     style: {},
     props: {},
     action: {},
+    ajax: {},
     base: {
       isLock: false
     }

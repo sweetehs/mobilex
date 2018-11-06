@@ -1,5 +1,5 @@
 <style>
-  .preview-wrapper{
+  .preview-wrapper {
     height: 100%;
     box-sizing: border-box;
     font-size: 0.28rem;
@@ -8,8 +8,8 @@
 
 <template>
   <div class="preview-wrapper" :style="style">
-    <previewinner :datas="datas" @changeParent="changeData" />
-    <previewinner :datas="hidden" @changeParent="changeData" type="xdialog" />
+    <previewinner v-if="loadView" :datas="datas" @changeParent="changeData" />
+    <!-- <previewinner :datas="hidden" @changeParent="changeData" type="xdialog" /> -->
   </div>
 </template>
 
@@ -22,7 +22,9 @@
   import rem from "@/util/rem"
   import {
     parseToRem,
-    handelCssData
+    handelCssData,
+    loop,
+    clone
   } from "@/util/util"
   const setGlobalComponents = () => {
     widgetlist.forEach((_c) => {
@@ -37,6 +39,8 @@
     },
     data() {
       return {
+        loadView: false,
+        ajaxList: {},
         style: {},
         datas: [],
         hidden: [],
@@ -53,7 +57,7 @@
       }).then((ajaxData) => {
         const allData = JSON.parse(ajaxData.data.data)
   
-        const datas = allData.datas
+        let datas = allData.datas
         parseToRem(datas)
         this.datas = datas
   
@@ -62,6 +66,50 @@
         this.hidden = hidden
   
         this.style = handelCssData(allData.base.style)
+        // 收集所有的ajax函数
+        const promise = []
+        loop(datas, () => true, (data) => {
+          if (data.ajax.flag == true) {
+            promise.push(axios({
+              url: data.ajax.url
+            }).then((ajaxData) => {
+              this.ajaxList[data.id] = ajaxData.data
+            }))
+          }
+        })
+        Promise.all(promise).then(() => {
+          // 设置props
+          let flag = true
+          let tempRoot = []
+          loop(datas, () => true, (data, index, arr, parent) => {
+            if (data.ajax.flag) {
+              if (data.ajax.repeat) {
+                flag = false
+                const ajaxData = this.ajaxList[data.id]
+                const list = ajaxData.map((_data) => {
+                  const widget = clone(data)
+                  // 查找有ajax的元素
+                  loop(widget.children, (_d) => _d.ajax && _d.ajax.id == data.id,(_child)=>{
+                    _child.props[_child.ajaxkey] = _data[_child.key]
+                  })
+                  return widget
+                })
+                if (parent && parent.children) {
+                  parent.children = list
+                } else {
+                  tempRoot = tempRoot.concat(list)
+                  this.datas = tempRoot
+                }
+                this.loadView = true
+              }
+            }
+            if (data.ajaxkey && data.ajax.id && flag) {
+              const ajaxData = this.ajaxList[data.ajax.id]
+              data.props[data.ajaxkey] = ajaxData[data.key]
+            }
+          })
+          console.log(datas)
+        })
         // 需要注册弹出层的数据
         this.hidden.forEach((_d) => {
           this.$set(this.middle, _d.id, false)

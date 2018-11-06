@@ -1,10 +1,41 @@
 <style lang="less">
   .editor-main-wrapper {
-    color: #ddd;
     height: 100%;
     display: flex;
-    a {
+    .editor-main-wrapper {
       color: #ddd;
+      a {
+        color: #ddd;
+      }
+      .el-textarea {
+        textarea {
+          height: 200px;
+        }
+      }
+      .el-radio__label {
+        color: rgb(221, 221, 221)!important;
+      }
+      .el-radio {
+        margin-right: 10px!important;
+      }
+      .el-radio+.el-radio {
+        margin: 0;
+      }
+      .el-tabs__item {
+        color: rgb(221, 221, 221);
+        &:hover {
+          color: #fff;
+        }
+        &.is-active {
+          color: #fff;
+        }
+      }
+      .el-form-item__label {
+        color: rgb(221, 221, 221)
+      }
+      .el-dialog {
+        color: #333!important;
+      }
     }
     .action-wrapper,
     .controls-wrapper {
@@ -111,46 +142,67 @@
 
 <template>
   <div class="editor-main-wrapper">
-    <div class="action-wrapper">
-      <div class="ps-wrapper">
-        <header><span>组件层级</span></header>
-        <div>
-          <header class="tree-root" :class="{active:currentWidget===''}" @click="setRoot">
-            <div>
-              <span class="fa fa-folder-open"></span> ROOT
-            </div>
-            <div class="action">
-              <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
-            </div>
-          </header>
-          <Pstree :index="1" :datas="widgetlist" />
-        </div>
-      </div>
-      <div class="nav-wrapper">
-        <header><span>组件库</span></header>
-        <div>
-          <ul>
-            <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="editor-wrapper">
-      <div class="editor-inner">
-        <Ioswrapper @save="peventSave">
-          <div class="switch-body">
-            <el-tabs v-model="vsTabIndex" tab-position="left" @tab-click="vsTabChange">
-              <el-tab-pane label="显" name="datas"></el-tab-pane>
-              <el-tab-pane label="隐" name="hidden"></el-tab-pane>
-            </el-tabs>
+    <div class="editor-main-wrapper">
+      <div class="action-wrapper">
+        <div class="ps-wrapper">
+          <header><span>组件层级</span></header>
+          <div>
+            <header class="tree-root" :class="{active:currentWidget===''}" @click="setRoot">
+              <div>
+                <span class="fa fa-folder-open"></span> ROOT
+              </div>
+              <div class="action">
+                <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
+              </div>
+            </header>
+            <Pstree :index="1" :datas="widgetlist" @setAjax="setAjax" />
           </div>
-          <iframe ref="editor" src="/inner.html" frameborder="0"></iframe>
-        </Ioswrapper>
+        </div>
+        <div class="nav-wrapper">
+          <header><span>组件库</span></header>
+          <div>
+            <ul>
+              <li :class="{disabled:disabledAdd}" v-for="(item,i) in widgetnav" :key="i" @click="eventAddWidget(item)">{{item.name}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <div class="editor-inner">
+          <Ioswrapper @save="peventSave">
+            <div class="switch-body">
+              <el-tabs v-model="vsTabIndex" tab-position="left" @tab-click="vsTabChange">
+                <el-tab-pane label="显" name="datas"></el-tab-pane>
+                <el-tab-pane label="隐" name="hidden"></el-tab-pane>
+              </el-tabs>
+            </div>
+            <iframe ref="editor" src="/inner.html" frameborder="0"></iframe>
+          </Ioswrapper>
+        </div>
+      </div>
+      <div class="controls-wrapper">
+        <Controls @change="peventUpdateById" @changeBase="peventUpdateBase" />
       </div>
     </div>
-    <div class="controls-wrapper">
-      <Controls @change="peventUpdateById" @changeBase="peventUpdateBase" />
-    </div>
+    <el-dialog v-if="currentWidget.ajax" title="ajax设置" :visible.sync="ajaxDialog" width="800px">
+      <el-form label-width="100px">
+        <el-form-item label="url">
+          <el-input v-model="currentWidget.ajax.url"></el-input>
+        </el-form-item>
+        <el-form-item label="repeat">
+          <el-radio-group v-model="currentWidget.ajax.repeat">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="设置key">
+          <Keytree :index="1" :datas="currentWidget.children" />
+        </el-form-item>
+      </el-form>
+      <div class="action fn-center">
+        <el-button type="primary" @click="saveAjax()">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -158,9 +210,9 @@
   import axios from "axios"
   import postMessage from "@/util/postMessage"
   import Controls from "./controls"
-  import Pstree from "./pstree"
-  import Ioswrapper from "./ios"
-  import "@/assets/less/wrapper-element.less"
+  import Keytree from "./widget/keytree"
+  import Pstree from "./widget/pstree"
+  import Ioswrapper from "./widget/ios"
   import {
     clone,
     extendDeep,
@@ -170,7 +222,8 @@
     components: {
       Controls,
       Ioswrapper,
-      Pstree
+      Pstree,
+      Keytree
     },
     created() {
       axios({
@@ -188,6 +241,7 @@
         vsTabIndex: "datas",
         widgetnav: [],
         showNav: false,
+        ajaxDialog: false,
         curwidget: {
           name: "",
           wid: "",
@@ -253,6 +307,15 @@
       }, 1000)
     },
     methods: {
+      saveAjax() {
+        this.$store.dispatch("$widget/setAjax").then(()=>{
+          this.ajaxDialog = false
+        })
+      },
+      setAjax() {
+        // 设置ajax数据
+        this.ajaxDialog = true
+      },
       vsTabChange(tab) {
         this.$store.dispatch("$widget/setTab", this.vsTabIndex)
       },

@@ -123,8 +123,12 @@ export default {
         _data.id = randomId()
         if (isLock) {
           _data.base.isLock = isLock
-        }else{
+        } else {
           _data.base.isLock = false
+        }
+        // 如果带有ajax
+        if (_data.ajax.id) {
+          _data.ajax.id = currentCopy.id
         }
       })
       if (id) {
@@ -183,6 +187,23 @@ export default {
           }
         })
       })
+    },
+    setAjax(state) {
+      let currendData = state.widget[state.currentTab]
+      let currentWidget = clone(state.currentWidget)
+      currentWidget.ajax.flag = true
+      // 设置所有子元素的ajaxid为父元素的id
+      loop(currentWidget.children, () => true, (data, index, arr, parent) => {
+        // 嵌套情况，如果不存在才设置
+        if (!data.ajax.id || !data.ajax.flag) {
+          data.ajax.id = currentWidget.id
+        }
+      })
+      // 找到元素更新值
+      loop(currendData, (data) => data.id == currentWidget.id, (data, index, arr, parent) => {
+        arr[index] = currentWidget
+      })
+      state.widget[state.currentTab] = clone(currendData)
     }
   },
   actions: {
@@ -221,6 +242,9 @@ export default {
     },
     setAll(context, data) {
       context.commit('setAll', data)
+    },
+    setAjax(context) {
+      context.commit('setAjax')
     }
   }
 }

@@ -11,7 +11,8 @@
         default(){
           return "默认文字"
         },
-      }
+      },
+      ajaxData: {}
     },
     data() {
       return {}
