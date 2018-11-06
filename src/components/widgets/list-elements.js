@@ -26,6 +26,38 @@ const mapList = [{
       "min-height": "60px"
     },
     component: layout
+  }, {
+    name: "两列布局",
+    wid: "layout",
+    isWrapper: true,
+    component: layout,
+    style: {
+      "display": "flex",
+      "min-height": "100px"
+    },
+    children: [{
+      name: "两列布局-左侧",
+      wid: "layout",
+      isWrapper: true,
+      children: [],
+      style: {
+        "felx": "1",
+        "display": "block",
+        "padding": "20px"
+      },
+      component: layout
+    }, {
+      name: "两列布局-右侧",
+      wid: "layout",
+      isWrapper: true,
+      children: [],
+      style: {
+        "felx": "1",
+        "display": "block",
+        "padding": "20px"
+      },
+      component: layout
+    }]
   }]
 }, {
   name: "基础",

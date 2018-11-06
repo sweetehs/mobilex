@@ -63,6 +63,41 @@
         }
       }
     }
+    .x-radio{
+      input[type=radio]{
+        position: absolute;
+        opacity: 0;
+      }
+      span{
+        display: inline-block;
+        vertical-align: middle;
+      }
+      div{
+        display: inline-block;
+        width: 0.28rem;
+        height: 0.28rem;
+        border-radius: 0.4rem;
+        border: 0.02rem solid #ffe100;
+        vertical-align: middle;
+        margin-right: 0.2rem;
+        position: relative;
+        &:after{
+          content: "";
+          width: 0.2rem;
+          height: 0.2rem;
+          border-radius: 0.18rem;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+        }
+      }
+      input[type=radio]:checked + div{
+        &:after{
+          background: #ffe100;
+        }
+      }
+    }
     .action {
       margin-top: 0.4rem;
       a {
@@ -90,16 +125,18 @@
         <div class="x-input" v-if="item.type=='input'">
           <input :placeholder="`请填写${item.label}`" v-model="item.value" type="text">
         </div>
-        <div v-if="item.type=='radio'" class="x_radio">
-          <label v-for="radio in item.values" :key="radio">
-                <input :value="radio" v-model="item.value" type="radio" :name="item.label">{{radio}}
-              </label>
+        <div v-if="item.type=='radio'">
+          <label v-for="radio in item.values" :key="radio" class="x-radio">
+            <span>{{radio}}</span>
+            <input :value="radio" v-model="item.value" type="radio" :name="item.label">
+            <div></div>
+          </label>
         </div>
         <div v-if="item.type=='select'" class="x-select">
           <select :placeholder="`请选择${item.label}`" v-model="item.value">
-                <option value="">请选择</option>
-                <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
-              </select>
+            <option value="">请选择</option>
+            <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
+          </select>
         </div>
       </div>
     </div>
