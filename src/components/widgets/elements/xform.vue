@@ -37,7 +37,7 @@
         width: 100%;
         font-size: 0.28rem;
       }
-      ::-webkit-input-placeholder{
+       ::-webkit-input-placeholder {
         color: #999;
       }
     }
@@ -54,18 +54,18 @@
       padding: 0 0.24rem;
       position: relative;
       width: 100%;
-      select{
+      select {
         color: #999;
         width: 100%;
         font-size: 0.28rem;
-        &:focus{
+        &:focus {
           outline: none;
         }
       }
     }
-    .action{
+    .action {
       margin-top: 0.4rem;
-      a{
+      a {
         font-weight: bold;
         display: block;
         width: 100%;
@@ -92,14 +92,14 @@
         </div>
         <div v-if="item.type=='radio'" class="x_radio">
           <label v-for="radio in item.values" :key="radio">
-            <input type="radio" :name="item.label">{{radio}}
-          </label>
+                <input :value="radio" v-model="item.value" type="radio" :name="item.label">{{radio}}
+              </label>
         </div>
         <div v-if="item.type=='select'" class="x-select">
           <select :placeholder="`请选择${item.label}`" v-model="item.value">
-            <option value="">请选择</option>
-            <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
-          </select>
+                <option value="">请选择</option>
+                <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
+              </select>
         </div>
       </div>
     </div>
@@ -138,19 +138,26 @@
         }
       }
     },
+    created() {
+      this.setInit()
+    },
     watch: {
       formitems() {
+        this.setInit()
+      }
+    },
+    methods: {
+      setInit() {
         this.forms = clone(this.formitems.map((data) => {
           data.value = ""
           return data
         }))
-      }
-    },
-    methods: {
+      },
       submit() {
         const that = this
         let error = ""
         this.forms.forEach((_data) => {
+          debugger
           if (!error) {
             if (_data.rule && !that.rules[_data.rule](_data.value)) {
               error = "请输入正确的" + _data.label
