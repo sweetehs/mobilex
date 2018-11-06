@@ -101,19 +101,19 @@
                   // 如果没有父元素 则需要删除原来的项数，在增加几项
                   Array.prototype.splice.apply(tempDatas, [tempDatas.length, 0].concat(list))
                 }
+                // 以后元素不进行遍历
+                return false
               }
-              this.datas = tempDatas
             } else {
               if (parent && parent.children) {
-                if(!data.ajax.id){
-                  tempParent.children.push(clone(data))
-                }
+                tempParent.children.push(clone(data))
               } else {
                 tempParent = clone(arr[index])
                 tempParent.children = []
                 tempDatas.splice(tempDatas.length, 0, tempParent)
               }
             }
+            this.datas = tempDatas
             // if (data.ajaxkey && data.ajax.id) {
             //   const ajaxData = this.ajaxList[data.ajax.id]
             //   data.props[data.ajaxkey] = ajaxData[data.key]
