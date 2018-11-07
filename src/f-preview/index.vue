@@ -28,7 +28,7 @@
   } from "@/util/util"
   const setGlobalComponents = () => {
     widgetlist.forEach((data) => {
-      data.children.map((_c)=>{
+      data.children.map((_c) => {
         Vue.component(_c.wid, _c.component)
       })
     });
@@ -70,13 +70,19 @@
         this.style = handelCssData(allData.base.style)
         // 收集所有的ajax函数
         const promise = []
+        const ajaxurls = {}
         loop(datas, () => true, (data) => {
           if (data.ajax.flag == true) {
-            promise.push(axios({
-              url: data.ajax.url
-            }).then((ajaxData) => {
-              this.ajaxList[data.id] = ajaxData.data
-            }))
+            const ajaxurl = data.ajax.url
+            if (!ajaxurls[ajaxurl]) {
+              ajaxurls[ajaxurl] = true
+              // url判断是否已经请求过
+              promise.push(axios({
+                url: ajaxurl
+              }).then((ajaxData) => {
+                this.ajaxList[ajaxurl] = ajaxData.data
+              }))
+            }
           }
         })
         Promise.all(promise).then(() => {
@@ -87,8 +93,8 @@
             // 需要重新生成一个树
             if (data.ajax.flag) {
               if (data.ajax.repeat) {
-                // flag = false
-                const ajaxData = this.ajaxList[data.id]
+                // 根据url获取得到的数据
+                const ajaxData = this.ajaxList[data.ajax.url]
                 const list = ajaxData.map((_data) => {
                   const widget = clone(data)
                   // 查找有ajax的元素

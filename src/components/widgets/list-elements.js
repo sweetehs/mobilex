@@ -38,7 +38,7 @@ const mapList = [{
       "min-height": "100px"
     },
     children: [{
-      name: "两列布局-左侧",
+      name: "左侧",
       wid: "layout",
       isWrapper: true,
       children: [],
@@ -49,7 +49,7 @@ const mapList = [{
       },
       component: layout
     }, {
-      name: "两列布局-右侧",
+      name: "右侧",
       wid: "layout",
       isWrapper: true,
       children: [],
