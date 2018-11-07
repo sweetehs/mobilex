@@ -111,6 +111,7 @@ export default {
       let currendData = state.widget[state.currentTab]
       let currentCopy = clone(state.currentCopy)
       currentCopy.id = randomId()
+      currentCopy.ajax = {}
       // 如果此时的状态是lock，要设置lock
       const {
         isLock
@@ -126,10 +127,9 @@ export default {
         } else {
           _data.base.isLock = false
         }
-        // 如果带有ajax
-        if (_data.ajax.id) {
-          _data.ajax.id = currentCopy.id
-        }
+        // 复制的元素去掉ajax
+        _data.ajax = {}
+        _data.key = ""
       })
       if (id) {
         // 找到父级元素并且复制到父级元素

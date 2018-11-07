@@ -14,18 +14,20 @@
       left: 0;
       top: 0;
       box-sizing: border-box;
-      border: 2px dashed #333;
       overflow: hidden;
-      box-sizing: border-box;
+      pointer-events: none;
+      border: 1px dashed #333;
     }
     &.hover {
       >.overlay {
-        border: 2px dashed #e12134;
+        border: 2px solid #e12134;
+        z-index: 4;
       }
     }
     &.active {
       >.overlay {
-        border: 2px dashed #48D1CC;
+        border: 2px solid #48D1CC;
+        z-index: 3;
       }
     }
   }

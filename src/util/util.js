@@ -57,6 +57,26 @@ export function loop(arr, judge, callback, parent) {
     }
   })
 }
+export function loopRange(arr, judge, callback, parent){
+  if (!arr) {
+    return
+  }
+  let children = []
+  arr.forEach((data, index) => {
+    var flag = true
+    if (judge(data)) {
+      if (callback) {
+        flag = callback(data, index, arr, parent)
+      }
+    }
+    if (isArray(data.children) && flag !== false) {
+      children = children.concat(data.children)
+    }
+  })
+  if(children.length !== 0 ){
+    loopRange(children, judge, callback, parent)
+  }
+}
 export function getComputedStyle($el) {
   return document.defaultView.getComputedStyle($el)
 }

@@ -24,6 +24,7 @@
     parseToRem,
     handelCssData,
     loop,
+    loopRange,
     clone
   } from "@/util/util"
   const setGlobalComponents = () => {
@@ -61,7 +62,6 @@
   
         let datas = allData.datas
         parseToRem(datas)
-        this.datas = datas
   
         const hidden = allData.hidden
         parseToRem(hidden)
@@ -88,7 +88,7 @@
         Promise.all(promise).then(() => {
           // 设置props
           let tempDatas = []
-          let tempParent = {}
+          let newParent = {}
           loop(datas, () => true, (data, index, arr, parent) => {
             // 需要重新生成一个树
             if (data.ajax.flag) {
@@ -104,7 +104,7 @@
                   return widget
                 })
                 if (parent && parent.children) {
-                  Array.prototype.splice.apply(tempParent.children, [tempParent.children.length, 0].concat(list))
+                  Array.prototype.splice.apply(parent.newParent.children, [parent.newParent.children.length, 0].concat(list))
                 } else {
                   // 如果没有父元素 则需要删除原来的项数，在增加几项
                   Array.prototype.splice.apply(tempDatas, [tempDatas.length, 0].concat(list))
@@ -113,24 +113,22 @@
                 return false
               }
             } else {
+              const newData = clone(data)
+              newData.children = []
               if (parent && parent.children) {
-                tempParent.children.push(clone(data))
+                parent.newParent.children.push(newData)
+                if(data.children){
+                  data.newParent = newData
+                }
               } else {
-                tempParent = clone(arr[index])
-                tempParent.children = []
-                tempDatas.splice(tempDatas.length, 0, tempParent)
+                tempDatas.splice(tempDatas.length, 0, newData)
+                data.newParent = newData
               }
             }
-            this.datas = tempDatas
-            // if (data.ajaxkey && data.ajax.id) {
-            //   const ajaxData = this.ajaxList[data.ajax.id]
-            //   data.props[data.ajaxkey] = ajaxData[data.key]
-            // }
+            
           })
-          setTimeout(() => {
-            this.loadView = true
-            console.log(clone(this.datas))
-          }, 1000)
+          this.datas = tempDatas
+          this.loadView = true
         })
         // 需要注册弹出层的数据
         this.hidden.forEach((_d) => {
