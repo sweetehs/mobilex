@@ -13,7 +13,7 @@
 
 <template>
 	<div :style="base.style" class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
-		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" />
+		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
 	</div>
 </template>
 
@@ -48,6 +48,7 @@
 				base: {},
 				currentId: '',
 				copyId: '',
+				cutId: '',
 				isDialog: ''
 			}
 		},
@@ -71,6 +72,9 @@
 			})
 			this.$source.receive("widgetcopy", (copyWidget) => {
 				this.copyId = copyWidget.id
+			})
+			this.$source.receive("widgetcut", (cutWidget) => {
+				this.cutId = cutWidget.id
 			})
 			event.$on("setControl", (id) => {
 				this.$source.send("widgetcontrol", id)

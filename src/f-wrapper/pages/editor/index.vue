@@ -159,7 +159,7 @@
                 <span class="fa fa-folder-open"></span> ROOT
               </div>
               <div class="action">
-                <a v-if="copyWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
+                <a v-if="copyWidget||cutWidget" class="fa fa-paste" href="javascript:;" @click="eventPaste"></a>
               </div>
             </header>
             <Pstree :index="1" :datas="widgetlist" @setAjax="setAjax" />
@@ -278,6 +278,9 @@
       copyWidget() {
         return this.$store.state.$widget.currentCopy
       },
+      cutWidget() {
+        return this.$store.state.$widget.currentCut
+      },
       currentIsWrapper() {
         return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
       },
@@ -292,6 +295,9 @@
       },
       copyWidget() {
         this.$source.send("widgetcopy", clone(this.copyWidget))
+      },
+      cutWidget() {
+        this.$source.send("widgetcut", clone(this.cutWidget))
       },
       widgetlist() {
         this.postWidgetListSend()

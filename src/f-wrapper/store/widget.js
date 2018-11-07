@@ -16,6 +16,7 @@ export default {
     currentTab: "",
     currentWidget: "", // 当前选中的数据
     currentCopy: "", // 当前复制的数据
+    currentCut: "", // 当前剪切的数据
     currentDrag: "" // 当前拖拽的组ID
   },
   mutations: {
@@ -97,6 +98,7 @@ export default {
     },
     setCopy(state, id) {
       let currendData = state.widget[state.currentTab]
+      state.currentCut = ""
       if (id) {
         loop(currendData, (data) => {
           return data.id === id
@@ -107,42 +109,72 @@ export default {
         state.currentCopy = ""
       }
     },
-    setPaste(state, id) {
+    setCut(state, id) {
       let currendData = state.widget[state.currentTab]
-      let currentCopy = clone(state.currentCopy)
-      currentCopy.id = randomId()
-      currentCopy.ajax = {}
-      // 如果此时的状态是lock，要设置lock
-      const {
-        isLock
-      } = state.currentCopy.base
-      if (state.currentCopy.id === isLock) {
-        currentCopy.base.isLock = currentCopy.id
-      }
-      loop(currentCopy.children, () => true, (_data) => {
-        // 设置子元素id和lock
-        _data.id = randomId()
-        if (isLock) {
-          _data.base.isLock = isLock
-        } else {
-          _data.base.isLock = false
-        }
-        // 复制的元素去掉ajax
-        _data.ajax = {}
-        _data.key = ""
-      })
+      state.currentCopy = ""
       if (id) {
-        // 找到父级元素并且复制到父级元素
         loop(currendData, (data) => {
           return data.id === id
         }, (data) => {
-          // 遍历每个元素重新设置ID
-          data.children.push(currentCopy)
-          state.currentCopy = ""
+          state.currentCut = clone(data)
         })
       } else {
-        currendData.push(currentCopy)
+        state.currentCut = ""
+      }
+    },
+    setPaste(state, id) {
+      let currendData = state.widget[state.currentTab]
+      if (state.currentCopy) {
+        // 复制
+        let currentCopy = clone(state.currentCopy)
+        currentCopy.id = randomId()
+        currentCopy.ajax = {}
+        // 如果此时的状态是lock，要设置lock
+        const {
+          isLock
+        } = state.currentCopy.base
+        if (state.currentCopy.id === isLock) {
+          currentCopy.base.isLock = currentCopy.id
+        }
+        loop(currentCopy.children, () => true, (_data) => {
+          // 设置子元素id和lock
+          _data.id = randomId()
+          if (isLock) {
+            _data.base.isLock = isLock
+          } else {
+            _data.base.isLock = false
+          }
+          // 复制的元素去掉ajax
+          _data.ajax = {}
+          _data.key = ""
+        })
+        if (id) {
+          // 找到元素并且复制到元素
+          loop(currendData, (data) => {
+            return data.id === id
+          }, (data) => {
+            // 遍历每个元素重新设置ID
+            data.children.push(currentCopy)
+          })
+        } else {
+          currendData.push(currentCopy)
+        }
         state.currentCopy = ""
+      } else if (state.currentCut) {
+        if (id) {
+          let currentCut = clone(state.currentCut)
+          // 找到父元素删除
+          loop(currendData, _d => _d.id === currentCut.id, (data, index, arr, parent) => {
+            arr.splice(index, 1)
+          })
+          // 找到新元素添加
+          loop(currendData, _d => _d.id === id, (data, index, arr, parent) => {
+            data.children.push(currentCut)
+          })
+        }else{
+          currendData.push(currentCut)
+        }
+        state.currentCut = ""
       }
     },
     setDrag(state, data) {
@@ -227,6 +259,9 @@ export default {
     },
     setLock(context, id) {
       context.commit('setLock', id)
+    },
+    setCut(context, id) {
+      context.commit('setCut', id)
     },
     setCopy(context, id) {
       context.commit('setCopy', id)

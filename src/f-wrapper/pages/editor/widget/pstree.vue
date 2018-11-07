@@ -72,7 +72,8 @@
     <ul :class="{root: index === 1}">
       <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{
             active:(currentWidget && item.id === currentWidget.id),
-            'is-copy': (copyWidget && item.id === copyWidget.id)
+            'is-copy': (copyWidget && item.id === copyWidget.id),
+            'is-cut': (cutWidget && item.id === cutWidget.id),
           }">
         <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
           <div :style="{
@@ -98,9 +99,9 @@
             <span v-else @dblclick="eventEditName(item)">{{item.label || item.name}}</span>
           </div>
           <div class="action">
-            <a v-if="copyWidget && item.isWrapper && copyWidget.id !== item.id" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
+            <a v-if="item.isWrapper && ((copyWidget && copyWidget.id !== item.id)||(cutWidget && cutWidget.id !== item.id))" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
             <a class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
-            <!-- <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a> -->
+            <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a>
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
@@ -130,6 +131,9 @@
       },
       copyWidget() {
         return this.$store.state.$widget.currentCopy
+      },
+      cutWidget() {
+        return this.$store.state.$widget.currentCut
       }
     },
     methods: {
@@ -169,9 +173,6 @@
         this.$store.dispatch("$widget/deletei", data.id)
         e.stopPropagation()
       },
-      eventCopyItem(data) {
-        this.$store.dispatch("$widget/setCopy", data.id)
-      },
       eventPasteItem(data) {
         this.$store.dispatch("$widget/setPaste", data.id)
       },
@@ -200,7 +201,12 @@
         event.dataTransfer.dropEffect = "move"
         e.preventDefault()
       },
-      eventCutItem(data) {}
+      eventCopyItem(data) {
+        this.$store.dispatch("$widget/setCopy", data.id)
+      },
+      eventCutItem(data) {
+        this.$store.dispatch("$widget/setCut", data.id)
+      }
     }
   }
 </script>

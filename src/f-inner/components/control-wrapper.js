@@ -10,6 +10,7 @@ export default {
     },
     currentId: {},
     copyId: {},
+    cutId: {},
     isDialog: {}
   },
   render(h, context) {
@@ -44,7 +45,8 @@ export default {
         result.push(h(control, {
           class: {
             active: data.id === context.props.currentId,
-              "is-copy": data.id === context.props.copyId
+            "is-copy": data.id === context.props.copyId,
+            "is-cut": data.id === context.props.cutId
           },
           props: {
             id: data.id,
