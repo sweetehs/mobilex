@@ -319,6 +319,7 @@
       // 得到当前widgetcontrol
       this.$source.receive('widgetcontrol', (id) => {
         this.$store.dispatch("$widget/setCur", id)
+        this.$store.dispatch("$widget/openFolder", id)
       })
       setTimeout(() => {
         this.postWidgetListSend()

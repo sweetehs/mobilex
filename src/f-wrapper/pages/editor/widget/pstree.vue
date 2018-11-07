@@ -71,28 +71,28 @@
   <div class="ps-tree-wrapper">
     <ul :class="{root: index === 1}">
       <li @click="setCurrent($event,item)" v-for="item in datas" :key="item.id" :class="{
-            active:(currentWidget && item.id === currentWidget.id),
-            'is-copy': (copyWidget && item.id === copyWidget.id),
-            'is-cut': (cutWidget && item.id === cutWidget.id),
-          }">
+                  active:(currentWidget && item.id === currentWidget.id),
+                  'is-copy': (copyWidget && item.id === copyWidget.id),
+                  'is-cut': (cutWidget && item.id === cutWidget.id),
+                }">
         <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
           <div :style="{
-                  'paddingLeft': (index === 1 ? 20 : index*15)+'px'
-                }">
+                        'paddingLeft': (index === 1 ? 20 : index*15)+'px'
+                      }">
             <span class="fa fa-book" :class="{
-                  'active': item.ajax && item.ajax.flag,
-                  'hidden': !item.isWrapper
-                }" @click="eventSetAjax(item)"></span>
+                        'active': item.ajax && item.ajax.flag,
+                        'hidden': !item.isWrapper
+                      }" @click="eventSetAjax(item)"></span>
             <span class="fa btn-lock" :class="{
-                  'fa-lock': item.base.isLock,
-                  'fa-unlock': !item.base.isLock,
-                  'hidden': !item.isWrapper
-                }" @click="eventToggleLock($event, item)"></span>
+                        'fa-lock': item.base.isLock,
+                        'fa-unlock': !item.base.isLock,
+                        'hidden': !item.isWrapper
+                      }" @click="eventToggleLock($event, item)"></span>
             <span class="fa btn-open" :class="{
-                  'fa-folder': item.children,
-                  'fa-file': !item.children,
-                  'fa-folder-open': isOpens.indexOf(item.id) !== -1
-                }" @click="eventOpen($event,item)"></span>
+                        'fa-folder': item.children,
+                        'fa-file': !item.children,
+                        'fa-folder-open': openlist.indexOf(item.id) !== -1
+                      }" @click="eventOpen($event,item)"></span>
             <span>{{item.name}}</span> ->
             <!--会双向绑定直接修改值，没通过vuex-->
             <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
@@ -105,7 +105,7 @@
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
-        <treewrapper @setAjax="eventSetAjax(item)" :index="index+1" v-if="(item.children && item.children.length !== 0) && isOpens.indexOf(item.id) !== -1" :datas="item.children" />
+        <treewrapper @setAjax="eventSetAjax(item)" :index="index+1" v-if="(item.children && item.children.length !== 0) && openlist.indexOf(item.id) !== -1" :datas="item.children" />
       </li>
     </ul>
   </div>
@@ -120,7 +120,6 @@
     props: ["index", "datas"],
     data() {
       return {
-        isOpens: [],
         id: randomId(),
         isEdit: false
       }
@@ -134,6 +133,9 @@
       },
       cutWidget() {
         return this.$store.state.$widget.currentCut
+      },
+      openlist() {
+        return this.$store.state.$widget.openlist
       }
     },
     methods: {
@@ -142,24 +144,21 @@
         e.stopPropagation()
       },
       eventToggleLock(e, data) {
-        this.$store.dispatch("$widget/setLock", data.id)
-        if (data.base.isLock) {
-          this.$store.dispatch("$widget/setCur")
-          let index = this.isOpens.indexOf(data.id)
-          if (index !== -1) {
-            this.isOpens.splice(index, 1)
+        this.$store.dispatch("$widget/setLock", data.id).then(() => {
+          if (data.base.isLock) {
+            this.$store.dispatch("$widget/setCur")
+            this.$store.dispatch("$widget/closeFolder", data.id)
           }
-        }
+        })
       },
       eventOpen(e, data) {
         if (data.base.isLock) {
           return
         }
-        let index = this.isOpens.indexOf(data.id)
-        if (index !== -1) {
-          this.isOpens.splice(index, 1)
-        } else {
-          this.isOpens.push(data.id)
+        if(this.openlist.indexOf(data.id) !== -1){
+          this.$store.dispatch("$widget/closeFolder", data.id)
+        }else{
+          this.$store.dispatch("$widget/openFolder", data.id)
         }
         e.stopPropagation()
       },

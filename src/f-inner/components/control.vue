@@ -17,6 +17,9 @@
       overflow: hidden;
       pointer-events: none;
       border: 1px dashed #333;
+      &:hover{
+        cursor: pointer;
+      }
     }
     &.hover {
       >.overlay {
@@ -59,13 +62,14 @@
     },
     methods: {
       canClick() {
-        return !this.base.isLock || this.id === this.base.isLock
+        return !this.base.isLock
       },
       eventItemClick(e) {
+        debugger
         if (this.canClick()) {
           event.$emit("setControl", this.id)
-          e.stopPropagation()
         }
+        e.stopPropagation()
       },
       eventEnter(e) {
         if (this.canClick()) {

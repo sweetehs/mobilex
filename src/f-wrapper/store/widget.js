@@ -6,6 +6,19 @@ import {
   loop,
   randomId
 } from "@/util/util"
+const setParent = (arr) => {
+  loop(arr, () => true, (data, index, arr, parent) => {
+    if (parent) {
+      data.parent = clone(parent)
+    }
+  })
+}
+const loopParent = (data, callback) => {
+  if (data.parent) {
+    callback && callback(data.parent)
+    loopParent(data.parent, callback)
+  }
+}
 export default {
   namespaced: true,
   state: {
@@ -17,25 +30,31 @@ export default {
     currentWidget: "", // 当前选中的数据
     currentCopy: "", // 当前复制的数据
     currentCut: "", // 当前剪切的数据
-    currentDrag: "" // 当前拖拽的组ID
+    currentDrag: "", // 当前拖拽的组ID
+    openlist: [] // 当前打开的文件夹
   },
   mutations: {
     setTab(state, tab) {
       state.currentTab = tab
     },
     setAll(state, data) {
+      loop(data.datas, () => true, (_data, index, arr, parent) => {
+        _data.parent = clone(parent)
+      })
       state.widget = data
     },
     add(state, widget) {
       let currendData = state.widget[state.currentTab]
       if (state.currentWidget && state.currentWidget.isWrapper) {
-        let getData = ""
+        let cdata = ""
         loop(currendData, (data) => {
           return data.id === state.currentWidget.id
         }, (data) => {
-          getData = data
+          cdata = data
         })
-        getData.children.push(widget)
+        cdata.children.push(widget)
+        widget.parent = clone(cdata)
+        setParent(widget.children)
         currendData = clone(currendData)
       } else {
         currendData.push(widget)
@@ -123,6 +142,7 @@ export default {
       }
     },
     setPaste(state, id) {
+      debugger
       let currendData = state.widget[state.currentTab]
       if (state.currentCopy) {
         // 复制
@@ -150,13 +170,13 @@ export default {
         })
         if (id) {
           // 找到元素并且复制到元素
-          loop(currendData, (data) => {
-            return data.id === id
-          }, (data) => {
+          loop(currendData, (data) => data.id === id, (data) => {
             // 遍历每个元素重新设置ID
+            currentCopy.parent = clone(data)
             data.children.push(currentCopy)
           })
         } else {
+          delete currentCopy.parent
           currendData.push(currentCopy)
         }
         state.currentCopy = ""
@@ -168,10 +188,12 @@ export default {
             arr.splice(index, 1)
           })
           // 找到新元素添加
-          loop(currendData, _d => _d.id === id, (data, index, arr, parent) => {
+          loop(currendData, _d => _d.id === id, (data) => {
+            currentCut.parent = clone(data)
             data.children.push(currentCut)
           })
-        }else{
+        } else {
+          delete currentCut.parent
           currendData.push(currentCut)
         }
         state.currentCut = ""
@@ -236,6 +258,28 @@ export default {
         arr[index] = currentWidget
       })
       state.widget[state.currentTab] = clone(currendData)
+    },
+    openFolder(state, id) {
+      const index = state.openlist.indexOf(id)
+      if (index === -1) {
+        state.openlist.push(id)
+      }
+      let currendData = state.widget[state.currentTab]
+      loop(currendData, _d => _d.id === id, (data) => {
+        debugger
+        loopParent(data, (parent) => {
+          const parentIndex = state.openlist.indexOf(parent.id)
+          if (parentIndex === -1 && parent.id) {
+            state.openlist.push(parent.id)
+          }
+        })
+      })
+    },
+    closeFolder(state, id) {
+      const index = state.openlist.indexOf(id)
+      if (index !== -1) {
+        state.openlist.splice(index, 1)
+      }
     }
   },
   actions: {
@@ -280,6 +324,12 @@ export default {
     },
     setAjax(context) {
       context.commit('setAjax')
+    },
+    openFolder(context, id) {
+      context.commit('openFolder', id)
+    },
+    closeFolder(context, id) {
+      context.commit('closeFolder', id)
     }
   }
 }
