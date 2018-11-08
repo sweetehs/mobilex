@@ -132,8 +132,8 @@
             type: "add"
           })
           let groupCount = 4
-          let emptyCount = ajaxData.data.length % groupCount
-          for(let i = 0;i < emptyCount-2;i++){
+          let emptyCount = (groupCount - ajaxData.data.length % groupCount)
+          for(let i = 0;i <emptyCount;i++){
             ajaxData.data.push({
               type: "empty"
             })
