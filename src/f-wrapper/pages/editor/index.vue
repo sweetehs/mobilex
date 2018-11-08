@@ -393,7 +393,7 @@
           url: "/mobilex/subject/update",
           method: "post",
           data: {
-            id: '5bd29730e3cd3d3c7387b330'||this.$route.params.id,
+            id: this.$route.params.id, // '5bd29730e3cd3d3c7387b330'
             subject: JSON.stringify(this.$widget)
           }
         }).then((ajaxData) => {
