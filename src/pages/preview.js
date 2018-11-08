@@ -3,6 +3,7 @@
 import Vue from 'vue'
 
 import Preview from './preview.vue'
+import "@/util/axios"
 
 import "@/assets/less/reset.less"
 import "@/assets/less/fn.less"

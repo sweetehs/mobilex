@@ -32,7 +32,7 @@
 	// 全局注册component widget
 	const setGlobalComponents = () => {
 		widgetlist.forEach((data) => {
-			data.children.forEach((_c)=>{
+			data.children.forEach((_c) => {
 				Vue.component(_c.wid, _c.component)
 			})
 		});
@@ -75,6 +75,13 @@
 			})
 			this.$source.receive("widgetcut", (cutWidget) => {
 				this.cutId = cutWidget.id
+			})
+			this.$source.receive("cutstart", () => {
+				let $overlay = document.querySelectorAll(".overlay")
+				for (let i = 0; i < $overlay.length; i++) {
+					$overlay[i].style.border = "none"
+				}
+				this.$source.send("cutover")
 			})
 			event.$on("setControl", (id) => {
 				this.$source.send("widgetcontrol", id)

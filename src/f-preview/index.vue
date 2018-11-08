@@ -55,7 +55,7 @@
       axios({
         url: "/mobilex/subject/get",
         params: {
-          id: "5bd29730e3cd3d3c7387b36d"
+          id: location.search.replace("?", "").split("=")[1]
         }
       }).then((ajaxData) => {
         const allData = JSON.parse(ajaxData.data.data)
@@ -117,7 +117,7 @@
               newData.children = []
               if (parent && parent.children) {
                 parent.newParent.children.push(newData)
-                if(data.children){
+                if (data.children) {
                   data.newParent = newData
                 }
               } else {
@@ -125,7 +125,7 @@
                 data.newParent = newData
               }
             }
-            
+  
           })
           this.datas = tempDatas
           this.loadView = true

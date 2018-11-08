@@ -4,9 +4,17 @@
 		display: flex;
 		flex-direction: column;
 		.top-wrapper{
-			height: 60px;
-			background: #aaa;
+			height: 80px;
 			flex-shrink: 0;
+			box-shadow: 0 0 5px #888;
+			padding: 0 30px;
+			display: flex;
+			align-items: center;
+			background: #333;
+			color: #fff;
+			.logo{
+				font-size: 22px;
+			}
 		}
 		.content-wrapper{
 			flex: 1;
@@ -17,6 +25,9 @@
 
 <template>
   <div class="f-wrapper-wrapper">
+		<div class="top-wrapper" v-if="isShowTop">
+			<div class="logo">MobileX</div>
+		</div>
 		<div class="content-wrapper">
 			<router-view/>
 		</div>
@@ -25,15 +36,27 @@
 <script>
 // import * as monaco from 'monaco-editor';
 export default {
-	mounted(){
-		// monaco.editor.create(this.$refs.editor, {
-    //     value: [
-    //       'function x() {',
-    //       '\tconsole.log("Hello world!");',
-    //       '}'
-    //     ].join('\n'),
-    //     language: 'javascript'
-    //   });
+	data(){
+		return {
+			isShowTop: true
+		}
+	},
+	created(){
+		this.showTop()
+	},
+	watch: {
+		$route(){
+			this.showTop()
+		}
+	},
+	methods: {
+		showTop(){
+			if(this.$route.path.indexOf("/editor") === -1){
+				this.isShowTop = true
+			}else{
+				this.isShowTop = false
+			}
+		}
 	}
 }
 </script>

@@ -46,7 +46,6 @@ export default {
     },
     add(state, widget) {
       let currendData = state.widget[state.currentTab]
-      debugger
       if (state.currentWidget && state.currentWidget.isWrapper) {
         let cdata = ""
         loop(currendData, (data) => {

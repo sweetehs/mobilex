@@ -3,31 +3,62 @@
     padding: 20px;
     ul {
       li {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-        margin-bottom: 10px;
+        display: flex;
       }
     }
     .box-card {
-      width: 300px;
-      height: 350px;
+      flex: 1;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      .el-card__body {
+        padding: 0;
+        height: 100%;
+      }
+      &.empty{
+        border: 1px solid transparent;
+        box-shadow: none;
+      }
       .header {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
+        .fa {
+          margin-left: 5px;
+          vertical-align: middle;
+          font-size: 16px;
+          &:hover {
+            color: #409eff;
+            cursor: pointer;
+          }
+        }
+        .fa-close {
+          margin-top: -2px;
+        }
       }
       .content {
+        position: relative;
+        height: 400px;
         .default {
-          font-size: 30px;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          position: absolute;
+          background: rgba(0, 0, 0, 0.3);
+          font-size: 20px;
           text-align: center;
-          margin-top: 50px;
+          padding-top: 50px;
+          color: #fff;
+          box-sizing: border-box;
+        }
+        .cover {
+          background-size: 100%;
+          height: 100%;
         }
       }
     }
     .add {
-      height: 350px;
-      width: 300px;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,23 +72,25 @@
 <template>
   <div class="list-wrapper">
     <ul>
-      <li>
-        <div class="add">
-          <i @click="addDialog = true" class="fa fa-plus-square-o" aria-hidden="true"></i>
-        </div>
-      </li>
       <li v-for="(item,i) in list" :key="i">
-        <el-card class="box-card">
-          <div slot="header" class="header">
-            <span>{{item.name}}</span>
-            <div class="action">
-              <span class="fa fa-edit" @click="eventEdit(item)"></span>
-              <span class="fa fa-close" @click="eventDelete(item)"></span>
-            </div>
-          </div>
-          <div class="content">
-            <div class="default">MobileX</div>
-          </div>
+        <el-card v-for="(item1,j) in item" :key="j" class="box-card" :class="{empty:item1.type === 'empty'}">
+<template v-if="item1.type === 'add'">
+  <div class="add">
+    <i @click="addDialog = true" class="fa fa-plus-square-o" aria-hidden="true"></i>
+  </div>
+</template>
+<template v-else-if="item1.type !== 'empty'">
+  <div slot="header" class="header">
+    <div class="action">
+      <span class="fa fa-edit" @click="eventEdit(item1)"></span>
+      <span class="fa fa-close" @click="eventDelete(item1)"></span>
+    </div>
+  </div>
+  <div class="content">
+    <div class="default">{{item1.name}}</div>
+    <div class="cover" :style="{backgroundImage: `url(${item1.cover})`}"></div>
+  </div>
+</template>
         </el-card>
       </li>
     </ul>
@@ -82,7 +115,7 @@
         list: [],
         addDialog: false,
         addData: {
-          name: "添加测试"
+          name: ""
         }
       }
     },
@@ -90,11 +123,32 @@
       this.ajaxGetList()
     },
     methods: {
+      dataGroup() {},
       ajaxGetList() {
         axios({
           url: '/mobilex/subject/all'
         }).then((ajaxData) => {
-          this.list = ajaxData.data
+          ajaxData.data.unshift({
+            type: "add"
+          })
+          let groupCount = 4
+          let emptyCount = ajaxData.data.length % groupCount
+          for(let i = 0;i < emptyCount-2;i++){
+            ajaxData.data.push({
+              type: "empty"
+            })
+          }
+          const list = []
+          let temp = []
+          ajaxData.data.forEach((data, i) => {
+            if (i % groupCount === 0) {
+              temp = []
+              list.push(temp)
+            }
+            temp.push(data)
+          })
+          debugger
+          this.list = list
         })
       },
       eventEdit(item) {

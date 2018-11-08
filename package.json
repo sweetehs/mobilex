@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.8",
+    "html2canvas": "^1.0.0-alpha.12",
     "less": "^3.8.1",
     "monaco-editor": "^0.14.3",
     "monaco-editor-webpack-plugin": "^1.5.4",

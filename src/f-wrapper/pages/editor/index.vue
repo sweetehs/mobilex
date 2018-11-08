@@ -149,7 +149,7 @@
 
 <template>
   <div class="editor-main-wrapper">
-    <div class="editor-main-wrapper">
+    <div class="editor-main-wrapper" v-loading="loading">
       <div class="action-wrapper">
         <div class="ps-wrapper">
           <header><span>组件层级</span></header>
@@ -224,6 +224,7 @@
   import Keytree from "./widget/keytree"
   import Pstree from "./widget/pstree"
   import Ioswrapper from "./widget/ios"
+  import html2canvas from "html2canvas"
   import {
     clone,
     loop,
@@ -251,8 +252,10 @@
             datas: [],
             hidden: []
           })
-  
         }
+        setTimeout(()=>{
+          this.loading = false
+        },800)
       })
     },
     data() {
@@ -262,6 +265,7 @@
         widgetnav: [],
         showNav: false,
         ajaxDialog: false,
+        loading: true,
         curwidget: {
           name: "",
           wid: "",
@@ -388,16 +392,29 @@
         })
       },
       peventSave() {
-        console.log(clone(this.$widget))
-        axios({
-          url: "/mobilex/subject/update",
-          method: "post",
-          data: {
-            id: this.$route.params.id, // '5bd29730e3cd3d3c7387b330'
-            subject: JSON.stringify(this.$widget)
-          }
-        }).then((ajaxData) => {
-          this.$message.success("保存成功")
+        // 截图之前去掉边框
+        this.$source.send("cutstart")
+        this.$source.receive("cutover", () => {
+          html2canvas(document.body.getElementsByTagName("iframe")[0].contentWindow.document.body, {
+            useCORS: true,
+            logging: false
+          }).then((canvas) => {
+            let cover = canvas.toDataURL("image/jpeg")
+            axios({
+              url: "/mobilex/subject/update",
+              method: "post",
+              data: {
+                id: this.$route.params.id, // '5bd29730e3cd3d3c7387b330'
+                cover: cover,
+                subject: JSON.stringify(this.$widget)
+              }
+            }).then((ajaxData) => {
+              this.$message.success("保存成功");
+              this.$router.push({
+                path: "/list"
+              })
+            })
+          });
         })
       }
     }
