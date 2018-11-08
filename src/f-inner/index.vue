@@ -3,7 +3,7 @@
 		background: #fff;
 		min-height: 100%;
 		transition: all .25s ease;
-		padding: 1px;
+		padding: 2px;
 		box-sizing: border-box;
 		&.dark {
 			background: #b6b6b6;

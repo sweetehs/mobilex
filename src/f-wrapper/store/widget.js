@@ -8,8 +8,10 @@ import {
 } from "@/util/util"
 const setParent = (arr) => {
   loop(arr, () => true, (data, index, arr, parent) => {
-    if (parent) {
-      data.parent = clone(parent)
+    if(parent && parent._path){
+      data._path = parent._path.concat([data.id])
+    }else if(!data._path){
+      data._path = [data.id]
     }
   })
 }
@@ -23,6 +25,7 @@ export default {
   namespaced: true,
   state: {
     widget: {
+      base: {},
       datas: [],
       hidden: []
     }, // 数据列表
@@ -38,13 +41,12 @@ export default {
       state.currentTab = tab
     },
     setAll(state, data) {
-      loop(data.datas, () => true, (_data, index, arr, parent) => {
-        _data.parent = clone(parent)
-      })
+      setParent(data.datas)
       state.widget = data
     },
     add(state, widget) {
       let currendData = state.widget[state.currentTab]
+      debugger
       if (state.currentWidget && state.currentWidget.isWrapper) {
         let cdata = ""
         loop(currendData, (data) => {
@@ -53,10 +55,11 @@ export default {
           cdata = data
         })
         cdata.children.push(widget)
-        widget.parent = clone(cdata)
-        setParent(widget.children)
+        widget._path = cdata._path.concat([widget.id])
+        setParent([widget])
         currendData = clone(currendData)
       } else {
+        setParent([widget])
         currendData.push(widget)
       }
     },
@@ -142,7 +145,6 @@ export default {
       }
     },
     setPaste(state, id) {
-      debugger
       let currendData = state.widget[state.currentTab]
       if (state.currentCopy) {
         // 复制
@@ -172,11 +174,12 @@ export default {
           // 找到元素并且复制到元素
           loop(currendData, (data) => data.id === id, (data) => {
             // 遍历每个元素重新设置ID
-            currentCopy.parent = clone(data)
+            currentCopy._path = data._path.concat([currentCopy.id])
+            setParent(currentCopy.children)
             data.children.push(currentCopy)
           })
         } else {
-          delete currentCopy.parent
+          delete currentCopy._path
           currendData.push(currentCopy)
         }
         state.currentCopy = ""
@@ -189,11 +192,12 @@ export default {
           })
           // 找到新元素添加
           loop(currendData, _d => _d.id === id, (data) => {
-            currentCut.parent = clone(data)
+            currentCut._path = data._path.concat([currentCut.id])
+            setParent(currentCut.children)
             data.children.push(currentCut)
           })
         } else {
-          delete currentCut.parent
+          delete currentCut._path
           currendData.push(currentCut)
         }
         state.currentCut = ""
@@ -266,11 +270,9 @@ export default {
       }
       let currendData = state.widget[state.currentTab]
       loop(currendData, _d => _d.id === id, (data) => {
-        debugger
-        loopParent(data, (parent) => {
-          const parentIndex = state.openlist.indexOf(parent.id)
-          if (parentIndex === -1 && parent.id) {
-            state.openlist.push(parent.id)
+        data._path && data._path.forEach((_path)=>{
+          if(state.openlist.indexOf(_path) == -1){
+            state.openlist.push(_path)
           }
         })
       })

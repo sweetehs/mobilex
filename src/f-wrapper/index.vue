@@ -8,7 +8,7 @@
 			background: #aaa;
 			flex-shrink: 0;
 		}
-		.bottom-wrapper{
+		.content-wrapper{
 			flex: 1;
 			overflow: auto;
 		}
@@ -17,7 +17,7 @@
 
 <template>
   <div class="f-wrapper-wrapper">
-		<div class="bottom-wrapper">
+		<div class="content-wrapper">
 			<router-view/>
 		</div>
 	</div>

@@ -65,7 +65,6 @@
         return !this.base.isLock
       },
       eventItemClick(e) {
-        debugger
         if (this.canClick()) {
           event.$emit("setControl", this.id)
         }

@@ -240,11 +240,19 @@
       axios({
         url: "/mobilex/subject/get",
         params: {
-          id: "5bd29730e3cd3d3c7387b36d"
+          id: this.$route.params.id
         }
       }).then((ajaxData) => {
-        console.log(JSON.parse(ajaxData.data.data))
-        this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data))
+        if (ajaxData.data.data.data) {
+          this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data.data))
+        } else {
+          this.$store.dispatch("$widget/setAll", {
+            base: {},
+            datas: [],
+            hidden: []
+          })
+  
+        }
       })
     },
     data() {
@@ -380,13 +388,12 @@
         })
       },
       peventSave() {
-        // 报错接口
         console.log(clone(this.$widget))
         axios({
           url: "/mobilex/subject/update",
           method: "post",
           data: {
-            id: "5bd29730e3cd3d3c7387b36d",
+            id: this.$route.params.id,
             subject: JSON.stringify(this.$widget)
           }
         }).then((ajaxData) => {
