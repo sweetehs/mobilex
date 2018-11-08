@@ -243,8 +243,8 @@
           id: this.$route.params.id
         }
       }).then((ajaxData) => {
-        if (ajaxData.data.data.data) {
-          this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data.data))
+        if (ajaxData.data.data) {
+          this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data))
         } else {
           this.$store.dispatch("$widget/setAll", {
             base: {},
@@ -393,7 +393,7 @@
           url: "/mobilex/subject/update",
           method: "post",
           data: {
-            id: this.$route.params.id,
+            id: '5bd29730e3cd3d3c7387b330'||this.$route.params.id,
             subject: JSON.stringify(this.$widget)
           }
         }).then((ajaxData) => {

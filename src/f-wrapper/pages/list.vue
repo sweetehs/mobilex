@@ -94,7 +94,7 @@
         axios({
           url: '/mobilex/subject/all'
         }).then((ajaxData) => {
-          this.list = ajaxData.data.data
+          this.list = ajaxData.data
         })
       },
       eventEdit(item) {
