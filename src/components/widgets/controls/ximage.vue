@@ -2,7 +2,7 @@
   <div class="ximage-wrapper">
     <el-form>
       <el-form-item label="地址" label-width="50px">
-        <el-input v-model="props.url"></el-input>
+        <xupload v-model="props.url"/>
       </el-form-item>
     </el-form>
   </div>

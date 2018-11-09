@@ -3,6 +3,6 @@ import xlink from "@/components/widgets/elements/common/xlink"
 export default{
   components:{
     xdialog,
-    xlink
+    xlink 
   }
 }

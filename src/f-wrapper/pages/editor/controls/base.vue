@@ -12,7 +12,7 @@
           <el-input v-model="props.style['background-color']"></el-input>
         </el-form-item>
         <el-form-item label="背景url" label-width="80px">
-          <upload v-model="props.style['background-image']"/>
+          <xupload v-model="props.style['background-image']"/>
         </el-form-item>
         <el-form-item label="背景重复" label-width="80px">
           <el-radio-group v-model="props.style['background-repeat']">
