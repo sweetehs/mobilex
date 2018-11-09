@@ -34,7 +34,6 @@ export default {
   },
   created() {
     //暂存一下默认数据
-    
     this.defaultData = clone(this.props)
     if (this.$parseData) {
       this.$parseData(clone(this.bdata))

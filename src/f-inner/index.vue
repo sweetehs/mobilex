@@ -64,7 +64,7 @@
 				handelCssData(data.base.style)
 				parseToRem(list)
 				this.datas = list
-				this.base = data.base
+				this.base = clone(data.base)
 				this.isDialog = data.type === "hidden"
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {

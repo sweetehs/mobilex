@@ -13,15 +13,23 @@ import "@/assets/less/fn.less"
 import "@/assets/less/common.less"
 import "@/assets/lib/font-awesome/css/font-awesome.min.css"
 
+
+import upload from "@/components/upload"
+Vue.component("upload", upload)
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 
-Vue.prototype.$ELEMENT = { size: 'mini' };
+Vue.prototype.$ELEMENT = {
+  size: 'mini'
+};
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
-  components: { Wrapper },
+  components: {
+    Wrapper
+  },
   template: '<Wrapper/>'
 })

@@ -12,7 +12,7 @@
           <el-input v-model="props.style['background-color']"></el-input>
         </el-form-item>
         <el-form-item label="背景url" label-width="80px">
-          <el-input v-model="props.style['background-image']"></el-input>
+          <upload v-model="props.style['background-image']"/>
         </el-form-item>
         <el-form-item label="背景重复" label-width="80px">
           <el-radio-group v-model="props.style['background-repeat']">
@@ -30,7 +30,7 @@
     clone
   } from "@/util/util"
   import mixin from "@/components/widgets/mixin-control"
-  export default {
+  export default {   
     mixins: [mixin],
     data() {
       return {
@@ -39,7 +39,6 @@
     },
     methods: {
       $parseData(data) {
-        // data.style.padding = "10px"
         if (!data.style) {
           data.style = {
             "padding": "",
