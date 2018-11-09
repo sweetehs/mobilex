@@ -30,8 +30,12 @@
     clone
   } from "@/util/util"
   import mixin from "@/components/widgets/mixin-control"
+  import xupload from "@/components/widgets/controls/util/xupload"
   export default {   
     mixins: [mixin],
+    components: {
+      xupload
+    },
     data() {
       return {
         props: {}

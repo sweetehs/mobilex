@@ -225,6 +225,11 @@
   import Pstree from "./widget/pstree"
   import Ioswrapper from "./widget/ios"
   import html2canvas from "html2canvas"
+  import Vue from "vue"
+  import controlsutil from "@/components/widgets/list-controls-common"
+  for (var i in controlsutil) {
+    Vue.component(i, controlsutil[i])
+  }
   import {
     clone,
     loop,
@@ -253,9 +258,9 @@
             hidden: []
           })
         }
-        setTimeout(()=>{
+        setTimeout(() => {
           this.loading = false
-        },800)
+        }, 800)
       })
     },
     data() {
