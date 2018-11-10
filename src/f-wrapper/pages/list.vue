@@ -147,7 +147,6 @@
             }
             temp.push(data)
           })
-          debugger
           this.list = list
         })
       },

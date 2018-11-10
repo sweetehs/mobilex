@@ -316,12 +316,10 @@
       cutWidget() {
         this.$source.send("widgetcut", clone(this.cutWidget))
       },
-      widgetlist() {
-        this.postWidgetListSend()
-      },
       $widget: {
         deep: true,
-        handler() {
+        handler(a,b) {
+          console.warn('$widget change')
           this.postWidgetListSend()
         }
       }
@@ -335,6 +333,7 @@
       })
       // 得到当前widgetcontrol
       this.$source.receive('widgetcontrol', (id) => {
+        console.warn('set control')
         this.$store.dispatch("$widget/setCur", id)
         this.$store.dispatch("$widget/openFolder", id)
       })
