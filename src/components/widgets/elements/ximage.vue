@@ -10,7 +10,7 @@
 
 <template>
   <div class="ximage-wrapper">
-    <img :src="url" alt="">
+    <img ondragstart="return false;" :src="url" />
   </div>
 </template>
 

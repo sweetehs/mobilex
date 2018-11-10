@@ -12,6 +12,10 @@
       flex: 1;
       margin-right: 10px;
     }
+    .fa{
+      font-size: 18px;
+      margin-right: 10px;
+    }
   }
 </style>
 
