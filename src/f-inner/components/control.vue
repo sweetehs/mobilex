@@ -45,7 +45,7 @@
       'item-control-wrapper':true,
       'hover':isHover,
       'lock': base.isLock
-    }" :style="style" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
+    }" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
     <div class="overlay" :class="{
         'lock-root': base.isLock == id
       }">

@@ -45,13 +45,16 @@ export default {
             base: data.base,
             position: data.style.position
           },
-          style: data.style
+          style: Object.assign(data.style,{
+            // left: "0",
+            // top: "0"
+          })
         }, [h(data.wid, {
           style: {
             // 个别样式要放在元素本上上
             "border-radius": data.style["border-radius"],
             "height": data.style["height"],
-            "width": data.style["width"],
+            "width": data.style["width"]
           },
           props: data.props
         }, childtemp)]))
