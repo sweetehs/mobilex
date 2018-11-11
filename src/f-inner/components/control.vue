@@ -2,6 +2,7 @@
   .item-control-wrapper {
     position: relative;
     margin: -1px;
+    transition: all 0.3s ease;
      &:hover{
         cursor: pointer;
       }
