@@ -2,12 +2,12 @@
   .item-control-wrapper {
     position: relative;
     margin: -1px;
-    transition: all 0.3s ease;
-     &:hover{
-        cursor: pointer;
-      }
-    &.lock{
-      .overlay:not(.lock-root){
+    // transition: all 0.3s ease;
+    &:hover {
+      cursor: pointer;
+    }
+    &.lock {
+      .overlay:not(.lock-root) {
         border: none;
       }
     }
@@ -38,23 +38,31 @@
 </style>
 
 <template>
-  <div :class="{
-    'item-control-wrapper':true,
-    'hover':isHover,
-    'lock': base.isLock
-  }" :style="style" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
+  <div v-drag="{
+      canDrag: position=='absolute' || position=='fixed',
+      dragEnd: dragEnd
+    }" :class="{
+      'item-control-wrapper':true,
+      'hover':isHover,
+      'lock': base.isLock
+    }" :style="style" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
     <div class="overlay" :class="{
-      'lock-root': base.isLock == id
-    }"></div>
+        'lock-root': base.isLock == id
+      }">
+    </div>
     <slot></slot>
   </div>
 </template>
 
 <script>
   import event from "./event"
+  import drag from "../directive/drag"
   export default {
     name: "control",
-    props: ["id", "base"],
+    props: ["id", "base", "position"],
+    directives: {
+      drag
+    },
     data() {
       return {
         style: {},
@@ -82,6 +90,9 @@
           this.isHover = false
           e.stopPropagation()
         }
+      },
+      dragEnd() {
+        // 设置元素left right
       }
     }
   }

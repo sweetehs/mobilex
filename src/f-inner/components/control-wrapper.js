@@ -11,7 +11,8 @@ export default {
     currentId: {},
     copyId: {},
     cutId: {},
-    isDialog: {}
+    isDialog: {},
+    position: {}
   },
   render(h, context) {
     const loop = (arr, index) => {
@@ -41,7 +42,8 @@ export default {
           },
           props: {
             id: data.id,
-            base: data.base
+            base: data.base,
+            position: data.style.position
           },
           style: data.style
         }, [h(data.wid, {

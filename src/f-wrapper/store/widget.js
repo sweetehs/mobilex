@@ -8,9 +8,9 @@ import {
 } from "@/util/util"
 const setParent = (arr) => {
   loop(arr, () => true, (data, index, arr, parent) => {
-    if(parent && parent._path){
+    if (parent && parent._path) {
       data._path = parent._path.concat([data.id])
-    }else if(!data._path){
+    } else if (!data._path) {
       data._path = [data.id]
     }
   })
@@ -183,12 +183,12 @@ export default {
         }
         state.currentCopy = ""
       } else if (state.currentCut) {
+        let currentCut = clone(state.currentCut)
+        // 找到父元素删除
+        loop(currendData, _d => _d.id === currentCut.id, (data, index, arr, parent) => {
+          arr.splice(index, 1)
+        })
         if (id) {
-          let currentCut = clone(state.currentCut)
-          // 找到父元素删除
-          loop(currendData, _d => _d.id === currentCut.id, (data, index, arr, parent) => {
-            arr.splice(index, 1)
-          })
           // 找到新元素添加
           loop(currendData, _d => _d.id === id, (data) => {
             currentCut._path = data._path.concat([currentCut.id])
@@ -269,8 +269,8 @@ export default {
       }
       let currendData = state.widget[state.currentTab]
       loop(currendData, _d => _d.id === id, (data) => {
-        data._path && data._path.forEach((_path)=>{
-          if(state.openlist.indexOf(_path) == -1){
+        data._path && data._path.forEach((_path) => {
+          if (state.openlist.indexOf(_path) == -1) {
             state.openlist.push(_path)
           }
         })

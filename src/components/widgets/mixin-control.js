@@ -22,6 +22,7 @@ export default {
         this.props = parseData
         this.autoChange = true
         this.preventAutoChange()
+        this.$change && this.$change()
       }
     },
     props: {
@@ -51,7 +52,6 @@ export default {
         this.props = this.$parseData(clone(this.bdata))
       } else {
         this.props = clone(this.bdata)
-        // 如果bdata为空 则不进行赋值
       }
     }
   },

@@ -5,6 +5,14 @@
 		transition: all .25s ease;
 		padding: 2px;
 		box-sizing: border-box;
+		position: relative;
+		.overlay{
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			left: 0;
+			right: 0;
+		}
 		&.dark {
 			background: #b6b6b6;
 			background-image: none!important;
@@ -14,6 +22,7 @@
 
 <template>
 	<div :style="base.style" class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
+		<div class="overlay"></div>
 		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
 	</div>
 </template>
