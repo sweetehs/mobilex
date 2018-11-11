@@ -4,6 +4,10 @@
     @fontColor: #b6b6b6;
     color: @fontColor;
     font-size: 12px;
+    .fa{
+      width: 14px;
+      text-align: center;
+    }
     ul {
       &.root {
         padding-left: 0;
@@ -88,11 +92,11 @@
                         'fa-unlock': !item.base.isLock,
                         'hidden': !item.isWrapper
                       }" @click="eventToggleLock($event, item)"></span>
-            <span class="fa btn-open" :class="{
+            <span v-if="item.children" class="fa btn-open" :class="{
                         'fa-folder': item.children,
-                        'fa-file': !item.children,
                         'fa-folder-open': openlist.indexOf(item.id) !== -1
                       }" @click="eventOpen($event,item)"></span>
+            <span v-else class="fa" :class="getIcon(item.wid)"></span>
             <span>{{item.name}}</span> ->
             <!--会双向绑定直接修改值，没通过vuex-->
             <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
@@ -139,6 +143,18 @@
       }
     },
     methods: {
+      getIcon(type){
+        if(type == "ximage"){
+          return "fa-image"
+        }else if(type == "xtext"){
+          return "fa-text-width"
+        }else if(type == "xbutton"){
+          return "fa-hand-pointer-o"
+        }else if(type == "xform"){
+          return "fa-wpforms"
+        } 
+        return "fa-file"
+      },
       setCurrent(e, data) {
         this.$store.dispatch("$widget/setCur", data.id)
         e.stopPropagation()
