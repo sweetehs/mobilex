@@ -325,7 +325,6 @@
       }
     },
     mounted() {
-      this.$store.dispatch("$widget/setTab", this.vsTabIndex)
       this.$source = new postMessage(this.$refs.editor.contentWindow, window)
       // 获取左侧菜单列表
       this.$source.receive('widgetnav', (widgetnav) => {
@@ -352,7 +351,9 @@
         this.ajaxDialog = true
       },
       vsTabChange(tab) {
-        this.$store.dispatch("$widget/setTab", this.vsTabIndex)
+        this.$store.dispatch("$widget/setTab", this.vsTabIndex).then(()=>{
+          this.postWidgetListSend()
+        })
       },
       setRoot() {
         this.$store.dispatch("$widget/setCur", "")

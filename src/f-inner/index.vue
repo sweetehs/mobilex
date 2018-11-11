@@ -7,6 +7,7 @@
 		box-sizing: border-box;
 		&.dark {
 			background: #b6b6b6;
+			background-image: none!important;
 		}
 	}
 </style>
@@ -60,6 +61,7 @@
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (data) => {
+				debugger
 				const list = clone(data.list)
 				handelCssData(data.base.style)
 				parseToRem(list)

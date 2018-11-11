@@ -29,7 +29,7 @@ export default {
       datas: [],
       hidden: []
     }, // 数据列表
-    currentTab: "",
+    currentTab: "datas",
     currentWidget: "", // 当前选中的数据
     currentCopy: "", // 当前复制的数据
     currentCut: "", // 当前剪切的数据
