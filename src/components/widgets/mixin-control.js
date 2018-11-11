@@ -8,7 +8,10 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        if (JSON.stringify(this.props) === JSON.stringify(this.bdata)) {
+        if (
+          JSON.stringify(this.props) === JSON.stringify(this.bdata) || 
+          !this.bdata
+        ) {
           return
         }
         console.warn('controls mixin bdata change')

@@ -2,6 +2,9 @@
   .item-control-wrapper {
     position: relative;
     margin: -1px;
+     &:hover{
+        cursor: pointer;
+      }
     &.lock{
       .overlay:not(.lock-root){
         border: none;
@@ -17,9 +20,6 @@
       overflow: hidden;
       pointer-events: none;
       border: 1px dashed #333;
-      &:hover{
-        cursor: pointer;
-      }
     }
     &.hover {
       >.overlay {
