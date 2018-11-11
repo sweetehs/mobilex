@@ -22,7 +22,7 @@ export default {
           temp = clone(this.bdata)
         }
         if (this.$parseData) {
-          this.$parseData(temp)
+          this.props = this.$parseData(clone(this.bdata))
         } else {
           // 会造成执行watch props
           this.props = clone(temp)
@@ -51,7 +51,7 @@ export default {
     //暂存一下默认数据
     this.defaultData = clone(this.props)
     if (this.$parseData) {
-      this.$parseData(clone(this.bdata))
+      this.props = this.$parseData(clone(this.bdata))
     } else {
       // 如果bdata为空 则不进行赋值
       if (getObjectLength(this.bdata)) {

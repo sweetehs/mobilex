@@ -53,7 +53,7 @@
             "background-repeat": "no-repeat"
           }
         }
-        this.props = data
+        return data
       }
     }
   }

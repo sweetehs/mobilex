@@ -4,9 +4,9 @@
       <!--需要特殊处理-->
       <el-form-item v-if="!item.disabled" v-for="(item,i) in props" :key="i" :label="item.name" label-width="80px">
         <el-input v-if="!item.radio" v-model="item.value"></el-input>
-          <el-radio-group v-if="item.radio" v-model="item.value">
-            <el-radio :label="r" v-for="r in item.radio" :key="r">{{r}}</el-radio>
-          </el-radio-group>
+        <el-radio-group v-if="item.radio" v-model="item.value">
+          <el-radio :label="r" v-for="r in item.radio" :key="r">{{r}}</el-radio>
+        </el-radio-group>
       </el-form-item>
     </el-form>
   </div>
@@ -26,9 +26,7 @@
         name: "布局",
         key: "display",
         value: "",
-        default(){
-          this.radio = ["flex", "block", "inline-block"]
-        }
+        radio: ["flex", "block", "inline-block"]
       }, {
         name: "flex值",
         key: "flex",
@@ -81,35 +79,27 @@
         })
         return flag;
       },
-      setDefault() {
-        this.props.forEach((_data) => {
-          _data.value = _data.default ? _data.default() : ''
-        })
-      },
       $parseData(bdata) {
-        this.setDefault()
-        this.props.forEach((_data) => {
-          if(_data.key === "flex"){
-            if(this.tdata && this.tdata.parentFlex){
+        const defaultData = this.props.map((_data) => {
+          _data.value = ""
+          return clone(_data)
+        })
+        defaultData.forEach((_data) => {
+          if (_data.key === "flex") {
+            if (this.tdata && this.tdata.parentFlex) {
               _data.disabled = false
-            }else{
+            } else {
               _data.disabled = true
             }
           }
-          if(_data.key === "display"){
-            if(this.tdata && this.tdata.disabledFlex){
-              _data.radio = _data.radio.filter((data)=>data !== "flex")
+          if (_data.key === "display") {
+            if (this.tdata && this.tdata.disabledFlex) {
+              _data.radio = _data.radio.filter((data) => data !== "flex")
             }
           }
-          let _style = bdata[_data.key]
-          if (_style) {
-            if (_data.parse) {
-              _data.parse(_style)
-            } else {
-              _data.value = _style
-            }
-          }
+          _data.value = bdata[_data.key]
         })
+        return defaultData
       },
       $reverseData() {
         return this.props.reduce((_data, next) => {

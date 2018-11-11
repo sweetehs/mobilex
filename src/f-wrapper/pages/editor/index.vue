@@ -404,6 +404,7 @@
             logging: false
           }).then((canvas) => {
             let cover = canvas.toDataURL("image/jpeg")
+            console.log(this.$widget)
             axios({
               url: "/mobilex/subject/update",
               method: "post",
@@ -414,9 +415,9 @@
               }
             }).then((ajaxData) => {
               this.$message.success("保存成功");
-              this.$router.push({
-                path: "/list"
-              })
+              // this.$router.push({
+              //   path: "/list"
+              // })
             })
           });
         })

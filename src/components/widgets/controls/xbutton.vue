@@ -12,9 +12,6 @@
       return {
         props: {}
       }
-    },
-    methods: {
-      $reverseData() {}
     }
   }
 </script>

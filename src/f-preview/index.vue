@@ -9,7 +9,7 @@
 <template>
   <div class="preview-wrapper" :style="style">
     <previewinner v-if="loadView" :datas="datas" @changeParent="changeData" />
-    <!-- <previewinner :datas="hidden" @changeParent="changeData" type="xdialog" /> -->
+    <previewinner :datas="hidden" @changeParent="changeData" type="xdialog" />
   </div>
 </template>
 
