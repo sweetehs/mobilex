@@ -88,7 +88,7 @@ export function parseToRem(arr) {
     if (data.style) {
       for (var i in data.style) {
         let _style = data.style[i]
-        data.style[i] = _style.replace(/(\d.*?)(px)/g, (a, b, c) => {
+        data.style[i] = _style.toString().replace(/(\d.*?)(px)/g, (a, b, c) => {
           return (parseInt(b) / 100) + "rem"
         })
       }

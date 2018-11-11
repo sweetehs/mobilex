@@ -26,58 +26,93 @@
         name: "布局",
         key: "display",
         value: "",
-        radio: ["flex", "block", "inline-block"]
+        radio: ["flex", "block", "inline-block"],
+        disabled: false
       }, {
         name: "flex值",
         key: "flex",
-        value: ""
+        value: "",
+        disabled: false
+      }, {
+        name: "定位",
+        key: "position",
+        value: "",
+        radio: ["relative", "absolute", "fixed"],
+        disabled: false
+      }, {
+        name: "left",
+        key: "left",
+        value: "",
+        disabled: false
+      }, {
+        name: "right",
+        key: "right",
+        value: "",
+        disabled: false
       }, {
         name: "宽度",
         key: "width",
         value: "auto",
+        disabled: false
       }, {
         name: "高度",
         key: "height",
         value: "auto",
+        disabled: false
       }, {
         name: "外边距",
         key: "margin",
-        value: ""
+        value: "",
+        disabled: false
       }, {
         name: "内边距",
         key: "padding",
-        value: ""
+        value: "",
+        disabled: false
       }, {
         name: "颜色",
         key: "color",
-        value: ""
+        value: "",
+        disabled: false
       }, {
         name: "背景颜色",
         key: "background-color",
-        value: ""
+        value: "",
+        disabled: false
       }, {
         name: "圆角",
         key: "border-radius",
         value: 0,
+        disabled: false
       }, {
         name: "对齐",
         key: "text-align",
         value: 'left',
-        radio: ["left", "center", "right"]
+        radio: ["left", "center", "right"],
+        disabled: false
       }]
       return {
         props: defaultData
       }
     },
     methods: {
-      filterForm(list, key, value) {
-        let flag = false
-        list.forEach((_data) => {
-          if (_data.key === "display" && _data.value === value) {
-            flag = true
+      getItem(key) {
+        return this.props.find(d => d.key === key)
+      },
+      $change() {
+        const position = this.getItem("position")
+        this.props.forEach((_data) => {
+          if (_data.key == "left" || _data.key == "right") {
+            let flag = ""
+            if (position.value == "absolute" || position.value == "fixed") {
+              flag = false
+            } else {
+              flag = true
+              _data.value = ""
+            }
+            _data.disabled = flag
           }
         })
-        return flag;
       },
       $parseData(bdata) {
         const defaultData = this.props.map((_data) => {

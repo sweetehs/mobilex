@@ -61,7 +61,6 @@
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (data) => {
-				debugger
 				const list = clone(data.list)
 				handelCssData(data.base.style)
 				parseToRem(list)
