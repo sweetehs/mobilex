@@ -9,7 +9,7 @@ export default {
       deep: true,
       handler() {
         let parseData = clone(this.bdata)
-        if(this.$parseData){
+        if (this.$parseData) {
           parseData = this.$parseData(clone(this.bdata))
         }
         if (
@@ -21,9 +21,7 @@ export default {
         console.warn('controls mixin bdata change')
         this.props = parseData
         this.autoChange = true
-        setTimeout(()=>{
-          this.autoChange = false
-        },1000)
+        this.preventAutoChange()
       }
     },
     props: {
@@ -46,15 +44,24 @@ export default {
     }
   },
   created() {
-    //暂存一下默认数据
-    this.defaultData = clone(this.props)
-    if (this.$parseData) {
-      this.props = this.$parseData(clone(this.bdata))
-    } else {
-      // 如果bdata为空 则不进行赋值
-      if (getObjectLength(this.bdata)) {
+    this.preventAutoChange()
+    this.$change && this.$change()
+    if (getObjectLength(this.bdata)) {
+      if (this.$parseData) {
+        this.props = this.$parseData(clone(this.bdata))
+      } else {
         this.props = clone(this.bdata)
+        // 如果bdata为空 则不进行赋值
       }
+    }
+  },
+  methods: {
+    preventAutoChange() {
+      // 当tdata和created变化时，不触发watch props
+      this.autoChange = true
+      setTimeout(() => {
+        this.autoChange = false
+      }, 1000)
     }
   }
 }
