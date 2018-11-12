@@ -37,6 +37,8 @@ export default {
         let tempData = clone(this.props)
         if (this.$change) {
           this.$change(tempData)
+          this.preventAutoChange()
+          this.props = tempData
         }
         if (this.$reverseData) {
           this.$emit("change", this.$reverseData(tempData))
