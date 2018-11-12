@@ -1,3 +1,4 @@
+import { clone } from "@/util/util"
 import control from "./control"
 export default {
   functional: true,
@@ -18,7 +19,8 @@ export default {
     const loop = (arr, index) => {
       index++
       let temp = []
-      temp = arr.reduce((result, data) => {
+      temp = arr.reduce((result, _data) => {
+        const data = clone(_data)
         let childtemp = []
         if (data.children) {
           childtemp = loop(data.children, index)

@@ -39,16 +39,16 @@
 
 <template>
   <div v-drag="{
-            canDrag: position=='absolute' || position=='fixed',
-            dragMove: dragMove
-          }" :class="{
-            'item-control-wrapper':true,
-            'hover':isHover,
-            'lock': base.isLock
-          }" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
+    canDrag: this.canDrag,
+    dragEnd: dragEnd
+  }" :class="{
+    'item-control-wrapper':true,
+    'hover':isHover,
+    'lock': base.isLock
+  }" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
     <div class="overlay" :class="{
-              'lock-root': base.isLock == id
-            }">
+      'lock-root': base.isLock == id
+    }">
     </div>
     <slot></slot>
   </div>
@@ -67,6 +67,11 @@
       return {
         style: {},
         isHover: false
+      }
+    },
+    computed: {
+      canDrag(){
+        return false //this.position=='absolute' || this.position=='fixed'
       }
     },
     methods: {
@@ -91,8 +96,8 @@
           e.stopPropagation()
         }
       },
-      dragMove(x, y) {
-         event.$emit("update", {
+      dragEnd(x, y) {
+        event.$emit("update", {
           id: this.id,
           data: {
             style: {

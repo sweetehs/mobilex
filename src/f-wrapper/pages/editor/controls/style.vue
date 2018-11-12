@@ -134,11 +134,9 @@
         })
         return defaultData
       },
-      $reverseData() {
-        return this.props.reduce((_data, next) => {
-          if (next.reverse) {
-            _data[next.key] = next.reverse()
-          } else {
+      $reverseData(props) {
+        return props.reduce((_data, next) => {
+          if(next.value){
             _data[next.key] = next.value
           }
           return _data

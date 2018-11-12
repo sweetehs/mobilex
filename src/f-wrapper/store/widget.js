@@ -103,6 +103,9 @@ export default {
         extendDeep(data.data, getData)
       }
       state.widget[state.currentTab] = clone(currendData)
+      if(data.id === state.currentWidget.id){
+        state.currentWidget = getData
+      }
     },
     updateBase(state, data) {
       // 为了防止死循环，比较数据是否相等

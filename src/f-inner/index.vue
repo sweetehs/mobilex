@@ -23,7 +23,7 @@
 <template>
 	<div :style="base.style" class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
 		<div class="overlay"></div>
-		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
+		<controlwrapper v-if="tryOne" :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
 	</div>
 </template>
 
@@ -59,7 +59,8 @@
 				currentId: '',
 				copyId: '',
 				cutId: '',
-				isDialog: ''
+				isDialog: '',
+				tryOne: true
 			}
 		},
 		mounted() {
@@ -70,6 +71,11 @@
 				return this.cloneWidgetRemoveComponent(_data)
 			}))
 			this.$source.receive("widgetlist", (data) => {
+				this.tryOne = false
+				setTimeout(()=>{
+					// 强制刷新所有组件
+					this.tryOne = true
+				})
 				const list = clone(data.list)
 				handelCssData(data.base.style)
 				parseToRem(list)

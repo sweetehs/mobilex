@@ -402,7 +402,6 @@
         e.stopPropagation();
       },
       peventUpdateById(data) {
-        debugger
         // 更新数据
         this.$store.dispatch("$widget/update", {
           id: "",
