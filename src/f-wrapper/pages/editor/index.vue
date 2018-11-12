@@ -303,6 +303,7 @@
       $widget: {
         deep: true,
         handler(){
+          console.log(clone(this.$widget))
           this.postWidgetListSend()
         }
       }
