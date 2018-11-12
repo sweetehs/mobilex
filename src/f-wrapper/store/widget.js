@@ -91,16 +91,18 @@ export default {
     },
     update(state, data) {
       let currendData = state.widget[state.currentTab]
+      let updateId = data.id || state.currentWidget.id
       let getData = ""
       loop(currendData, (data) => {
-        return data.id === state.currentWidget.id
-      }, (data) => {
-        getData = data
+        return data.id === updateId
+      }, (_data) => {
+        getData = _data
       })
       // 为了防止死循环，比较数据是否相等
-      if (!compare(data, getData)) {
-        extendDeep(data, getData)
+      if (!compare(data.data, getData)) {
+        extendDeep(data.data, getData)
       }
+      state.widget[state.currentTab] = clone(currendData)
     },
     updateBase(state, data) {
       // 为了防止死循环，比较数据是否相等

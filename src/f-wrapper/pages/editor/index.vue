@@ -302,7 +302,7 @@
       },
       $widget: {
         deep: true,
-        handler(){
+        handler() {
           console.log(clone(this.$widget))
           this.postWidgetListSend()
         }
@@ -320,6 +320,10 @@
         this.$store.dispatch("$widget/setCur", id);
         this.$store.dispatch("$widget/openFolder", id);
       });
+      // 内部跟新外部的数据
+      this.$source.receive("updateitem", (data) => {
+        this.$store.dispatch("$widget/update", data)
+      })
       this.ajaxGetList()
     },
     methods: {
@@ -398,8 +402,12 @@
         e.stopPropagation();
       },
       peventUpdateById(data) {
+        debugger
         // 更新数据
-        this.$store.dispatch("$widget/update", data)
+        this.$store.dispatch("$widget/update", {
+          id: "",
+          data
+        })
       },
       peventUpdateBase(data) {
         // 更新基础数据

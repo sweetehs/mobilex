@@ -6,7 +6,7 @@
 		padding: 2px;
 		box-sizing: border-box;
 		position: relative;
-		.overlay{
+		.overlay {
 			position: absolute;
 			height: 100%;
 			width: 100%;
@@ -95,6 +95,9 @@
 			})
 			event.$on("setControl", (id) => {
 				this.$source.send("widgetcontrol", id)
+			})
+			event.$on("update", (data) => {
+				this.$source.send("updateitem", data)
 			})
 		},
 		methods: {

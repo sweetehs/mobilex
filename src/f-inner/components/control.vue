@@ -39,16 +39,16 @@
 
 <template>
   <div v-drag="{
-      canDrag: position=='absolute' || position=='fixed',
-      dragEnd: dragEnd
-    }" :class="{
-      'item-control-wrapper':true,
-      'hover':isHover,
-      'lock': base.isLock
-    }" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
+            canDrag: position=='absolute' || position=='fixed',
+            dragMove: dragMove
+          }" :class="{
+            'item-control-wrapper':true,
+            'hover':isHover,
+            'lock': base.isLock
+          }" @click="eventItemClick" @mouseover="eventEnter" @mouseout="eventLeave">
     <div class="overlay" :class="{
-        'lock-root': base.isLock == id
-      }">
+              'lock-root': base.isLock == id
+            }">
     </div>
     <slot></slot>
   </div>
@@ -91,8 +91,16 @@
           e.stopPropagation()
         }
       },
-      dragEnd() {
-        // 设置元素left right
+      dragMove(x, y) {
+         event.$emit("update", {
+          id: this.id,
+          data: {
+            style: {
+              left: x,
+              top: y
+            }
+          }
+        })
       }
     }
   }

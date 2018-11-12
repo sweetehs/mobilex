@@ -45,8 +45,8 @@
         value: "",
         disabled: false
       }, {
-        name: "right",
-        key: "right",
+        name: "top",
+        key: "top",
         value: "",
         disabled: false
       }, {
@@ -99,7 +99,7 @@
       $change(props) {
         const position = props.find(d => d.key === 'position')
         props.forEach((_data) => {
-          if (_data.key == "left" || _data.key == "right") {
+          if (_data.key == "left" || _data.key == "top") {
             let flag = ""
             if (position.value == "absolute" || position.value == "fixed") {
               flag = false
