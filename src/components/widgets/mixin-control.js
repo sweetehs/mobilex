@@ -15,8 +15,7 @@ export default {
         }
         if (
           JSON.stringify(parseData) == JSON.stringify(this.props) ||
-          !this.bdata ||
-          !getObjectLength(this.bdata)
+          !this.bdata
         ) {
           return
         }
