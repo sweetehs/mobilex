@@ -14,10 +14,10 @@
         }
       }
       .el-radio__label {
-        color: rgb(221, 221, 221)!important;
+        color: rgb(221, 221, 221) !important;
       }
       .el-radio {
-        margin-right: 10px!important;
+        margin-right: 10px !important;
       }
       .el-radio+.el-radio {
         margin: 0;
@@ -32,10 +32,10 @@
         }
       }
       .el-form-item__label {
-        color: rgb(221, 221, 221)
+        color: rgb(221, 221, 221);
       }
       .el-dialog {
-        color: #333!important;
+        color: #333 !important;
       }
     }
     .action-wrapper,
@@ -116,7 +116,7 @@
               background: rgb(83, 83, 83);
               color: rgb(130, 130, 130);
               &:hover {
-                cursor: not-allowed
+                cursor: not-allowed;
               }
             }
           }
@@ -218,50 +218,29 @@
 </template>
 
 <script>
-  import axios from "axios"
-  import postMessage from "@/util/postMessage"
-  import Controls from "./controls"
-  import Keytree from "./widget/keytree"
-  import Pstree from "./widget/pstree"
-  import Ioswrapper from "./widget/ios"
-  import html2canvas from "html2canvas"
-  import Vue from "vue"
-  import controlsutil from "@/components/widgets/list-controls-common"
+  import axios from "axios";
+  import postMessage from "@/util/postMessage";
+  import Controls from "./controls";
+  import Keytree from "./widget/keytree";
+  import Pstree from "./widget/pstree";
+  import Ioswrapper from "./widget/ios";
+  import html2canvas from "html2canvas";
+  import Vue from "vue";
+  import controlsutil from "@/components/widgets/list-controls-common";
   for (var i in controlsutil) {
-    Vue.component(i, controlsutil[i])
+    Vue.component(i, controlsutil[i]);
   }
   import {
     clone,
     loop,
     randomId
-  } from "@/util/util.js"
+  } from "@/util/util.js";
   export default {
     components: {
       Controls,
       Ioswrapper,
       Pstree,
       Keytree
-    },
-    created() {
-      axios({
-        url: "/mobilex/subject/get",
-        params: {
-          id: this.$route.params.id
-        }
-      }).then((ajaxData) => {
-        if (ajaxData.data.data) {
-          this.$store.dispatch("$widget/setAll", JSON.parse(ajaxData.data.data))
-        } else {
-          this.$store.dispatch("$widget/setAll", {
-            base: {},
-            datas: [],
-            hidden: []
-          })
-        }
-        setTimeout(() => {
-          this.loading = false
-        }, 800)
-      })
     },
     data() {
       return {
@@ -280,128 +259,164 @@
             props: {}
           }
         }
-      }
+      };
     },
     computed: {
       $widget() {
-        return this.$store.state.$widget.widget
+        return this.$store.state.$widget.widget;
       },
       widgetlist() {
-        return this.$widget[this.vsTabIndex]
+        return this.$widget[this.vsTabIndex];
       },
       currentWidget() {
-        return this.$store.state.$widget.currentWidget
+        return this.$store.state.$widget.currentWidget;
       },
       copyWidget() {
-        return this.$store.state.$widget.currentCopy
+        return this.$store.state.$widget.currentCopy;
       },
       cutWidget() {
-        return this.$store.state.$widget.currentCut
+        return this.$store.state.$widget.currentCut;
       },
       currentIsWrapper() {
-        return (this.currentWidget && this.currentWidget.isWrapper) || this.currentWidget === ""
+        return (
+          (this.currentWidget && this.currentWidget.isWrapper) ||
+          this.currentWidget === ""
+        );
       },
       disabledAdd() {
-        return !this.currentIsWrapper || (this.currentWidget && this.currentWidget.base.isLock)
+        return (!this.currentIsWrapper ||
+          (this.currentWidget && this.currentWidget.base.isLock)
+        );
       }
     },
     watch: {
       currentWidget() {
         // 当前current改变的时候通知内部
-        this.$source.send("widgetcurrent", clone(this.currentWidget))
+        this.$source.send("widgetcurrent", clone(this.currentWidget));
       },
       copyWidget() {
-        this.$source.send("widgetcopy", clone(this.copyWidget))
+        this.$source.send("widgetcopy", clone(this.copyWidget));
       },
       cutWidget() {
-        this.$source.send("widgetcut", clone(this.cutWidget))
+        this.$source.send("widgetcut", clone(this.cutWidget));
       }
     },
     mounted() {
-      this.$source = new postMessage(this.$refs.editor.contentWindow, window)
+      this.$source = new postMessage(this.$refs.editor.contentWindow, window);
       // 获取左侧菜单列表
-      this.$source.receive('widgetnav', (widgetnav) => {
-        this.widgetnav = widgetnav
-      })
+      this.$source.receive("widgetnav", widgetnav => {
+        this.widgetnav = widgetnav;
+      });
       // 得到当前widgetcontrol
-      this.$source.receive('widgetcontrol', (id) => {
-        console.warn('set control')
-        this.$store.dispatch("$widget/setCur", id)
-        this.$store.dispatch("$widget/openFolder", id)
-      })
-      setTimeout(() => {
-        this.postWidgetListSend()
-      }, 500)
+      this.$source.receive("widgetcontrol", id => {
+        console.warn("set control");
+        this.$store.dispatch("$widget/setCur", id);
+        this.$store.dispatch("$widget/openFolder", id);
+      });
+      this.ajaxGetList()
     },
     methods: {
+      ajaxGetList() {
+        axios({
+          url: "/mobilex/subject/get",
+          params: {
+            id: this.$route.params.id
+          }
+        }).then(ajaxData => {
+          const allData = ajaxData.data.data ? JSON.parse(ajaxData.data.data) : {
+            base: {},
+            datas: [],
+            hidden: []
+          }
+          this.$store.dispatch("$widget/setAll", allData).then(() => {
+            setTimeout(() => {
+              this.postWidgetListSend();
+              this.loading = false;
+            }, 500)
+          });
+        });
+      },
       saveAjax() {
         this.$store.dispatch("$widget/setAjax").then(() => {
-          this.ajaxDialog = false
-        })
+          this.ajaxDialog = false;
+        });
       },
       setAjax() {
         // 设置ajax数据
-        this.ajaxDialog = true
+        this.ajaxDialog = true;
       },
       vsTabChange(tab) {
-        this.$store.dispatch("$widget/setTab", this.vsTabIndex).then(()=>{
-          this.postWidgetListSend()
-        })
+        this.$store.dispatch("$widget/setTab", this.vsTabIndex).then(() => {
+          this.postWidgetListSend();
+        });
       },
       setRoot() {
-        this.$store.dispatch("$widget/setCur", "")
-        this.$store.dispatch("$widget/setCopy", "")
+        this.$store.dispatch("$widget/setCur", "");
+        this.$store.dispatch("$widget/setCopy", "");
       },
       postWidgetListSend() {
         // 发送list数据内部显示
-        this.$source.send("widgetlist", clone({
-          list: this.widgetlist,
-          type: this.vsTabIndex,
-          base: this.$widget.base
-        }))
+        this.$source.send(
+          "widgetlist",
+          clone({
+            list: this.widgetlist,
+            type: this.vsTabIndex,
+            base: this.$widget.base
+          })
+        );
       },
       eventAddWidget(widget) {
         // 不是wrapper不能增加组件
-        if (this.currentWidget == "" || (this.currentIsWrapper && !this.currentWidget.base.isLock)) {
+        if (
+          this.currentWidget == "" ||
+          (this.currentIsWrapper && !this.currentWidget.base.isLock)
+        ) {
           // 增加一个组件
-          const newWidget = clone(widget)
-          newWidget.id = randomId()
-          loop(newWidget.children, () => true, (data) => {
-            data.id = randomId()
-          })
+          const newWidget = clone(widget);
+          newWidget.id = randomId();
+          loop(
+            newWidget.children,
+            () => true,
+            data => {
+              data.id = randomId();
+            }
+          );
           // 增加数据
-          this.$store.dispatch("$widget/add", newWidget).then(()=>{
-            this.postWidgetListSend()
-          })
-          return
+          this.$store.dispatch("$widget/add", newWidget).then(() => {
+            this.postWidgetListSend();
+          });
+          return;
         }
       },
       eventPaste(e) {
-        this.$store.dispatch("$widget/setPaste")
-        e.stopPropagation()
+        this.$store.dispatch("$widget/setPaste");
+        e.stopPropagation();
       },
       peventUpdateById(data) {
         // 更新数据
         this.$store.dispatch("$widget/update", data).then(() => {
-          this.postWidgetListSend()
-        })
+          this.postWidgetListSend();
+        });
       },
       peventUpdateBase(data) {
         // 更新基础数据
         this.$store.dispatch("$widget/updateBase", data).then(() => {
-          this.postWidgetListSend()
-        })
+          this.postWidgetListSend();
+        });
       },
       peventSave() {
         // 截图之前去掉边框
-        this.$source.send("cutstart")
+        this.$source.send("cutstart");
         this.$source.receive("cutover", () => {
-          html2canvas(document.body.getElementsByTagName("iframe")[0].contentWindow.document.body, {
-            useCORS: true,
-            logging: false
-          }).then((canvas) => {
-            let cover = canvas.toDataURL("image/jpeg")
-            console.log(this.$widget)
+          html2canvas(
+            document.body.getElementsByTagName("iframe")[0].contentWindow.document
+            .body, {
+              useCORS: true,
+              logging: false
+            }
+          ).then(canvas => {
+            let cover = canvas.toDataURL("image/jpeg");
+            console.log(this.$widget);
             axios({
               url: "/mobilex/subject/update",
               method: "post",
@@ -410,16 +425,16 @@
                 cover: cover,
                 subject: JSON.stringify(this.$widget)
               }
-            }).then((ajaxData) => {
+            }).then(ajaxData => {
               this.$message.success("保存成功");
               // this.$router.push({
               //   path: "/list"
               // })
-            })
+            });
           });
-        })
+        });
       }
     }
-  }
+  };
 </script>
 
