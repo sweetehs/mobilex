@@ -1,5 +1,6 @@
 import {
   clone,
+  extendDeep,
   getObjectLength
 } from "@/util/util"
 export default {
@@ -36,9 +37,8 @@ export default {
         console.warn('controls mixin props change')
         let tempData = clone(this.props)
         if (this.$change) {
+          // 把change的数据传给外面，不在watch里面修改，防止死循环，在外部在通过props传进来来
           this.$change(tempData)
-          this.preventAutoChange()
-          this.props = tempData
         }
         if (this.$reverseData) {
           this.$emit("change", this.$reverseData(tempData))

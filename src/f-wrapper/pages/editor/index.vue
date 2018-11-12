@@ -406,6 +406,8 @@
         this.$store.dispatch("$widget/update", {
           id: "",
           data
+        }).then(()=>{
+          this.$store.dispatch("$widget/setCur", this.currentWidget.id);
         })
       },
       peventUpdateBase(data) {
