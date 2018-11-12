@@ -5,7 +5,7 @@ const getParent = (el) => {
     if (
       $parent.className &&
       $parent.className.indexOf("item-control-wrapper") !== -1 &&
-      (position != "" || position != "static")
+      (position != "" && position != "static")
     ) {
       return $parent
     } else if ($parent.parentNode) {

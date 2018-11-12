@@ -96,23 +96,21 @@
       }
     },
     methods: {
-      getItem(key) {
-        return this.props.find(d => d.key === key)
-      },
-      $change() {
-        const position = this.getItem("position")
-        this.props.forEach((_data) => {
+      $change(props) {
+        const position = props.find(d => d.key === 'position')
+        props.forEach((_data) => {
           if (_data.key == "left" || _data.key == "right") {
             let flag = ""
             if (position.value == "absolute" || position.value == "fixed") {
               flag = false
             } else {
               flag = true
-              _data.value = ""
+              _data.value = "0px"
             }
             _data.disabled = flag
           }
         })
+        return props
       },
       $parseData(bdata) {
         const defaultData = this.props.map((_data) => {

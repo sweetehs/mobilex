@@ -31,37 +31,39 @@ export default {
         if (this.autoChange) {
           return
         }
-        clearTimeout(this.time)
-        this.time = setTimeout(() => {
-          console.warn('controls mixin props change')
-          this.$change && this.$change()
-          if (this.$reverseData) {
-            this.$emit("change", this.$reverseData(clone(this.props)))
-          } else {
-            this.$emit("change", clone(this.props))
-          }
-        }, 200)
+        console.warn('controls mixin props change')
+        let tempData = clone(this.props)
+        if (this.$change) {
+          this.$change(tempData)
+        }
+        if (this.$reverseData) {
+          this.$emit("change", this.$reverseData(tempData))
+        } else {
+          this.$emit("change", tempData)
+        }
       }
     }
   },
   created() {
     this.preventAutoChange()
-    this.$change && this.$change()
+    let parseData = clone(this.bdata)
+    if (this.$parseData) {
+      parseData = this.$parseData(clone(this.bdata))
+    }
+    if (this.$change) {
+      this.$change(parseData)
+    }
     if (getObjectLength(this.bdata)) {
-      if (this.$parseData) {
-        this.props = this.$parseData(clone(this.bdata))
-      } else {
-        this.props = clone(this.bdata)
-      }
+      this.props = parseData
     }
   },
   methods: {
     preventAutoChange() {
-      // 当tdata和created变化时，不触发watch props
+      // 当手动变化props时，防止多次触发pros watch 引起多次执行
       this.autoChange = true
       setTimeout(() => {
         this.autoChange = false
-      }, 1000)
+      }, 500)
     }
   }
 }

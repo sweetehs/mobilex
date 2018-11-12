@@ -45,10 +45,7 @@ export default {
             base: data.base,
             position: data.style.position
           },
-          style: Object.assign(data.style,{
-            // left: "0",
-            // top: "0"
-          })
+          style: Object.assign(data.style)
         }, [h(data.wid, {
           style: {
             // 个别样式要放在元素本上上

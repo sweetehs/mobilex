@@ -385,6 +385,7 @@
         e.stopPropagation()
       },
       peventUpdateById(data) {
+        
         // 更新数据
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
