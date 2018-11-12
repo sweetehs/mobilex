@@ -8,10 +8,6 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        let parseData = clone(this.bdata)
-        if (this.$parseData) {
-          parseData = this.$parseData(clone(this.bdata))
-        }
         if (
           !this.bdata ||
           !getObjectLength(this.bdata)
@@ -19,8 +15,14 @@ export default {
           return
         }
         console.warn('controls mixin bdata change')
+        let parseData = clone(this.bdata)
+        if (this.$parseData) {
+          parseData = this.$parseData(clone(this.bdata))
+        }
+        if (this.$change) {
+          this.$change(parseData)
+        }
         this.props = parseData
-        this.autoChange = true
         this.preventAutoChange()
         this.$change && this.$change()
       }

@@ -315,13 +315,6 @@
       },
       cutWidget() {
         this.$source.send("widgetcut", clone(this.cutWidget))
-      },
-      $widget: {
-        deep: true,
-        handler(a,b) {
-          console.warn('$widget change')
-          this.postWidgetListSend()
-        }
       }
     },
     mounted() {
@@ -338,7 +331,7 @@
       })
       setTimeout(() => {
         this.postWidgetListSend()
-      }, 1000)
+      }, 500)
     },
     methods: {
       saveAjax() {
@@ -376,7 +369,10 @@
           loop(newWidget.children, () => true, (data) => {
             data.id = randomId()
           })
-          this.$store.dispatch("$widget/add", newWidget)
+          // 增加数据
+          this.$store.dispatch("$widget/add", newWidget).then(()=>{
+            this.postWidgetListSend()
+          })
           return
         }
       },
@@ -385,7 +381,6 @@
         e.stopPropagation()
       },
       peventUpdateById(data) {
-        
         // 更新数据
         this.$store.dispatch("$widget/update", data).then(() => {
           this.postWidgetListSend()
