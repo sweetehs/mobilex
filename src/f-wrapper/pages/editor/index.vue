@@ -299,6 +299,12 @@
       },
       cutWidget() {
         this.$source.send("widgetcut", clone(this.cutWidget));
+      },
+      $widget: {
+        deep: true,
+        handler(){
+          this.postWidgetListSend()
+        }
       }
     },
     mounted() {
@@ -382,9 +388,7 @@
             }
           );
           // 增加数据
-          this.$store.dispatch("$widget/add", newWidget).then(() => {
-            this.postWidgetListSend();
-          });
+          this.$store.dispatch("$widget/add", newWidget)
           return;
         }
       },
@@ -394,15 +398,11 @@
       },
       peventUpdateById(data) {
         // 更新数据
-        this.$store.dispatch("$widget/update", data).then(() => {
-          this.postWidgetListSend();
-        });
+        this.$store.dispatch("$widget/update", data)
       },
       peventUpdateBase(data) {
         // 更新基础数据
-        this.$store.dispatch("$widget/updateBase", data).then(() => {
-          this.postWidgetListSend();
-        });
+        this.$store.dispatch("$widget/updateBase", data)
       },
       peventSave() {
         // 截图之前去掉边框
