@@ -8,7 +8,6 @@ export default {
     bdata: {
       deep: true,
       handler() {
-        debugger
         if (
           !this.bdata ||
           !getObjectLength(this.bdata)
@@ -47,21 +46,21 @@ export default {
     }
   },
   created() {
-    this.preventAutoChange()
-    let parseData = clone(this.bdata)
-    if (this.$parseData) {
-      parseData = this.$parseData(clone(this.bdata))
-    }
-    if (this.$change) {
-      this.$change(parseData)
-    }
     if (getObjectLength(this.bdata)) {
+      this.preventAutoChange()
+      let parseData = clone(this.bdata)
+      if (this.$parseData) {
+        parseData = this.$parseData(clone(this.bdata))
+      }
+      if (this.$change) {
+        this.$change(parseData)
+      }
       this.props = parseData
     }
   },
   methods: {
     preventAutoChange() {
-      // 当手动变化props时，防止多次触发pros watch 引起多次执行
+      // 当代码变化props时，防止多次触发props watch 引起多次执行
       this.autoChange = true
       setTimeout(() => {
         this.autoChange = false
