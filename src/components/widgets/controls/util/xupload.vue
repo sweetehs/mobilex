@@ -74,6 +74,7 @@
           method: "post",
           data: formData
         }).then((ajaxData) => {
+          this.$refs.file.value = ""
           this.image = ajaxData.data.url
           const image = new Image()
           image.src = this.image

@@ -55,7 +55,10 @@ export default {
             "height": data.style["height"],
             "width": data.style["width"]
           },
-          props: data.props
+          props: {
+            ...data.props,
+            style: data.style
+          }
         }, childtemp)]))
         return result
       }, [])

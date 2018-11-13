@@ -1,5 +1,5 @@
 <style>
-  .widget-layout-wrapper{
+  .widget-layout-wrapper {
     box-sizing: border-box;
   }
 </style>
@@ -13,8 +13,9 @@
 <script>
   export default {
     name: "layout",
-    props: ["flex"],
+    props: ["flex", "style"],
     data() {
+      debugger
       return {}
     }
   }

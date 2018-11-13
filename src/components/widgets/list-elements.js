@@ -23,8 +23,10 @@ const mapList = [{
     children: [],
     style: {
       "display": "block",
-      "padding": "20px",
-      "min-height": "60px"
+      "min-height": "60px",
+      "box-sizing": "border-box",
+      "background-size": "100%",
+      "background-repeat": "no-repeat"
     },
     component: layout
   }, {
@@ -76,7 +78,7 @@ const mapList = [{
     }
   }, {
     name: "图片",
-    wid: "layout",
+    wid: "ximage",
     ajaxkey: "url",
     style: {
       "display": "inline-block",
@@ -84,7 +86,8 @@ const mapList = [{
       "color": "#abcdef",
       "width": "200px",
       "height": "200px",
-      "background-size": "100%"
+      "background-size": "100%",
+      "background-repeat": "no-repeat"
     },
     // props: {
     //   url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"

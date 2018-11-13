@@ -1,5 +1,6 @@
 import {
-  clone
+  clone,
+  handelCssData
 } from "@/util/util"
 export default {
   functional: true,
@@ -22,7 +23,7 @@ export default {
         } = data
         var base = h(data.wid, {
           props: data.props,
-          style: data.style,
+          style: handelCssData(data.style),
           nativeOn: {
             click() {
               if (action && action.type === 'xdialog') {
