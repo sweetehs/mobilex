@@ -76,20 +76,20 @@ const mapList = [{
     }
   }, {
     name: "图片",
-    wid: "ximage",
+    wid: "layout",
     ajaxkey: "url",
     style: {
       "display": "inline-block",
-      "margin": "10px",
+      "box-size": "border-box",
       "color": "#abcdef",
       "width": "200px",
       "height": "200px",
-      "border-radius": "200px"
+      "background-size": "100%"
     },
-    props: {
-      url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
-    },
-    component: ximage
+    // props: {
+    //   url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1296403907,1724068158&fm=26&gp=0.jpg"
+    // },
+    component: layout
   }, {
     name: "按钮",
     wid: "xbutton",

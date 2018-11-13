@@ -2,7 +2,7 @@
   .control-xform {
     padding-right: 20px;
     .item {
-      margin-bottom: 15px;
+      margin-bottom: 30px;
       .item-common,
       .item-special {
         position: relative;
@@ -37,28 +37,32 @@
   <div class="control-xform">
     <el-form label-width="100px">
       <el-form-item label="ajax地址">
-        <el-input v-model="props.url"></el-input>
+        <el-input @change="$send" v-model="props.url"></el-input>
       </el-form-item>
       <el-form-item class="item" v-for="(item,i) in props.formitems" :key="i">
         <div slot="label">
-          <div class="fn-mb5"><el-input v-model="item.label"></el-input></div>
-          <div><el-input v-model="item.key"></el-input></div>
+          <div class="fn-mb5">
+            <el-input v-model="item.label"></el-input>
+          </div>
+          <div>
+            <el-input @change="$send" v-model="item.key"></el-input>
+          </div>
         </div>
         <div class="item-common">
           <a v-if="item.type !== 'input'" href="javascript:;" class="fa fa-plus" @click="eventAddItem(item)"></a>
-          <el-select v-model="item.type">
+          <el-select @change="$send" v-model="item.type">
             <el-option v-for="(t,i) in formType" :key="i" :value="t.value" :label="t.name"></el-option>
           </el-select>
         </div>
         <div class="item-rule fn-mb5">
-          <el-radio-group v-model="item.rule">
+          <el-radio-group @change="$send" v-model="item.rule">
             <el-radio v-for="(item,i) in formRule" :label="item.value" :key="i">{{item.name}}</el-radio>
           </el-radio-group>
         </div>
         <div v-if="item.type !== 'input'" class="item-special">
           <p v-for="(t,i) in item.values" :key="i">
-            <el-input v-model="item.values[i]"></el-input>
-            <a href="javascript:;" class="fa fa-remove" @click="item.values.splice(i,1)"></a>
+            <el-input @change="$send" v-model="item.values[i]"></el-input>
+            <a href="javascript:;" class="fa fa-remove" @click="eventDeleteItem(item,i)"></a>
           </p>
         </div>
       </el-form-item>
@@ -105,12 +109,11 @@
           this.$set(data, "values", [])
         }
         data.values.push('')
+        this.$send()
       },
-      reverseData(props){
-        return props.formitems.map((_data)=>{
-          _data.value = ""
-          return _data
-        })
+      eventDeleteItem(item, i) {
+        item.values.splice(i, 1)
+        this.$send()
       }
     }
   }

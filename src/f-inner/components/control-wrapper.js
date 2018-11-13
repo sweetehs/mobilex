@@ -1,4 +1,4 @@
-import { clone } from "@/util/util"
+import { clone, handelCssData } from "@/util/util"
 import control from "./control"
 export default {
   functional: true,
@@ -47,7 +47,7 @@ export default {
             base: data.base,
             position: data.style.position
           },
-          style: Object.assign(data.style)
+          style: handelCssData(data.style)
         }, [h(data.wid, {
           style: {
             // 个别样式要放在元素本上上
