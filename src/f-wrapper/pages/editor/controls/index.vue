@@ -22,9 +22,9 @@
       <el-tab-pane label="样式" name="1" v-if="currentWidget ? true : false">
         <Controlstyle @change="peventChangeStyleData" :bdata="currentWidget.style" :tdata="currentWidget.temp" />
       </el-tab-pane>
-      <!-- <el-tab-pane label="操作" name="2" v-if="currentWidget ? true : false">
+      <el-tab-pane label="操作" name="2" v-if="currentWidget ? true : false">
         <Controlaction @change="preventChangeActionData" :bdata="currentWidget.action" />
-      </el-tab-pane> -->
+      </el-tab-pane>
       <el-tab-pane label="个性化" name="3" v-if="currentWidget ? true : false">
         <component @change="peventChangePropsData" :is="currentWidget.wid" :bdata="(currentWidget) ? currentWidget.props : {}" />
       </el-tab-pane>

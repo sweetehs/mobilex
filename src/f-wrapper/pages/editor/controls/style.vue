@@ -57,13 +57,24 @@
         type: "input",
         disabled: false
       }, {
+        name: "超出",
+        key: "overflow",
+        type: "radio",
+        values: ["hidden", "auto", "scroll"],
+        disabled: false
+      }, {
         name: "内边距",
         key: "padding",
         type: "input",
         disabled: false
       }, {
-        name: "颜色",
+        name: "字体颜色",
         key: "color",
+        type: "input",
+        disabled: false
+      }, {
+        name: "字体大小",
+        key: "font-size",
         type: "input",
         disabled: false
       }, {
@@ -85,7 +96,7 @@
         name: "背景重复",
         type: "radio",
         key: "background-repeat",
-        values: ["repeat","no-repeat"],
+        values: ["repeat", "no-repeat"],
         disabled: false
       }, {
         name: "背景图片",
@@ -128,7 +139,7 @@
           }
         })
       },
-      imgChange(size){
+      imgChange(size) {
         this.props.width = size.width + "px"
         this.props.height = size.height + "px"
       }

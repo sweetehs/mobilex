@@ -71,7 +71,7 @@
     },
     computed: {
       canDrag(){
-        return this.position=='absolute' || this.position=='fixed'
+        return (this.position=='absolute' || this.position=='fixed') && !this.base.isLock
       }
     },
     methods: {

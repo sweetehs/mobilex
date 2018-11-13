@@ -14,16 +14,18 @@
         padding: 0;
         height: 100%;
       }
-      &.empty{
+      &.empty {
         border: 1px solid transparent;
         box-shadow: none;
       }
       .header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+        .action {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+        }
         .fa {
-          margin-left: 5px;
+          margin-left: 10px;
           vertical-align: middle;
           font-size: 16px;
           &:hover {
@@ -74,14 +76,16 @@
     <ul>
       <li v-for="(item,i) in list" :key="i">
         <el-card v-for="(item1,j) in item" :key="j" class="box-card" :class="{empty:item1.type === 'empty'}">
-<template v-if="item1.type === 'add'">
-  <div class="add">
-    <i @click="addDialog = true" class="fa fa-plus-square-o" aria-hidden="true"></i>
-  </div>
+          <template v-if="item1.type === 'add'">
+                <div class="add">
+                  <i @click="eventShowDialog('add')" class="fa fa-plus-square-o" aria-hidden="true"></i>
+                </div>
 </template>
+
 <template v-else-if="item1.type !== 'empty'">
   <div slot="header" class="header">
     <div class="action">
+      <span class="fa fa-copy" @click="eventShowDialog('copy',item1)"></span>
       <span class="fa fa-edit" @click="eventEdit(item1)"></span>
       <span class="fa fa-close" @click="eventDelete(item1)"></span>
     </div>
@@ -94,14 +98,14 @@
         </el-card>
       </li>
     </ul>
-    <el-dialog title="添加" :visible.sync="addDialog" width="500px">
+    <el-dialog :title="dialogTitle" :visible.sync="addDialog" width="500px">
       <el-form label-width="90px">
         <el-form-item label="专题标题：">
-          <el-input placeholder="请输入专题名称" v-model="addData.name"></el-input>
+          <el-input placeholder="请输入专题名称" v-model="dialogData.name"></el-input>
         </el-form-item>
       </el-form>
       <div class="action fn-center">
-        <el-button type="primary" @click="eventAdd()">添加</el-button>
+        <el-button type="primary" @click="eventSubmit()">{{dialogTitle}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -114,16 +118,26 @@
       return {
         list: [],
         addDialog: false,
-        addData: {
+        dialogData: {
           name: ""
-        }
+        },
+        dialogTitle: ""
       }
     },
     mounted() {
       this.ajaxGetList()
     },
     methods: {
-      dataGroup() {},
+      eventShowDialog(type, data) {
+        this.addDialog = true
+        this.currentData = data
+        this.type = type
+        if(this.type === "add"){
+          this.dialogTitle = "增加"
+        }else if(this.type === "copy"){
+          this.dialogTitle = "复制"
+        }
+      },
       ajaxGetList() {
         axios({
           url: '/mobilex/subject/all'
@@ -133,7 +147,7 @@
           })
           let groupCount = 4
           let emptyCount = (groupCount - ajaxData.data.length % groupCount)
-          for(let i = 0;i <emptyCount;i++){
+          for (let i = 0; i < emptyCount; i++) {
             ajaxData.data.push({
               type: "empty"
             })
@@ -167,18 +181,34 @@
           this.$message.success("删除成功");
         })
       },
-      eventAdd() {
-        axios({
-          url: '/mobilex/subject/save',
-          method: "post",
-          data: {
-            name: this.addData.name
-          }
-        }).then((ajaxData) => {
-          this.ajaxGetList()
-          this.addDialog = false;
-          this.$message.success("新建成功");
-        })
+      eventSubmit() {
+        debugger
+        if (this.type === "add") {
+          axios({
+            url: '/mobilex/subject/save',
+            method: "post",
+            data: {
+              name: this.addData.name
+            }
+          }).then((ajaxData) => {
+            this.ajaxGetList()
+            this.addDialog = false;
+            this.$message.success("新建成功");
+          })
+        } else if (this.type === "copy") {
+          axios({
+            url: '/mobilex/subject/copy',
+            method: "post",
+            data: {
+              name: this.dialogData.name,
+              copyid: this.currentData._id
+            }
+          }).then(() => {
+            this.ajaxGetList()
+            this.addDialog = false;
+            this.$message.success("复制成功");
+          })
+        }
       }
     }
   }

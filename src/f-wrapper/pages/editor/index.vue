@@ -44,6 +44,10 @@
       flex: 1;
       min-width: 400px;
       flex-shrink: 0;
+      overflow: auto;
+    }
+    .controls-wrapper{
+      padding-right: 20px;
     }
     .action-wrapper {
       // background: rgb(77,77,77);

@@ -13,9 +13,8 @@
 <script>
   export default {
     name: "layout",
-    props: ["flex", "style"],
+    props: ["flex", "istyle"],
     data() {
-      debugger
       return {}
     }
   }

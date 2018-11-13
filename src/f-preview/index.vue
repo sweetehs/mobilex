@@ -1,6 +1,5 @@
 <style>
   .preview-wrapper {
-    height: 100%;
     box-sizing: border-box;
     font-size: 0.28rem;
   }

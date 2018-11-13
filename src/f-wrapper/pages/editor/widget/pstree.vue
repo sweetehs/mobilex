@@ -97,10 +97,10 @@
                         'fa-folder-open': openlist.indexOf(item.id) !== -1
                       }" @click="eventOpen($event,item)"></span>
             <span v-else class="fa" :class="getIcon(item.wid)"></span>
-            <span>{{item.name}}</span> ->
+            <span @dblclick="eventEditName(item)" class="fn-mr10">{{item.name}}</span>
             <!--会双向绑定直接修改值，没通过vuex-->
             <input v-if="item.id == currentWidget.id && isEdit" type="text" v-model="item.label" @blur="eventSetLabelName(item)">
-            <span v-else @dblclick="eventEditName(item)">{{item.label || item.name}}</span>
+            <span v-else>{{item.label}}</span>
           </div>
           <div class="action">
             <a v-if="item.isWrapper && ((copyWidget && copyWidget.id !== item.id)||(cutWidget && cutWidget.id !== item.id))" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>

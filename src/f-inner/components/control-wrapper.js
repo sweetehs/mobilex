@@ -57,7 +57,7 @@ export default {
           },
           props: {
             ...data.props,
-            style: data.style
+            istyle: data.style
           }
         }, childtemp)]))
         return result

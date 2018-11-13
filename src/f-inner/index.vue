@@ -14,7 +14,7 @@
 			right: 0;
 		}
 		&.dark {
-			background: #b6b6b6;
+			background: #b6b6b6!important;
 			background-image: none!important;
 		}
 	}
