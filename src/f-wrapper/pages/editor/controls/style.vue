@@ -114,15 +114,15 @@
       }, {
         name: "背景",
         children: [{
-          name: "背景图片",
-          type: "upload",
-          key: "background-image",
-          disabled: false
-        }, {
           name: "背景重复",
           type: "radio",
           key: "background-repeat",
           values: ["repeat", "no-repeat"],
+          disabled: false
+        }, {
+          name: "背景图片",
+          type: "upload",
+          key: "background-image",
           disabled: false
         }, {
           name: "背景颜色",

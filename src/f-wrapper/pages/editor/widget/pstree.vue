@@ -36,13 +36,14 @@
           visibility: hidden;
         }
       }
+      .fa.active{
+        color: #409EFF!important;
+        font-size: 14px;
+      }
       .fa-book {
         color: #888;
         width: 12px;
         display: inline-block;
-        &.active {
-          color: #409EFF;
-        }
         &.hidden {
           visibility: hidden;
         }
@@ -104,8 +105,12 @@
           </div>
           <div class="action">
             <a v-if="item.isWrapper && ((copyWidget && copyWidget.id !== item.id)||(cutWidget && cutWidget.id !== item.id))" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
-            <a class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
-            <a class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a>
+            <a :class="{
+              active: copyWidget && copyWidget.id == item.id
+            }" class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
+            <a :class="{
+              active: cutWidget && cutWidget.id == item.id
+            }" class="fa fa-cut" href="javascript:;" @click="eventCutItem(item)"></a>
             <a class="fa fa-close" href="javascript:;" @click="eventDeleteItem($event, item)"></a>
           </div>
         </div>
