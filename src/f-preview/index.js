@@ -21,9 +21,11 @@ export default {
         const {
           action
         } = data
+        const className = {}
+        className[`x${data.id}`] = true
         var base = h(data.wid, {
           props: data.props,
-          style: handelCssData(data.style),
+          class: className,
           nativeOn: {
             click() {
               if (action && action.type === 'xdialog') {

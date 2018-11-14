@@ -34,8 +34,13 @@
     });
   }
   setGlobalComponents()
+  const setGlobalCommonComponents = () => {
+    for (let i in widgetlistcommon) {
+      Vue.component(i, widgetlistcommon[i])
+    }
+  }
+  setGlobalCommonComponents()
   export default {
-    mixins: [widgetlistcommon],
     components: {
       previewinner
     },
@@ -67,10 +72,10 @@
         this.hidden = hidden
   
         this.style = handelCssData(allData.base.style)
-        // 收集所有的ajax函数
         const promise = []
         const ajaxurls = {}
         loop(datas, () => true, (data) => {
+          // 收集所有的ajax函数
           if (data.ajax.flag == true) {
             const ajaxurl = data.ajax.url
             if (!ajaxurls[ajaxurl]) {
@@ -98,7 +103,12 @@
                   const widget = clone(data)
                   // 查找有ajax的元素
                   loop(widget.children, (_d) => _d.ajax && _d.ajax.id == data.id, (_child) => {
-                    _child.props[_child.ajaxkey] = _data[_child.key]
+                    // 单独处理图片问题
+                    if (_child.wid === "ximage") {
+                      _child.style['background-image'] = _data[_child.key]
+                    } else {
+                      _child.props[_child.ajaxkey] = _data[_child.key]
+                    }
                   })
                   return widget
                 })
@@ -126,6 +136,21 @@
             }
   
           })
+          // 处理css
+          let cssText = ""
+          loop(tempDatas, () => true, (data) => {
+            const arr = []
+            const style = handelCssData(data.style)
+            for(var i in style){
+              arr.push(`${i}:${style[i]}`)
+            }
+            cssText += `.x${data.id}{${arr.join(";")}}`
+          })
+          var head = document.getElementsByTagName('head')[0];
+          var s = document.createElement('style');
+          s.setAttribute('type', 'text/css');
+          s.appendChild(document.createTextNode(cssText));
+          head.appendChild(s);
           this.datas = tempDatas
           this.loadView = true
         })
