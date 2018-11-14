@@ -21,13 +21,17 @@ export default {
     var offsetX = 0
     var offsetY = 0
     let isMove = false
+    let timer = ""
     const $parent = getParent(el)
     el.setAttribute("x-drag", binding.value.canDrag)
+
     function down(e) {
       if (el.getAttribute("x-drag") == "false") {
         return
       }
-      $parent.style.backgroundColor = "rgba(255,228,181,0.7)"
+      timer = setTimeout(() => {
+        $parent.style.backgroundColor = "rgba(255,228,181,0.7)"
+      }, 300)
       offsetX = (e.pageX - el.offsetLeft)
       offsetY = (e.pageY - el.offsetTop)
       el.style.cursor = "move"
@@ -43,11 +47,13 @@ export default {
     }
 
     function up() {
+      clearTimeout(timer)
       $parent.style.backgroundColor = ""
+      el.style.cursor = "pointer"
       removeEventListener("mousemove", move)
       removeEventListener("mouseup", up)
-      if(!isMove){
-        return 
+      if (!isMove) {
+        return
       }
       isMove = false
       let left = 0

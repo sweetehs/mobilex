@@ -64,7 +64,7 @@
           margin-right: 10px;
           a {
             color: @fontColor;
-            margin-right: 6px;
+            margin-right: 4px;
           }
         }
       }
@@ -81,22 +81,16 @@
                   'is-cut': (cutWidget && item.id === cutWidget.id),
                 }">
         <div draggable="true" @dragstart="dragStart(item)" @drop="drop(item)" @dragover='allowDrop($event)' class="tree-item" :class="{folder:item.children}">
-          <div :style="{
-                        'paddingLeft': (index === 1 ? 20 : index*15)+'px'
-                      }">
-            <span class="fa fa-book" :class="{
-                        'active': item.ajax && item.ajax.flag,
-                        'hidden': !item.isWrapper
-                      }" @click="eventSetAjax(item)"></span>
-            <span class="fa btn-lock" :class="{
-                        'fa-lock': item.base.isLock,
-                        'fa-unlock': !item.base.isLock,
-                        'hidden': !item.isWrapper
-                      }" @click="eventToggleLock($event, item)"></span>
+          <div :style="{'paddingLeft': (index === 1 ? 25 : index*25)+'px'}">
+            <a class="fa btn-lock" :class="{
+              'fa-lock': item.base.isLock,
+              'fa-unlock': !item.base.isLock,
+              'hidden': !item.isWrapper
+            }" @click="eventToggleLock($event, item)"></a>
             <span v-if="item.children" class="fa btn-open" :class="{
-                        'fa-folder': item.children,
-                        'fa-folder-open': openlist.indexOf(item.id) !== -1
-                      }" @click="eventOpen($event,item)"></span>
+              'fa-folder': item.children,
+              'fa-folder-open': openlist.indexOf(item.id) !== -1
+            }" @click="eventOpen($event,item)"></span>
             <span v-else class="fa" :class="getIcon(item.wid)"></span>
             <span @dblclick="eventEditName(item)" class="fn-mr10">{{item.name}}</span>
             <!--会双向绑定直接修改值，没通过vuex-->
@@ -105,6 +99,10 @@
           </div>
           <div class="action">
             <a v-if="item.isWrapper && ((copyWidget && copyWidget.id !== item.id)||(cutWidget && cutWidget.id !== item.id))" class="fa fa-paste" href="javascript:;" @click="eventPasteItem(item)"></a>
+            <a class="fa fa-book" :class="{
+              'active': item.ajax && item.ajax.flag,
+              'hidden': !item.isWrapper
+            }" @click="eventSetAjax(item)"></a>
             <a :class="{
               active: copyWidget && copyWidget.id == item.id
             }" class="fa fa-copy" href="javascript:;" @click="eventCopyItem(item)"></a>
