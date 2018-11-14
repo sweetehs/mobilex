@@ -5,6 +5,7 @@ Editor https://github.com/Microsoft/monaco-editor
 ```javascript
 {
   base:{
+    borderColor: "",
     style: {}
   },
   datas:[{

@@ -1,6 +1,6 @@
 <template>
   <el-form>
-    <el-form label-width="80px">
+    <el-form label-width="100px">
       <el-form-item v-if="!item.disabled" v-for="(item,i) in formlist" :key="i" :label="item.name">
         <el-input @change="itemChange" v-if="item.type=='input'" v-model="props[item.key]"></el-input>
         <el-radio-group @change="itemChange" v-if="item.type=='radio'" v-model="props[item.key]">

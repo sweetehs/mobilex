@@ -1,6 +1,11 @@
 <template>
   <div class="control-base-wrapper">
     <xformall :formlist="formlist" :props="props.style||{}" @send="$send"/>
+    <el-form>
+      <el-form-item label="组件边框颜色" label-width="100px">
+        <el-input @change="$send" v-model="props.borderColor"></el-input>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 

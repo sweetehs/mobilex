@@ -3,7 +3,7 @@
 		background: #fff;
 		min-height: 100%;
 		transition: all .25s ease;
-		padding: 2px;
+		// padding: 2px;
 		box-sizing: border-box;
 		position: relative;
 		.overlay {
@@ -23,7 +23,7 @@
 <template>
 	<div :style="base.style" class="f-inner-wrapper" :class="isDialog ? 'dark' : ''">
 		<div class="overlay"></div>
-		<controlwrapper v-if="tryOne" :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
+		<controlwrapper :isDialog="isDialog" :datas="datas||[]" :currentId="currentId" :copyId="copyId" :cutId="cutId" />
 	</div>
 </template>
 
@@ -72,7 +72,7 @@
 			}))
 			this.$source.receive("widgetlist", (data) => {
 				this.tryOne = false
-				setTimeout(()=>{
+				setTimeout(() => {
 					// 强制刷新所有组件
 					this.tryOne = true
 				})
@@ -82,6 +82,8 @@
 				this.datas = list
 				this.base = clone(data.base)
 				this.isDialog = data.type === "hidden"
+				// 设置外框的颜色
+				this.setItemBorder()
 			})
 			this.$source.receive("widgetcurrent", (currentwidget) => {
 				this.currentId = currentwidget.id
@@ -107,6 +109,20 @@
 			})
 		},
 		methods: {
+			setItemBorder() {
+				if (this.base.borderColor) {
+					var head = document.getElementsByTagName('head')[0];
+					var s = document.createElement('style');
+					const css = `
+							.item-control-wrapper div.overlay{
+								border: 1px dashed ${this.base.borderColor};
+							}
+						`
+					s.setAttribute('type', 'text/css');
+					s.appendChild(document.createTextNode(css));
+					head.appendChild(s);
+				}
+			},
 			cloneWidgetRemoveComponent(data) {
 				let _data = clone(data)
 				delete _data.component

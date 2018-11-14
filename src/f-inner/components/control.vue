@@ -1,7 +1,8 @@
 <style lang="less">
   .item-control-wrapper {
     position: relative;
-    margin: -1px;
+    // margin: -1px;
+    // padding: 1px;
     // transition: all 0.3s ease;
     &:hover {
       cursor: pointer;
