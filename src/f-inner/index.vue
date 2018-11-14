@@ -30,6 +30,7 @@
 <script>
 	import Vue from "vue"
 	import widgetlist from "@/components/widgets/list-elements"
+	import widgetlistcommon from "@/components/widgets/list-elements-common"
 	import postMessage from "@/util/postMessage"
 	import event from "./components/event"
 	import controlwrapper from "./components/control-wrapper"
@@ -48,6 +49,12 @@
 		});
 	}
 	setGlobalComponents()
+	const setGlobalCommonComponents = () => {
+		for (let i in widgetlistcommon) {
+			Vue.component(i, widgetlistcommon[i])
+		}
+	}
+	setGlobalCommonComponents()
 	export default {
 		components: {
 			controlwrapper
@@ -114,10 +121,10 @@
 					var head = document.getElementsByTagName('head')[0];
 					var s = document.createElement('style');
 					const css = `
-							.item-control-wrapper div.overlay{
-								border: 1px dashed ${this.base.borderColor};
-							}
-						`
+								.item-control-wrapper div.overlay{
+									border: 1px dashed ${this.base.borderColor};
+								}
+							`
 					s.setAttribute('type', 'text/css');
 					s.appendChild(document.createTextNode(css));
 					head.appendChild(s);

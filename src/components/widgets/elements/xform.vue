@@ -41,28 +41,6 @@
         color: #999;
       }
     }
-    .x-select {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f4f5f6;
-      border: none;
-      border-radius: 0.04rem;
-      box-sizing: border-box;
-      color: #999;
-      height: 0.88rem;
-      padding: 0 0.24rem;
-      position: relative;
-      width: 100%;
-      select {
-        color: #999;
-        width: 100%;
-        font-size: 0.28rem;
-        &:focus {
-          outline: none;
-        }
-      }
-    }
     .x-radio{
       input[type=radio]{
         position: absolute;
@@ -132,11 +110,8 @@
             <div></div>
           </label>
         </div>
-        <div v-if="item.type=='select'" class="x-select">
-          <select :placeholder="`请选择${item.label}`" v-model="item.value">
-            <option value="">请选择</option>
-            <option :value="select" v-for="select in item.values" :key="select">{{select}}</option>
-          </select>
+        <div v-if="item.type=='select'">
+          <xselect v-model="item.value" :placeholder="`请选择${item.label}`" :options="item.values"/>
         </div>
       </div>
     </div>
