@@ -24,6 +24,7 @@
     handelCssData,
     loop,
     loopRange,
+    randomId,
     clone
   } from "@/util/util"
   const setGlobalComponents = () => {
@@ -139,6 +140,8 @@
           // 处理css
           let cssText = ""
           loop(tempDatas, () => true, (data) => {
+            // 解决repeat中id重复的问题
+            data.id = data.id + randomId(2)
             const arr = []
             const style = handelCssData(data.style)
             for(var i in style){

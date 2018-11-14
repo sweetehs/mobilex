@@ -25,6 +25,7 @@ export default {
         className[`x${data.id}`] = true
         var base = h(data.wid, {
           props: data.props,
+          // style: data.style,
           class: className,
           nativeOn: {
             click() {

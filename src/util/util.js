@@ -1,10 +1,11 @@
 export function clone(data) {
   return data ? JSON.parse(JSON.stringify(data)) : {}
 }
-export function randomId() {
+export function randomId(num) {
   var returnStr = "",
     charStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < 12; i++) {
+    num = num || 12
+  for (var i = 0; i < num; i++) {
     var index = Math.round(Math.random() * (charStr.length - 1));
     returnStr += charStr.substring(index, index + 1);
   }
