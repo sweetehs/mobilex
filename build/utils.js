@@ -108,14 +108,29 @@ var glob = require('glob')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var PAGE_PATH = path.resolve(__dirname, '../src/pages')
 var merge = require('webpack-merge')
+const buildList = [{
+    name: "preview"
+  },
+  {
+    name: "inner",
+    chunks: ["vendor", "manifest"]
+  },
+  {
+    name: "wrapper",
+    chunks: ["vendor", "manifest"]
+  }
+]
 exports.entries = function () {
   var entryFiles = glob.sync(PAGE_PATH + '/*.js')
-  console.log(entryFiles)
   var map = {}
   entryFiles.forEach((filePath) => {
     var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
-    map[filename] = filePath
+    var buildConfig = buildList.find(d => d.name === filename)
+    if (buildConfig) {
+      map[filename] = filePath
+    }
   })
+  console.log(map)
   return map
 }
 exports.htmlPlugin = function () {
@@ -123,15 +138,20 @@ exports.htmlPlugin = function () {
   let arr = []
   entryHtml.forEach((filePath) => {
     let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+    var buildConfig = buildList.find(d => d.name === filename)
+    if (!buildConfig) {
+      return
+    }
     let conf = {
       // 模板来源
       template: filePath,
       // 文件名称
       filename: filename + '.html',
       // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
-      chunks: ['manifest', 'vendor', filename],
+      chunks: buildConfig.chunks ? buildConfig.chunks.concat([filename]) : [filename],
       inject: true
     }
+    console.log(conf)
     if (process.env.NODE_ENV === 'production') {
       conf = merge(conf, {
         minify: {
